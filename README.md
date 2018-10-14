@@ -8,7 +8,7 @@
 If you are having error when building android with a error of gradle, you may install Homebrew on the mac
 [Homebrew](https://brew.sh) then
 > run brew install gradle
-ref: <https://stackoverflow.com/questions/43480076/ionic-2-error-could-not-find-an-installed-version-of-gradle-either-in-android>
+> ref: <https://stackoverflow.com/questions/43480076/ionic-2-error-could-not-find-an-installed-version-of-gradle-either-in-android>
 
 ## Environment information:
 

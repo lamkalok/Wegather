@@ -1,0 +1,51 @@
+<!--
+  Generated template for the GroupAddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add New Group</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <h2>Start a new group</h2>
+    <p>Find new people and do your thing together</p>
+  </div>
+  <ion-card>
+    <img *ngIf="imgSrc" [src]="imgSrc" />
+    
+      <ion-row padding>
+
+        <ion-label stacked class="label-text">Please Select Group Image</ion-label>
+        <ion-item>
+          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
+        </ion-item>
+      </ion-row>
+
+   
+  </ion-card>
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked class="label-text">Group Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="label-text">Description</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="label-text">Interest Tags</ion-label>
+        <ion-input type="text" (click)="selectTags()"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button full (click)="createGroup()">Create Group</button>
+</ion-content>

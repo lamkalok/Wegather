@@ -3,9 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { HomePage } from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +18,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GroupServiceProvider } from '../providers/group-service/group-service';
 import { AngularFirestoreModule, AngularFirestoreDocument } from '@angular/fire/firestore';
+
+import { Camera } from '@ionic-native/camera';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -33,8 +36,8 @@ var firebaseConfig = {
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
     HomePage,
+    ContactPage,
     TabsPage
   ],
   imports: [
@@ -52,8 +55,8 @@ var firebaseConfig = {
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
     HomePage,
+    ContactPage,
     TabsPage
   ],
   providers: [
@@ -62,6 +65,7 @@ var firebaseConfig = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     GroupServiceProvider,
     AngularFirestoreModule,
+    Camera,
   ]
 })
 export class AppModule {}

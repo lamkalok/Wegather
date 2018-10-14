@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 
 /*
@@ -13,7 +14,8 @@ export class GroupServiceProvider {
 
   constructor(
     public afd: AngularFireDatabase,
-    public fireStore: AngularFirestore
+    public fireStore: AngularFirestore,
+    public fireStorage: AngularFireStorage,
     ) 
   {
     console.log('Hello GroupServiceProvider Provider');
@@ -33,6 +35,13 @@ export class GroupServiceProvider {
 
   removeGroup(){
 
+  }
+
+  createGroup(image: string){
+    const picture = this.fireStorage.ref('Groups/myphoto.jpg');
+    picture.putString(image, 'data_url').then(function(snapshot) {
+      return true;
+    });;
   }
 
 }

@@ -27972,6 +27972,10 @@ ion-navbar.toolbar {
   color: #6E6E6E;
 }
 
+page-group-add .label-text {
+  font-size: 1.0em !important;
+}
+
 page-home ion-scroll[scrollX] .scroll-item {
   display: inline-block;
 }
