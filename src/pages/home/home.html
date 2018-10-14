@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar >
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+  <div>
+    <h3 style="display: inline;">Your groups</h3>
+    <span class="greyFont" style="float:right" (click)="createNewGroup()">+ New group</span>
+  </div>
+
+  
+  <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >
+    <div class="scroll-item" *ngFor="let group of groups | async ; let i=index">
+        <ion-card >
+          <img src="{{group.image}}">
+          <div class="card-title">{{group.name}}</div>
+          </ion-card>
+    </div>
+  </ion-scroll>
+
+<ion-item class="greyFont">See All</ion-item>
+<ion-card>
+    <ion-card-header>
+        Your Calendar
+      </ion-card-header>
+</ion-card>
+</ion-content>

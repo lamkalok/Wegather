@@ -1,0 +1,8 @@
+{
+  "name": "wegather",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "4d2ff49f"
+}
