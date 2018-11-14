@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 520:
+/***/ 527:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GroupAddPageModule", function() { return GroupAddPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__group_add__ = __webpack_require__(521);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(530);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var GroupAddPageModule = /** @class */ (function () {
-    function GroupAddPageModule() {
+var RegisterPageModule = /** @class */ (function () {
+    function RegisterPageModule() {
     }
-    GroupAddPageModule = __decorate([
+    RegisterPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__group_add__["a" /* GroupAddPage */],
+                __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__group_add__["a" /* GroupAddPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
             ],
         })
-    ], GroupAddPageModule);
-    return GroupAddPageModule;
+    ], RegisterPageModule);
+    return RegisterPageModule;
 }());
 
-//# sourceMappingURL=group-add.module.js.map
+//# sourceMappingURL=register.module.js.map
 
 /***/ }),
 
-/***/ 521:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GroupAddPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(304);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_group_service_group_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,62 +62,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 /**
- * Generated class for the GroupAddPage page.
+ * Generated class for the RegisterPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var GroupAddPage = /** @class */ (function () {
-    function GroupAddPage(navCtrl, navParams, camera, groupService) {
+var RegisterPage = /** @class */ (function () {
+    function RegisterPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.camera = camera;
-        this.groupService = groupService;
+        this.shareServiceProvider = shareServiceProvider;
+        this.authServiceProvider = authServiceProvider;
+        this.userServiceProvider = userServiceProvider;
+        this.groupServiceProvider = groupServiceProvider;
     }
-    GroupAddPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad GroupAddPage');
+    RegisterPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad RegisterPage');
     };
-    GroupAddPage.prototype.takeImage = function () {
+    RegisterPage.prototype.register = function () {
         var _this = this;
-        var options = {
-            quality: 65,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
-        };
-        this.camera.getPicture(options).then(function (imageData) {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-            var base64Image = 'data:image/jpeg;base64,' + imageData;
-            _this.imgSrc = base64Image;
-        }, function (err) {
-            // Handle error
-        });
-    };
-    GroupAddPage.prototype.selectTags = function () {
-        console.log("tags");
-        this.navCtrl.pop();
-    };
-    GroupAddPage.prototype.createGroup = function () {
-        if (this.groupService.createGroup(this.imgSrc)) {
-            this.navCtrl.pop();
+        this.shareServiceProvider.showLoading();
+        if (this.password == this.password2) {
+            this.user = {
+                img: "",
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+            };
+            console.log(this.user);
+            this.authServiceProvider.signup(this.email, this.password).then(function (value) {
+                var uid = _this.authServiceProvider.getLoggedUID();
+                console.log("UID: " + uid);
+                _this.userServiceProvider.createUser(_this.user, uid).then(function () {
+                    _this.shareServiceProvider.hideLoading();
+                    _this.navCtrl.pop();
+                    _this.shareServiceProvider.showToast("Register success");
+                    //this.navCtrl.push('RegisterSelectCategoriesPage')
+                });
+            })
+                .catch(function (err) {
+                _this.shareServiceProvider.hideLoading();
+                _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!");
+            });
+        }
+        else {
+            this.shareServiceProvider.showAlert("Register Fail, please input the same password!");
         }
     };
-    GroupAddPage = __decorate([
+    RegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-group-add',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/group-add/group-add.html"*/'<!--\n  Generated template for the GroupAddPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Add New Group</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div>\n    <h2>Start a new group</h2>\n    <p>Find new people and do your thing together</p>\n  </div>\n  <ion-card>\n    <img *ngIf="imgSrc" [src]="imgSrc" />\n    \n      <ion-row padding>\n\n        <ion-label stacked class="label-text">Please Select Group Image</ion-label>\n        <ion-item>\n          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>\n        </ion-item>\n      </ion-row>\n\n   \n  </ion-card>\n    <ion-list>\n\n      <ion-item>\n        <ion-label stacked class="label-text">Group Name</ion-label>\n        <ion-input type="text"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label stacked class="label-text">Description</ion-label>\n        <ion-textarea></ion-textarea>\n      </ion-item>\n      <ion-item>\n        <ion-label stacked class="label-text">Interest Tags</ion-label>\n        <ion-input type="text" (click)="selectTags()"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <button ion-button full (click)="createGroup()">Create Group</button>\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/group-add/group-add.html"*/,
+            selector: 'page-register',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Register</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n      <img src="../../assets/imgs/wegather_logo.png">\n\n  <div>\n    <form #registerForm="ngForm">\n   \n        <ion-list inset>\n\n            <ion-item>\n             \n              <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>\n            </ion-item>\n          \n            <ion-item>\n            \n              <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="password" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n                \n                <ion-input [(ngModel)]="password2" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n          \n          </ion-list>\n\n           \n<br />\n      <ion-row>\n        <ion-col class="signup-col">\n\n          <button ion-button block color="skyblue" outline (click)="register()">Submit</button>\n\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
-    ], GroupAddPage);
-    return GroupAddPage;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _f || Object])
+    ], RegisterPage);
+    return RegisterPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
-//# sourceMappingURL=group-add.js.map
+//# sourceMappingURL=register.js.map
 
 /***/ })
 

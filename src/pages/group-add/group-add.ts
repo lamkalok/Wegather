@@ -53,10 +53,7 @@ export class GroupAddPage {
   }
 
   createGroup(){
-    if(this.groupService.createGroup(this.imgSrc)){
-      this.navCtrl.pop();
-    }
-    
+    this.groupService.createGroup(this.imgSrc)
   }
 
 }

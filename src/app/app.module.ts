@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
+import { LoginPage } from '../pages/login/login';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -20,6 +21,9 @@ import { GroupServiceProvider } from '../providers/group-service/group-service';
 import { AngularFirestoreModule, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Camera } from '@ionic-native/camera';
+import { ShareServiceProvider } from '../providers/share-service/share-service';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { UserServiceProvider } from '../providers/user-service/user-service';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -38,6 +42,7 @@ var firebaseConfig = {
     AboutPage,
     HomePage,
     ContactPage,
+    LoginPage,
     TabsPage
   ],
   imports: [
@@ -57,6 +62,7 @@ var firebaseConfig = {
     AboutPage,
     HomePage,
     ContactPage,
+    LoginPage,
     TabsPage
   ],
   providers: [
@@ -66,6 +72,9 @@ var firebaseConfig = {
     GroupServiceProvider,
     AngularFirestoreModule,
     Camera,
+    ShareServiceProvider,
+    AuthServiceProvider,
+    UserServiceProvider,
   ]
 })
 export class AppModule {}

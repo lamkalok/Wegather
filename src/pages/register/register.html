@@ -1,0 +1,64 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+      <img src="../../assets/imgs/wegather_logo.png">
+
+  <div>
+    <form #registerForm="ngForm">
+   
+        <ion-list inset>
+
+            <ion-item>
+             
+              <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>
+            </ion-item>
+          
+            <ion-item>
+            
+              <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+               
+                <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+               
+                <ion-input [(ngModel)]="password" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                
+                <ion-input [(ngModel)]="password2" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>
+            </ion-item>
+          
+          </ion-list>
+
+           
+<br />
+      <ion-row>
+        <ion-col class="signup-col">
+
+          <button ion-button block color="skyblue" outline (click)="register()">Submit</button>
+
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-content>

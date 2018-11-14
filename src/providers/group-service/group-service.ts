@@ -12,6 +12,8 @@ import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } fr
 @Injectable()
 export class GroupServiceProvider {
 
+  categories = [];
+
   constructor(
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
@@ -19,6 +21,24 @@ export class GroupServiceProvider {
     ) 
   {
     console.log('Hello GroupServiceProvider Provider');
+  }
+
+  async getCategories() {
+    //This code can getting all doc data inside a collection
+    
+    let cateDoc = this.fireStore.firestore.collection(`Groups`);
+    await cateDoc.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        //console.log(doc.id, "=>", doc.data());
+        
+        var cate = {
+          name: doc.id,
+          img: doc.data(),
+        }
+        this.categories.push(cate);
+      })
+    })
+    return this.categories;
   }
 
   getGroups(){
@@ -37,10 +57,12 @@ export class GroupServiceProvider {
 
   }
 
+
+
   createGroup(image: string){
     const picture = this.fireStorage.ref('Groups/myphoto.jpg');
     picture.putString(image, 'data_url').then(function(snapshot) {
-      return true;
+      
     });;
   }
 
