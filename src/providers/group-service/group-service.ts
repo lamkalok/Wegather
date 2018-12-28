@@ -3,6 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 
+
 /*
   Generated class for the GroupServiceProvider provider.
 
@@ -18,22 +19,26 @@ export class GroupServiceProvider {
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
     public fireStorage: AngularFireStorage,
-    ) 
-  {
+  ) {
     console.log('Hello GroupServiceProvider Provider');
   }
 
   async getCategories() {
     //This code can getting all doc data inside a collection
-    
-    let cateDoc = this.fireStore.firestore.collection(`Groups`);
+    console.log("GroupServiceProvider getCategories")
+    this.categories = [];
+    let cateDoc = this.fireStore.firestore.collection(`Categories`);
+
     await cateDoc.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        //console.log(doc.id, "=>", doc.data());
-        
+
+        const data = doc.data();
+
         var cate = {
           name: doc.id,
-          img: doc.data(),
+          img: data.img,
+          selected: false,
+          groups: data.groups,
         }
         this.categories.push(cate);
       })
@@ -41,7 +46,9 @@ export class GroupServiceProvider {
     return this.categories;
   }
 
-  getGroups(){
+
+
+  getGroups() {
     //return this.afd.list('/Groups').valueChanges();
     return this.fireStore.collection('Groups').valueChanges();
   }
@@ -53,16 +60,56 @@ export class GroupServiceProvider {
       return true;
   }*/
 
-  removeGroup(){
+  async getGroup(cateName: string, group: string) {
+    
+    // let groupDoc = this.fireStore.firestore.collection(`Groups`).get();
+
+    // groupDoc.then((querySnapshot)=>{
+    //   querySnapshot.forEach((doc) => {
+
+    //     const data = doc.data();
+    //     console.log(doc.id);
+    //   })
+    // });
+    var retrunGroup = null;
+    var docRef = this.fireStore.firestore.collection("Groups").doc(group);
+
+    await docRef.get().then(function (doc) {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+
+        const data = doc.data();
+
+        var group = {
+          id: doc.id,
+          img: data.img,
+          numberOfMembers: data.numberOfMembers,
+          joined: false
+        }
+
+        //console.log("group: " + group);
+
+        retrunGroup = group;
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
+    return retrunGroup;
+  }
+
+  removeGroup() {
 
   }
 
 
 
-  createGroup(image: string){
+  createGroup(image: string) {
     const picture = this.fireStorage.ref('Groups/myphoto.jpg');
-    picture.putString(image, 'data_url').then(function(snapshot) {
-      
+    picture.putString(image, 'data_url').then(function (snapshot) {
     });;
   }
 

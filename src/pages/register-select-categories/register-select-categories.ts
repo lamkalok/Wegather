@@ -15,6 +15,8 @@ import { GroupServiceProvider } from '../../providers/group-service/group-servic
 })
 export class RegisterSelectCategoriesPage {
   categories: any[];
+  count: number = 0;
+  isValid: boolean = false;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -22,11 +24,39 @@ export class RegisterSelectCategoriesPage {
   }
 
   ionViewDidLoad() {
+    this.categories = [];
+    this.count = 0;
+    this.isValid = false;
     console.log('ionViewDidLoad RegisterSelectCategoriesPage');
     this.groupServiceProvider.getCategories().then((list)=>{
       this.categories = list;
     });
-    
   }
+
+  ionViewWillLeave(){
+
+    console.log('ionViewWillLeave RegisterSelectCategoriesPage');
+
+  }
+
+  changeClass (cate) {
+    if(cate.selected){
+      this.count--;
+    }else{
+      this.count++;
+    }
+    cate.selected = !cate.selected;
+    if(this.count > 0){
+      this.isValid = true;
+    }else{
+      this.isValid = false;
+    }
+  }
+
+  nextPage(){
+    this.navCtrl.push('RegisterSelectGroupsPage', this.categories);
+  }
+
+
 
 }

@@ -1,0 +1,40 @@
+<!--
+  Generated template for the RegisterSelectGroupsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Groups</ion-title>
+    <ion-buttons end>
+      <button [disabled]="!isValid" ion-button icon-start (click)="nextPage()">
+        Next
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <p center text-center>Join groups to start gathering with other people based on your interest.</p>
+  <ion-list>
+    <ion-card *ngFor="let group of groups ; let i = index">
+      <img src="{{ group.img }}" />
+      <ion-card-content>
+        
+          <div>
+            {{ group.id }}
+            <ion-note>
+              {{ group.numberOfMembers }} members
+              <ion-icon name="add-circle" class="joinIcon" float-end *ngIf="!group.joined" (click)="joinGroup(group)"></ion-icon>
+              <span float-end *ngIf="group.joined" (click)="joinGroup(group)">Joined</span>
+            </ion-note>
+          </div>
+        
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

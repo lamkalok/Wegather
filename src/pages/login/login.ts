@@ -33,7 +33,7 @@ export class LoginPage {
 
   createAccount(){
     console.log('Register Page');
-    this.navCtrl.push('RegisterPage')
+    this.navCtrl.push('RegisterSelectCategoriesPage')
   }
 
   login(){
