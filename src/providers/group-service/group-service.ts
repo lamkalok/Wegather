@@ -46,8 +46,27 @@ export class GroupServiceProvider {
     return this.categories;
   }
 
-  getUserJoindedGroups(joinedGroups){
-    
+  async getUserJoindedGroups(joinedGroups) {
+    var groupData = [];
+    await this.fireStore.firestore.collection("Groups").get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        joinedGroups.forEach((element) => {
+          if (element == doc.id) {
+            var g = {
+              id: doc.id,
+              img: doc.data().img,
+              numberOfMembers: doc.data().numberOfMembers,
+              owner: doc.data().owner,
+              members: doc.data().members
+            }
+            groupData.push(g)
+          }
+        })
+      });
+    });
+    return groupData;
   }
 
   getAllGroups() {
@@ -122,16 +141,16 @@ export class GroupServiceProvider {
       groupRef.get().then(function (doc) {
         if (doc.exists) {
           console.log("Document data:", doc.data());
-  
+
           const data = doc.data();
-  
+
           var count = data.numberOfMembers + 1;
           //console.log("group: " + group);
 
           var array = data.members;
 
           array.push(user.uid);
-  
+
           groupRef.update({
             members: array,
             numberOfMembers: count

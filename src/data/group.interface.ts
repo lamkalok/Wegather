@@ -5,6 +5,6 @@ export interface Group {
     img: string,
     numberOfMembers: number,
     owner: string,
-    member: any []
+    members: any []
 }
 

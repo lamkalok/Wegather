@@ -52,5 +52,16 @@ export class LoginPage {
     });
   }
 
+  initLogin(){
+    this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+      console.log(this.authServiceProvider.isLoggedIn());
+      console.log(this.authServiceProvider.userData);
+      if (this.authServiceProvider.isLoggedIn()) {
+        this.navCtrl.setRoot(TabsPage);
+        this.navCtrl.popToRoot();
+      }
+    });
+  }
+
 
 }

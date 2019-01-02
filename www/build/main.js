@@ -102,6 +102,36 @@ var GroupServiceProvider = /** @class */ (function () {
         });
     };
     GroupServiceProvider.prototype.getUserJoindedGroups = function (joinedGroups) {
+        return __awaiter(this, void 0, void 0, function () {
+            var groupData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        groupData = [];
+                        return [4 /*yield*/, this.fireStore.firestore.collection("Groups").get().then(function (querySnapshot) {
+                                querySnapshot.forEach(function (doc) {
+                                    // doc.data() is never undefined for query doc snapshots
+                                    console.log(doc.id, " => ", doc.data());
+                                    joinedGroups.forEach(function (element) {
+                                        if (element == doc.id) {
+                                            var g = {
+                                                id: doc.id,
+                                                img: doc.data().img,
+                                                numberOfMembers: doc.data().numberOfMembers,
+                                                owner: doc.data().owner,
+                                                members: doc.data().members
+                                            };
+                                            groupData.push(g);
+                                        }
+                                    });
+                                });
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, groupData];
+                }
+            });
+        });
     };
     GroupServiceProvider.prototype.getAllGroups = function () {
         //return this.afd.list('/Groups').valueChanges();
@@ -365,6 +395,7 @@ var AuthServiceProvider = /** @class */ (function () {
     AuthServiceProvider.prototype.login = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
+            var error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(function (value) {
@@ -389,13 +420,23 @@ var AuthServiceProvider = /** @class */ (function () {
                         })];
                     case 1:
                         _a.sent();
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 5, , 6]);
+                        if (!(this.firebaseAuth.auth.currentUser != null)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.userServiceProvider.getUser(this.firebaseAuth.auth.currentUser.uid).then(function (u) {
-                                console.log(u);
+                                console.log("set user data: " + u);
                                 _this.userData = u;
                             })];
-                    case 2:
+                    case 3:
                         _a.sent();
-                        return [2 /*return*/, this.firebaseAuth.auth.currentUser];
+                        _a.label = 4;
+                    case 4: return [3 /*break*/, 6];
+                    case 5:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/, this.firebaseAuth.auth.currentUser];
                 }
             });
         });
@@ -677,9 +718,20 @@ var LoginPage = /** @class */ (function () {
             }
         });
     };
+    LoginPage.prototype.initLogin = function () {
+        var _this = this;
+        this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then(function (currentUser) {
+            console.log(_this.authServiceProvider.isLoggedIn());
+            console.log(_this.authServiceProvider.userData);
+            if (_this.authServiceProvider.isLoggedIn()) {
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
+                _this.navCtrl.popToRoot();
+            }
+        });
+    };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Welcome to Wegather</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <img src="../../assets/imgs/wegather_logo.png">\n  <div>\n    <form #registerForm="ngForm">\n      <ion-row>\n        <ion-col>\n         \n\n            <ion-item>\n              <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>\n            </ion-item>\n\n\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col class="signup-col">\n          <button ion-button block color="skyblue" outline (click)="login()">Login</button>\n          <button ion-button block color="skyblue" outline (click)="createAccount()">Create New Account</button>\n          <button ion-button block color="orange" clear (click)="resetPassword()">Reset Password</button>\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Welcome to Wegather</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <img src="../../assets/imgs/wegather_logo.png">\n  <div>\n    <form #registerForm="ngForm">\n      <ion-row>\n        <ion-col>\n         \n\n            <ion-item>\n              <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>\n            </ion-item>\n\n\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col class="signup-col">\n          <button ion-button block color="skyblue" outline (click)="login()">Login</button>\n          <button ion-button block color="skyblue" outline (click)="initLogin()">Init Login</button>\n          <button ion-button block color="skyblue" outline (click)="createAccount()">Create New Account</button>\n          <button ion-button block color="orange" clear (click)="resetPassword()">Reset Password</button>\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _e || Object])
     ], LoginPage);
@@ -829,21 +881,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.shareServiceProvider = shareServiceProvider;
         this.authServiceProvider = authServiceProvider;
         this.userServiceProvider = userServiceProvider;
         this.groupServiceProvider = groupServiceProvider;
-        this.groups = this.groupServiceProvider.getGroups();
+        this.groups = [];
+        this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then(function (data) {
+            console.log(data);
+            _this.groups = data;
+        });
         console.log(this.authServiceProvider.userData);
         this.authServiceProvider.currentUserInfo();
     }
+    HomePage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad HomePage');
+    };
     HomePage.prototype.createNewGroup = function () {
         this.navCtrl.push('GroupAddPage');
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar >\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding >\n  <div>\n    <h3 style="display: inline;">Your groups</h3>\n    <span class="greyFont" style="float:right" (click)="createNewGroup()">+ New group</span>\n  </div>\n\n  \n  <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >\n    <div class="scroll-item" *ngFor="let group of groups | async ; let i=index">\n        <ion-card >\n          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG6JbHwz2HliaogmpbC6jYzJLiQabUWFRCnIjaFG_yJejGAtQ_XQ">\n          <div class="card-title">{{group.name}}</div>\n          </ion-card>\n    </div>\n  </ion-scroll>\n\n<ion-item class="greyFont">See All</ion-item>\n<ion-card>\n    <ion-card-header>\n        Your Calendar\n      </ion-card-header>\n</ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar >\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding >\n  <div>\n    <h3 style="display: inline;">Your groups</h3>\n    <span class="greyFont" style="float:right" (click)="createNewGroup()">+ New group</span>\n  </div>\n\n  \n  <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >\n    <div class="scroll-item" *ngFor="let group of groups; let i=index">\n        <ion-card >\n          <img src="{{group.img}}">\n          <div class="card-title">{{group.id}}</div>\n          </ion-card>\n    </div>\n  </ion-scroll>\n\n<ion-item class="greyFont">See All</ion-item>\n<ion-card>\n    <ion-card-header>\n        Your Calendar\n      </ion-card-header>\n</ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _e || Object])
     ], HomePage);
@@ -1030,9 +1090,10 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=app.component.js.map

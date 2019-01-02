@@ -6,6 +6,7 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { GroupServiceProvider } from '../../providers/group-service/group-service';
 import { User } from "../../data/user.interface";
 import { Observable } from 'rxjs';
+import { initDomAdapter } from '@angular/platform-browser/src/browser';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  groups: Observable<any[]>;
+  groups = [];
   constructor(
     public navCtrl: NavController,
     public shareServiceProvider: ShareServiceProvider,
@@ -21,9 +22,16 @@ export class HomePage {
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider
     ) {
-    this.groups = this.groupServiceProvider.getUserJoinedGroups(this.authServiceProvider.userData.joinedGroups);
+    this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+      console.log(data);
+      this.groups = data;
+    });
     console.log(this.authServiceProvider.userData);
     this.authServiceProvider.currentUserInfo();
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad HomePage');
   }
 
   createNewGroup(){

@@ -58,13 +58,18 @@ export class AuthServiceProvider {
           default:
             this.shareServiceProvider.showAlert(err.message);
             break;
-        } 
+        }
       });
-
-    await this.userServiceProvider.getUser(this.firebaseAuth.auth.currentUser.uid).then((u)=>{
-        console.log(u);
-        this.userData = u
-    });
+    try {
+      if(this.firebaseAuth.auth.currentUser!=null){
+        await this.userServiceProvider.getUser(this.firebaseAuth.auth.currentUser.uid).then((u) => {
+          console.log("set user data: " + u);
+          this.userData = u
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
     return this.firebaseAuth.auth.currentUser;
   }
 
