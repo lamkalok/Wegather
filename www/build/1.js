@@ -71,27 +71,51 @@ var RegisterSelectGroupsPage = /** @class */ (function () {
         this.navParams = navParams;
         this.groupServiceProvider = groupServiceProvider;
         this.groups = [];
+        this.count = 0;
+        this.isValid = false;
         console.log(this.navParams);
         var data = this.navParams.data;
         if (data != null) {
-            data.forEach(function (element) {
-                if (element.selected) {
-                    console.log("selected cate: " + element.name);
-                    var groupNames = element.groups;
-                    groupNames.forEach(function (group) {
-                        groupServiceProvider.getGroup(element.name, group).then(function (g) {
-                            _this.groups.push(g);
-                        });
-                    });
-                }
-            });
+            try {
+                data.forEach(function (element) {
+                    if (element.selected) {
+                        console.log("selected cate: " + element.name);
+                        var groupNames = element.groups;
+                        if (groupNames != undefined) {
+                            groupNames.forEach(function (group) {
+                                groupServiceProvider.getGroup(element.name, group).then(function (g) {
+                                    _this.groups.push(g);
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
     }
     RegisterSelectGroupsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad RegisterSelectGroupsPage');
     };
     RegisterSelectGroupsPage.prototype.joinGroup = function (group) {
+        if (group.joined) {
+            this.count--;
+        }
+        else {
+            this.count++;
+        }
         group.joined = !group.joined;
+        if (this.count > 0) {
+            this.isValid = true;
+        }
+        else {
+            this.isValid = false;
+        }
+    };
+    RegisterSelectGroupsPage.prototype.nextPage = function () {
+        this.navCtrl.push('RegisterPage', this.groups);
     };
     RegisterSelectGroupsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({

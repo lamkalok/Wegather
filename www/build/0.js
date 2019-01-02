@@ -49,6 +49,7 @@ var RegisterPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tabs_tabs__ = __webpack_require__(305);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -64,6 +65,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the RegisterPage page.
  *
@@ -72,41 +74,70 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var RegisterPage = /** @class */ (function () {
     function RegisterPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.shareServiceProvider = shareServiceProvider;
         this.authServiceProvider = authServiceProvider;
         this.userServiceProvider = userServiceProvider;
         this.groupServiceProvider = groupServiceProvider;
+        this.joinedGroups = [];
+        //console.log(navParams.data);
+        try {
+            var groups = navParams.data;
+            groups.forEach(function (element) {
+                if (element.joined) {
+                    console.log(element);
+                    _this.joinedGroups.push(element.id);
+                }
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     RegisterPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad RegisterPage');
     };
     RegisterPage.prototype.register = function () {
         var _this = this;
-        this.shareServiceProvider.showLoading();
+        var regex = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})");
         if (this.password == this.password2) {
-            this.user = {
-                img: "",
-                name: this.name,
-                email: this.email,
-                phone: this.phone,
-            };
-            console.log(this.user);
-            this.authServiceProvider.signup(this.email, this.password).then(function (value) {
-                var uid = _this.authServiceProvider.getLoggedUID();
-                console.log("UID: " + uid);
-                _this.userServiceProvider.createUser(_this.user, uid).then(function () {
+            if (this.password.match(regex)) {
+                this.shareServiceProvider.showLoading();
+                this.authServiceProvider.signup(this.email, this.password).then(function (value) {
+                    var Uid = _this.authServiceProvider.getLoggedUID();
+                    _this.user = {
+                        uid: Uid,
+                        img: "",
+                        name: _this.name,
+                        email: _this.email,
+                        phone: _this.phone,
+                        joinedGroups: _this.joinedGroups,
+                    };
+                    console.log("UID: " + Uid);
+                    _this.userServiceProvider.createUser(_this.user, Uid).then(function () {
+                        _this.groupServiceProvider.addMemberToGroup(_this.user, _this.joinedGroups).then(function () {
+                            _this.userServiceProvider.getUser(_this.authServiceProvider.firebaseAuth.auth.currentUser.uid).then(function (u) {
+                                _this.authServiceProvider.userData = u;
+                                _this.shareServiceProvider.hideLoading();
+                                //this.navCtrl.pop();
+                                _this.shareServiceProvider.showToast("Register success");
+                                //this.navCtrl.push('RegisterSelectCategoriesPage')
+                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__tabs_tabs__["a" /* TabsPage */]);
+                                _this.navCtrl.popToRoot();
+                            });
+                        });
+                    });
+                })
+                    .catch(function (err) {
                     _this.shareServiceProvider.hideLoading();
-                    _this.navCtrl.pop();
-                    _this.shareServiceProvider.showToast("Register success");
-                    //this.navCtrl.push('RegisterSelectCategoriesPage')
+                    _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!");
                 });
-            })
-                .catch(function (err) {
-                _this.shareServiceProvider.hideLoading();
-                _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!");
-            });
+            }
+            else {
+                this.shareServiceProvider.showAlert("Register Fail, password should longer than 8 length and contains number and letter !");
+            }
         }
         else {
             this.shareServiceProvider.showAlert("Register Fail, please input the same password!");
@@ -116,14 +147,10 @@ var RegisterPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-register',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Register</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n      <img src="../../assets/imgs/wegather_logo.png">\n\n  <div>\n    <form #registerForm="ngForm">\n   \n        <ion-list inset>\n\n            <ion-item>\n             \n              <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>\n            </ion-item>\n          \n            <ion-item>\n            \n              <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="password" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n                \n                <ion-input [(ngModel)]="password2" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n          \n          </ion-list>\n\n           \n<br />\n      <ion-row>\n        <ion-col class="signup-col">\n\n          <button ion-button block color="skyblue" outline (click)="register()">Submit</button>\n\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _f || Object])
     ], RegisterPage);
     return RegisterPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=register.js.map

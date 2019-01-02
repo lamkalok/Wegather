@@ -31,7 +31,8 @@ export class UserServiceProvider {
       img: user.img,
       name: user.name,
       email: user.email,
-      phone: user.phone
+      phone: user.phone,
+      joinedGroups: user.joinedGroups
     })
       .then(function () {
         console.log("User successfully Created");
@@ -39,6 +40,23 @@ export class UserServiceProvider {
       .catch(function (error) {
         console.error("Error create user: ", error);
       });
+  }
+
+  async getUser(uid: string){
+    var uData: any;
+    var userRef = this.fireStore.firestore.collection("Users").doc(uid);
+    await userRef.get().then((doc)=>{
+      const data = doc.data();
+      var u = {
+        email: doc.data().email,
+        img: doc.data().img,
+        joinedGroups: doc.data().joinedGroups,
+        name: doc.data().name,
+        phone: doc.data().phone
+      }
+      uData = u;
+    });
+    return uData;
   }
 
 }

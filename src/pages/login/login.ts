@@ -17,29 +17,40 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
 
+  email: string
+  password: string
+
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public shareServiceProvider: ShareServiceProvider,
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
-    ) {
+  ) {
     
+    this.authServiceProvider.logout();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  createAccount(){
+  createAccount() {
     console.log('Register Page');
     this.navCtrl.push('RegisterSelectCategoriesPage')
   }
 
-  login(){
-    this.navCtrl.setRoot(TabsPage);
-    this.navCtrl.popToRoot();
+  login() {
+    this.authServiceProvider.login(this.email, this.password).then((currentUser)=>{
+      console.log(this.authServiceProvider.isLoggedIn());
+      console.log(this.authServiceProvider.userData);
+      if (this.authServiceProvider.isLoggedIn()) {
+        this.navCtrl.setRoot(TabsPage);
+        this.navCtrl.popToRoot();
+      }
+      
+    });
   }
-  
+
 
 }

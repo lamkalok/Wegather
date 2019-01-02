@@ -16,8 +16,10 @@ import { GroupServiceProvider } from '../../providers/group-service/group-servic
 })
 export class RegisterSelectGroupsPage {
 
-  selectedCategories: any[];
+  
   groups = [];
+  count: number = 0;
+  isValid: boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -27,17 +29,24 @@ export class RegisterSelectGroupsPage {
     console.log(this.navParams);
     var data = this.navParams.data;
     if(data != null){
-      data.forEach(element => {
-        if(element.selected){
-          console.log("selected cate: " + element.name);
-          let groupNames = element.groups;
-          groupNames.forEach(group => {
-            groupServiceProvider.getGroup(element.name, group).then((g)=>{
-              this.groups.push(g);
-            });
-          });
-        }
-      });
+      try {
+        data.forEach(element => {
+          if(element.selected){
+            console.log("selected cate: " + element.name);
+            let groupNames = element.groups;
+            if(groupNames!=undefined){
+              groupNames.forEach(group => {
+                groupServiceProvider.getGroup(element.name, group).then((g)=>{
+                  this.groups.push(g);
+                });
+              });
+            }
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      
     }
   }
 
@@ -46,7 +55,21 @@ export class RegisterSelectGroupsPage {
   }
 
   joinGroup(group){
+    if(group.joined){
+      this.count--;
+    }else{
+      this.count++;
+    }
     group.joined = !group.joined;
+    if(this.count > 0){
+      this.isValid = true;
+    }else{
+      this.isValid = false;
+    }
+  }
+
+  nextPage(){
+    this.navCtrl.push('RegisterPage', this.groups);
   }
 
 }

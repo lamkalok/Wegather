@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
-
+import * as fs from 'firebase/firestore';
 
 /*
   Generated class for the GroupServiceProvider provider.
@@ -46,9 +46,11 @@ export class GroupServiceProvider {
     return this.categories;
   }
 
+  getUserJoindedGroups(joinedGroups){
+    
+  }
 
-
-  getGroups() {
+  getAllGroups() {
     //return this.afd.list('/Groups').valueChanges();
     return this.fireStore.collection('Groups').valueChanges();
   }
@@ -61,7 +63,7 @@ export class GroupServiceProvider {
   }*/
 
   async getGroup(cateName: string, group: string) {
-    
+
     // let groupDoc = this.fireStore.firestore.collection(`Groups`).get();
 
     // groupDoc.then((querySnapshot)=>{
@@ -111,6 +113,38 @@ export class GroupServiceProvider {
     const picture = this.fireStorage.ref('Groups/myphoto.jpg');
     picture.putString(image, 'data_url').then(function (snapshot) {
     });;
+  }
+
+  async addMemberToGroup(user, joinedGroups) {
+    await joinedGroups.forEach(id => {
+      var groupRef = this.fireStore.firestore.collection("Groups").doc(id);
+
+      groupRef.get().then(function (doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+  
+          const data = doc.data();
+  
+          var count = data.numberOfMembers + 1;
+          //console.log("group: " + group);
+
+          var array = data.members;
+
+          array.push(user.uid);
+  
+          groupRef.update({
+            members: array,
+            numberOfMembers: count
+          });
+
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+    });
   }
 
 }
