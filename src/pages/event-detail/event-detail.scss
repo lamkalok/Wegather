@@ -1,0 +1,16 @@
+page-event-detail {
+
+    .bigIcon {
+        font-size: 4rem;
+    }
+
+    .avatar_holder{
+        ion-avatar,
+        ion-avatar>img {
+            display: inline;
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+        }
+    }
+}

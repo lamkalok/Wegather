@@ -57,9 +57,12 @@ export class GroupServiceProvider {
             var g = {
               id: doc.id,
               img: doc.data().img,
-              numberOfMembers: doc.data().numberOfMembers,
+              numberOfMembers: doc.data().members.length,
               owner: doc.data().owner,
-              members: doc.data().members
+              members: doc.data().members,
+              isPublic: doc.data().isPublic,
+              shortDescription: doc.data().shortDescription,
+              organizers: doc.data().organizers,
             }
             groupData.push(g)
           }
@@ -104,7 +107,7 @@ export class GroupServiceProvider {
         var group = {
           id: doc.id,
           img: data.img,
-          numberOfMembers: data.numberOfMembers,
+          numberOfMembers: data.members.length,
           joined: false
         }
 
@@ -144,7 +147,7 @@ export class GroupServiceProvider {
 
           const data = doc.data();
 
-          var count = data.numberOfMembers + 1;
+          
           //console.log("group: " + group);
 
           var array = data.members;
@@ -153,7 +156,6 @@ export class GroupServiceProvider {
 
           groupRef.update({
             members: array,
-            numberOfMembers: count
           });
 
         } else {
@@ -165,5 +167,7 @@ export class GroupServiceProvider {
       });
     });
   }
+
+  
 
 }

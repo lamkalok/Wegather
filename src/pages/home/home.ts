@@ -20,14 +20,24 @@ export class HomePage {
     public shareServiceProvider: ShareServiceProvider,
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
-    public groupServiceProvider: GroupServiceProvider
+    public groupServiceProvider: GroupServiceProvider,
+    
     ) {
-    this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-      console.log(data);
-      this.groups = data;
-    });
-    console.log(this.authServiceProvider.userData);
-    this.authServiceProvider.currentUserInfo();
+      // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+      //   console.log(this.authServiceProvider.isLoggedIn());
+      //   console.log(this.authServiceProvider.userData);
+      //   this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+      //     console.log(data);
+      //     this.groups = data;
+      //   });
+      //   console.log(this.authServiceProvider.userData);
+      //   this.authServiceProvider.currentUserInfo();
+      // });
+
+      this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+        console.log(data);
+        this.groups = data;
+      });
   }
 
   ionViewDidLoad() {
@@ -36,6 +46,14 @@ export class HomePage {
 
   createNewGroup(){
     this.navCtrl.push('GroupAddPage');
+  }
+
+  groupDetail(group){
+    this.navCtrl.push('GroupDetailPage', group);
+  }
+
+  eventDetail(event){
+    this.navCtrl.push('EventDetailPage', event);
   }
 
   

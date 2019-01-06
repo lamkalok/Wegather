@@ -35869,8 +35869,16 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Brands';
 }
 
+.small {
+  font-size: 1rem;
+}
+
 .greyFont {
   color: #6E6E6E;
+}
+
+.cover {
+  width: 100%;
 }
 
 .user:before {
@@ -35885,8 +35893,61 @@ readers do not read off random characters that represent icons */
   content: "\f099";
 }
 
+.topLine {
+  border-top-style: solid;
+  border-width: 0.1px;
+  border-color: #EFEFEF;
+}
+
+.bottomLine {
+  border-bottom-style: solid;
+  border-width: 0.1px;
+  border-color: #EFEFEF;
+}
+
+page-event-detail .bigIcon {
+  font-size: 4rem;
+}
+
+page-event-detail .avatar_holder ion-avatar,
+page-event-detail .avatar_holder ion-avatar > img {
+  display: inline;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+}
+
 page-group-add .label-text {
   font-size: 1.0em !important;
+}
+
+page-group-detail .organizer {
+  padding-top: 2rem;
+}
+
+page-group-detail .organizer ion-avatar,
+page-group-detail .organizer ion-avatar > img {
+  display: inline;
+  border-radius: 50%;
+  height: 6rem;
+  width: 6rem;
+}
+
+page-group-detail ion-scroll[scrollX] .scroll-item {
+  display: inline-block;
+}
+
+page-group-detail ion-scroll[scrollX] ion-card {
+  width: 20rem;
+  height: 17rem;
+}
+
+page-group-detail .avatar_holder ion-avatar,
+page-group-detail .avatar_holder ion-avatar > img {
+  display: inline;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
 }
 
 page-home ion-scroll[scrollX] .scroll-item {
@@ -35896,12 +35957,21 @@ page-home ion-scroll[scrollX] .scroll-item {
 page-home .card-background-page ion-card {
   position: relative;
   text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+page-home .card-background-page ion-card img {
+  height: 150px;
+  width: auto;
+  -webkit-filter: brightness(80%);
+  filter: brightness(80%);
 }
 
 page-home .card-background-page .card-title {
   position: absolute;
   top: 36%;
-  font-size: 2.0em;
+  font-size: 1.5em;
   width: 100%;
   font-weight: bold;
   color: #fff;
@@ -35913,13 +35983,6 @@ page-home .card-background-page .card-subtitle {
   top: 52%;
   width: 100%;
   color: #fff;
-}
-
-page-home img {
-  height: 200px;
-  width: 100%;
-  -o-object-fit: contain;
-  object-fit: contain;
 }
 
 page-register-select-categories .card, page-register-select-categories .card-md, page-register-select-categories .card-ios {

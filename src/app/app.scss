@@ -19,9 +19,17 @@
 @import "../assets/scss/solid.scss";
 @import "../assets/scss/brands.scss";
 
+.small {
+    font-size: 1rem;
+}
 
 .greyFont {
     color: #6E6E6E;
+}
+
+
+.cover{
+    width: 100%;
 }
 
 .user {
@@ -51,4 +59,16 @@
     &:before {
         content: fa-content($fa-var-twitter);
     }
+}
+
+.topLine {
+    border-top-style: solid;
+    border-width: 0.1px;
+    border-color: #EFEFEF;
+}
+
+.bottomLine {
+    border-bottom-style: solid;
+    border-width: 0.1px;
+    border-color: #EFEFEF;
 }

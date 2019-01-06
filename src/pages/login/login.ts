@@ -41,15 +41,20 @@ export class LoginPage {
   }
 
   login() {
-    this.authServiceProvider.login(this.email, this.password).then((currentUser)=>{
-      console.log(this.authServiceProvider.isLoggedIn());
-      console.log(this.authServiceProvider.userData);
-      if (this.authServiceProvider.isLoggedIn()) {
-        this.navCtrl.setRoot(TabsPage);
-        this.navCtrl.popToRoot();
-      }
-      
-    });
+    if(this.email == null || this.password == null){
+      this.shareServiceProvider.showAlert("Please enter email and password");
+    } else {
+      this.authServiceProvider.login(this.email, this.password).then((currentUser)=>{
+        console.log(this.authServiceProvider.isLoggedIn());
+        console.log(this.authServiceProvider.userData);
+        if (this.authServiceProvider.isLoggedIn()) {
+          this.navCtrl.setRoot(TabsPage);
+          this.navCtrl.popToRoot();
+        }
+        
+      });
+    }
+    
   }
 
   initLogin(){
