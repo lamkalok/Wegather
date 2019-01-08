@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { Observable } from 'rxjs';
 import * as fs from 'firebase/firestore';
 
 /*
@@ -12,13 +14,15 @@ import * as fs from 'firebase/firestore';
 */
 @Injectable()
 export class GroupServiceProvider {
-
+  userJoinedGroup:Observable<any>;
+  groupObserver:Observable<any>;
   categories = [];
 
   constructor(
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
     public fireStorage: AngularFireStorage,
+    public authServiceProvider: AuthServiceProvider,
   ) {
     console.log('Hello GroupServiceProvider Provider');
   }
@@ -45,6 +49,31 @@ export class GroupServiceProvider {
     })
     return this.categories;
   }
+
+  async getUserJoinedGroupsRealTime(groupID){
+    
+    // var uid = this.authServiceProvider.getLoggedUID();
+    // this.userJoinedGroup = this.fireStore.doc('Users/' + uid ).valueChanges();
+    // await this.userJoinedGroup.subscribe(evt => {
+    //   console.log(evt.joinedGroups);
+    //   evt.joinedGroups.forEach(groupID => {
+    //     this.groupObserver = this.fireStore.doc('Groups/' + groupID ).snapshotChanges();
+    //     this.groupObserver.subscribe(groupEvt=>{
+    //       console.log(groupEvt.payload.data());
+    //       console.log(groupEvt.payload.id);
+          
+    //     })
+    //   });
+    // });
+
+    // this.groupObserver = this.fireStore.doc('Groups/' + "新手媽媽谷" ).snapshotChanges();
+    
+    // return this.groupObserver;
+
+    return await this.fireStore.doc('Groups/' + groupID ).snapshotChanges();
+
+  }
+
 
   async getUserJoindedGroups(joinedGroups) {
     var groupData = [];
@@ -89,7 +118,7 @@ export class GroupServiceProvider {
         group.eventsSnapshot.forEach(element => {
           element.date_from = element.date_from.toDate();
           
-          console.log(element.date_from);
+          //console.log(element.date_from);
         });
       } catch (error) {
         
@@ -124,23 +153,33 @@ export class GroupServiceProvider {
     // });
     var retrunGroup = null;
     var docRef = this.fireStore.firestore.collection("Groups").doc(group);
-
+    var auth = this.authServiceProvider;
     await docRef.get().then(function (doc) {
       if (doc.exists) {
-        console.log("Document data:", doc.data());
+        //console.log("Document data:", doc.data());
 
         const data = doc.data();
 
-        var group = {
+        var group = null;
+
+        group = {
           id: doc.id,
           img: data.img,
           numberOfMembers: data.members.length,
+          shortDescription: data.shortDescription,
           joined: false
+        }    
+
+        // logined user get new group 
+        if(auth.isLoggedIn()){
+          if(!data.members.includes(auth.getLoggedUID())){
+            retrunGroup = group;
+          } else {
+            retrunGroup = null;
+          }
+        } else { // register user 
+          retrunGroup = group;
         }
-
-        //console.log("group: " + group);
-
-        retrunGroup = group;
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -169,8 +208,9 @@ export class GroupServiceProvider {
     });;
   }
 
-  async addMemberToGroup(user, joinedGroups) {
+  async addMemberToGroup(uid, joinedGroups:Array<any>) {
     await joinedGroups.forEach(id => {
+      var userRef = this.fireStore.firestore.collection("Users").doc(uid);
       var groupRef = this.fireStore.firestore.collection("Groups").doc(id);
 
       groupRef.get().then(function (doc) {
@@ -184,11 +224,11 @@ export class GroupServiceProvider {
 
           var array = data.members;
 
-          array.push(user.uid);
+          array.push(uid);
 
           groupRef.update({
             members: array,
-          });
+          })
 
         } else {
           // doc.data() will be undefined in this case

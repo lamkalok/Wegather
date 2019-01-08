@@ -3,6 +3,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { User } from "../../data/user.interface";
+import { AuthServiceProvider } from '../auth-service/auth-service';
+
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -13,20 +15,20 @@ import { User } from "../../data/user.interface";
 @Injectable()
 export class UserServiceProvider {
   usersCollection: any;
-  user:User;
+  user: User;
   constructor(
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
     public fireStorage: AngularFireStorage,
   ) {
     console.log('Hello UserServiceProvider Provider');
-   
+
   }
 
   async createUser(user: User, uid: string) {
 
     this.user = user;
-    
+
     this.fireStore.collection('Users').doc(uid).set({
       img: user.img,
       name: user.name,
@@ -42,10 +44,10 @@ export class UserServiceProvider {
       });
   }
 
-  async getUser(uid: string){
+  async getUser(uid: string) {
     var uData: any;
     var userRef = this.fireStore.firestore.collection("Users").doc(uid);
-    await userRef.get().then((doc)=>{
+    await userRef.get().then((doc) => {
       const data = doc.data();
       var u = {
         email: doc.data().email,
@@ -57,6 +59,33 @@ export class UserServiceProvider {
       uData = u;
     });
     return uData;
+  }
+
+  async getUserJoinedGroupRealTime(uid){
+    return await this.fireStore.doc('Users/' + uid ).snapshotChanges()
+  }
+
+  async addGroupToUser(uid: string, joinedGroups: Array<any>, auth: AuthServiceProvider) {
+    
+      
+      var userRef = this.fireStore.firestore.collection("Users").doc(uid);
+      userRef.get().then((doc) => {
+        const data = doc.data();
+        var array = data.joinedGroups;
+        var processed = 0;
+        joinedGroups.forEach(groupID => {
+          auth.userData.joinedGroups.push(groupID);
+          array.push(groupID);
+          processed++;
+          if(processed==joinedGroups.length){
+            userRef.update({
+              joinedGroups: array,
+            })
+            
+          }
+        });
+      })
+    
   }
 
 }

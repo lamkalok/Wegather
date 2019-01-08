@@ -82,18 +82,23 @@ export class EventDetailPage {
   }
 
   goEvent() {
-    console.log("goEvent");
-    this.eventServiceProvider.addMemeberToEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
-      this.joinedThisEvent = true;
-    });
-    
+    if(this.shareServiceProvider.showConfirm("Join event", "Are sure to join this event?")){
+      console.log("goEvent");
+      this.eventServiceProvider.addMemeberToEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
+        this.joinedThisEvent = true;
+        this.shareServiceProvider.showToast("Join event successfully");
+      });
+    }
   }
 
   quitEvent() {
-    console.log("quitEvent");
-    this.eventServiceProvider.removeMemberFromEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
-      this.joinedThisEvent = false;
-    });
+    if(this.shareServiceProvider.showConfirm("Quit event", "Are sure to quit this event?")){
+      console.log("quitEvent");
+      this.eventServiceProvider.removeMemberFromEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
+        this.joinedThisEvent = false;
+        this.shareServiceProvider.showToast("Quit event successfully");
+      });
+    }
   }
 
 }

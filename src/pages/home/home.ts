@@ -14,6 +14,7 @@ import { initDomAdapter } from '@angular/platform-browser/src/browser';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  groupsObs: Observable<any>[];
   groups = [];
   constructor(
     public navCtrl: NavController,
@@ -21,40 +22,91 @@ export class HomePage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
-    
-    ) {
-      this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
-        console.log(this.authServiceProvider.isLoggedIn());
-        console.log(this.authServiceProvider.userData);
-        this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-          console.log(data);
-          this.groups = data;
-        });
-        console.log(this.authServiceProvider.userData);
-        this.authServiceProvider.currentUserInfo();
-      });
 
-      // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-      //   console.log(data);
-      //   this.groups = data;
-      // });
+  ) {
+    // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+    //   console.log(this.authServiceProvider.isLoggedIn());
+    //   console.log(this.authServiceProvider.userData);
+    //   this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+    //     console.log(data);
+    //     this.groups = data;
+    //   });
+    //   console.log(this.authServiceProvider.userData);
+    //   this.authServiceProvider.currentUserInfo();
+    // });
+
+
+    try {
+
+      this.userServiceProvider.getUserJoinedGroupRealTime(this.authServiceProvider.getLoggedUID()).then((ubs) => {
+        ubs.subscribe(uwt => {
+
+          var userData: any = uwt.payload.data();
+          console.log(userData.joinedGroups);
+          userData.joinedGroups.forEach(groupID => {
+            this.groups = [];
+            console.log(groupID);
+            this.groupServiceProvider.getUserJoinedGroupsRealTime(groupID).then((gbs) => {
+              gbs.subscribe(gwt => {
+                console.log(gwt.payload.data());
+                var g: any = gwt.payload.data();
+                g.id = gwt.payload.id;
+                if (g.eventsSnapshot != undefined) {
+                  if (g.eventsSnapshot.length > 0) {
+                    g.eventsSnapshot.forEach(eventsSp => {
+                      eventsSp.date_from = eventsSp.date_from.toDate();
+                    });
+                  }
+                }
+
+                var found = false;
+                for (var i = 0; i < this.groups.length; i++) {
+                  if (this.groups[i].id == g.id) {
+                    found = true;
+                    break;
+                  }
+                }
+                if(!found){
+                  this.groups.push(g);
+                }
+                
+              })
+            });
+          });
+
+
+        })
+      });
+    } catch (error) {
+
+    }
+
+    /** Old method -> not real time */
+    // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+    //   //console.log(data);
+    //   this.groups = data;
+    // });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
 
-  createNewGroup(){
+  createNewGroup() {
     this.navCtrl.push('GroupAddPage');
   }
 
-  groupDetail(group){
+  joinNewGroup() {
+    this.navCtrl.push('RegisterSelectCategoriesPage');
+  }
+
+  groupDetail(group) {
     this.navCtrl.push('GroupDetailPage', group);
   }
 
-  eventDetail(event){
+  eventDetail(event) {
     this.navCtrl.push('EventDetailPage', event);
   }
 
-  
+
 }

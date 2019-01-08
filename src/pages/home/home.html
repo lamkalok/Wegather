@@ -7,7 +7,7 @@
 <ion-content padding >
   <div>
     <h3 style="display: inline;">Your groups</h3>
-    <span class="greyFont" style="float:right; padding-top:10px;" (click)="createNewGroup()">+ New group</span>
+    <span class="greyFont" style="float:right; padding-top:10px;" (click)="joinNewGroup()">+ Join new group</span>
   </div>
 
   
@@ -31,9 +31,9 @@
             </button>
           </ion-fab>
         </div>
-        <ion-item padding-top>
-          <h2>{{event.id}}</h2>
-          <p>{{event.description}}</p>
+        <ion-item>
+          <h2 padding-top>{{event.id}}</h2>
+          <p text-wrap>{{event.description}}</p>
         </ion-item>
        
         <ion-item actions>

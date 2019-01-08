@@ -52,36 +52,16 @@
 
   <div class="events" >
       <h3 padding-horizontal>Events<span float-right style="color:red ; font-size:14px; ">See all</span></h3>
-      <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" no-padding >
-          <div class="scroll-item" >
-              <ion-card>
-                  <ion-card-header>
-                    Header
+      <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" no-padding *ngIf="group.eventsSnapshot?.length > 0">
+          <div class="scroll-item" *ngFor="let event of group.eventsSnapshot">
+              <ion-card (click)="eventDetail(event)">
+                  <ion-card-header text-wrap>
+                    {{event.id}}
                   </ion-card-header>
                   <ion-card-content text-wrap>
-                    The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+                    <p>{{event.description | slice:0 : 40}}...</p>
                   </ion-card-content>
-                </ion-card>
-          </div>
-          
-          <div class="scroll-item" >
-              <ion-card>
-                  <ion-card-header>
-                    Header
-                  </ion-card-header>
-                  <ion-card-content text-wrap>
-                    The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
-                  </ion-card-content>
-                </ion-card>
-          </div>
-          <div class="scroll-item" >
-              <ion-card>
-                  <ion-card-header>
-                    Header
-                  </ion-card-header>
-                  <ion-card-content text-wrap>
-                    The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
-                  </ion-card-content>
+                  <ion-note float-right padding >{{event.date_from | date }}</ion-note>
                 </ion-card>
           </div>
       </ion-scroll>

@@ -75,7 +75,7 @@ export class RegisterPage {
 
           this.user = {
             uid: Uid,
-            img: "",
+            img: "https://firebasestorage.googleapis.com/v0/b/wegather-dcb52.appspot.com/o/Users%2Fuser.jpg?alt=media&token=c744108d-36a8-493d-ada4-de5f859118df",
             name: this.name,
             email: this.email,
             phone: this.phone,
@@ -83,26 +83,27 @@ export class RegisterPage {
           }
 
           console.log("UID: " + Uid);
-          this.userServiceProvider.createUser(this.user, Uid).then(() => {
-            this.groupServiceProvider.addMemberToGroup(this.user, this.joinedGroups).then(() => {
 
-              this.userServiceProvider.getUser(this.authServiceProvider.firebaseAuth.auth.currentUser.uid).then((u) => {
-                this.authServiceProvider.userData = u;
+          try {
+            this.userServiceProvider.createUser(this.user, Uid).then(() => {
+              this.groupServiceProvider.addMemberToGroup(Uid, this.joinedGroups).then(() => {
+                this.authServiceProvider.userData = this.user;
                 this.shareServiceProvider.hideLoading();
                 //this.navCtrl.pop();
                 this.shareServiceProvider.showToast("Register success")
                 //this.navCtrl.push('RegisterSelectCategoriesPage')
                 this.navCtrl.setRoot(TabsPage);
                 this.navCtrl.popToRoot();
-
               });
-
             });
-          });
+          } catch (error) {
+            this.shareServiceProvider.hideLoading();
+            this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + error);
+          }
         })
           .catch(err => {
             this.shareServiceProvider.hideLoading();
-            this.shareServiceProvider.showAlert("Register Fail, Something went wrong!");
+            this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + err);
           });
 
       } else {

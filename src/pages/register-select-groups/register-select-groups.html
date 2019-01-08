@@ -27,6 +27,7 @@
         
           <div>
             {{ group.id }}
+            <p>{{group.shortDescription}}</p>
             <ion-note>
               {{ group.numberOfMembers }} members
               <ion-icon name="add-circle" class="joinIcon" float-end *ngIf="!group.joined" (click)="joinGroup(group)"></ion-icon>

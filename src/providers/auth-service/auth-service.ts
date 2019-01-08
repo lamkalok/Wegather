@@ -22,6 +22,7 @@ export class AuthServiceProvider {
     public shareServiceProvider: ShareServiceProvider,
     public userServiceProvider: UserServiceProvider, ) {
     console.log('Hello AuthServiceProvider Provider');
+    
   }
 
   signup(email: string, password: string) {

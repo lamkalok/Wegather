@@ -22,6 +22,7 @@ export class GroupDetailPage {
 
   membersInGroup = [];
   organizers = [];
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,10 +41,12 @@ export class GroupDetailPage {
         })
       });
 
-      this.group.members.forEach(member => {
 
+
+      this.group.members.forEach(member => {
         this.userServiceProvider.getUser(member).then((memberData) => {
           this.membersInGroup.push(memberData);
+          console.log(memberData);
         })
       })
     } catch (error) {
@@ -84,6 +87,10 @@ export class GroupDetailPage {
     });
 
     actionSheet.present();
+  }
+
+  eventDetail(eventsSnapshot){
+    this.navCtrl.push("EventDetailPage", eventsSnapshot)
   }
 
 }

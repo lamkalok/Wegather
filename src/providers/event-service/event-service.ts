@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as fs from 'firebase/firestore';
 import { Observable } from 'rxjs';
 /*
@@ -17,6 +19,7 @@ export class EventServiceProvider {
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
     public fireStorage: AngularFireStorage,
+    public authServiceProvider: AuthServiceProvider,
     ) {
     console.log('Hello EventServiceProvider Provider');
   }

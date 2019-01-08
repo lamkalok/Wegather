@@ -56,5 +56,30 @@ export class ShareServiceProvider {
     });
     alert.present();
   }
+
+  showConfirm(msg: string, title: string) : boolean {
+    const confirm = this.alertCtrl.create({
+      title: title,
+      message: msg,
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagree clicked');
+            return false;
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            console.log('Agree clicked');
+            return true;
+          }
+        }
+      ]
+    });
+    confirm.present();
+    return false;
+  }
   
 }
