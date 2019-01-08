@@ -541,16 +541,16 @@ var HomePage = /** @class */ (function () {
                                         });
                                     }
                                 }
-                                var found = false;
+                                var updated = false;
                                 for (var i = 0; i < _this.groups.length; i++) {
                                     if (_this.groups[i].id == g.id) {
-                                        found = true;
+                                        _this.groups.splice(i, 1, g);
+                                        updated = true;
                                         break;
                                     }
                                 }
-                                if (!found) {
+                                if (!updated)
                                     _this.groups.push(g);
-                                }
                             });
                         });
                     });
@@ -582,7 +582,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar >\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding >\n  <div>\n    <h3 style="display: inline;">Your groups</h3>\n    <span class="greyFont" style="float:right; padding-top:10px;" (click)="joinNewGroup()">+ Join new group</span>\n  </div>\n\n  \n  <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >\n    <div class="scroll-item" *ngFor="let group of groups; let i=index">\n        <ion-card (click)="groupDetail(group)">\n          <img src="{{group.img}}">\n          <div class="card-title">{{group.id}}</div>\n          </ion-card>\n    </div>\n  </ion-scroll>\n  \n  <h3>Upcoming Events</h3>\n<div *ngFor="let group of groups">\n    <ion-card class="adv-map" *ngFor="let event of group.eventsSnapshot">\n        <div style="position: relative" (click)="eventDetail(event)">\n          <img src="{{event.img}}">\n          <ion-fab right top>\n            <button ion-fab class="fab-map">\n              <ion-icon name=\'pin\'></ion-icon>\n            </button>\n          </ion-fab>\n        </div>\n        <ion-item>\n          <h2 padding-top>{{event.id}}</h2>\n          <p text-wrap>{{event.description}}</p>\n        </ion-item>\n       \n        <ion-item actions>\n          <ion-note item-start class="item-bold">{{event.date_from | date: \'fullDate\'}}</ion-note>\n          \n        </ion-item>\n      </ion-card>\n</div>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar >\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding >\n  <div>\n    <h3 style="display: inline;">Your groups</h3>\n    <span class="greyFont" style="float:right; padding-top:10px;" (click)="joinNewGroup()">+ Join new group</span>\n  </div>\n\n  \n  <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >\n    <div class="scroll-item" *ngFor="let group of groups">\n        <ion-card (click)="groupDetail(group)">\n          <img src="{{group.img}}">\n          <div class="card-title">{{group.id}}</div>\n          </ion-card>\n    </div>\n  </ion-scroll>\n  \n  <h3>Upcoming Events</h3>\n<div *ngFor="let group of groups">\n    <ion-card class="adv-map" *ngFor="let event of group.eventsSnapshot">\n        <div style="position: relative" (click)="eventDetail(event)">\n          <img src="{{event.img}}">\n          <ion-fab right top>\n            <button ion-fab class="fab-map">\n              <ion-icon name=\'pin\'></ion-icon>\n            </button>\n          </ion-fab>\n        </div>\n        <ion-item>\n          <h2 padding-top>{{event.id}}</h2>\n          <p text-wrap>{{event.description}}</p>\n        </ion-item>\n       \n        <ion-item actions>\n          <ion-note item-start class="item-bold">{{event.date_from | date: \'fullDate\'}}</ion-note>\n          \n        </ion-item>\n      </ion-card>\n</div>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _e || Object])
     ], HomePage);

@@ -59,21 +59,21 @@ export class HomePage {
                   }
                 }
 
-                var found = false;
+                var updated = false;
                 for (var i = 0; i < this.groups.length; i++) {
                   if (this.groups[i].id == g.id) {
-                    found = true;
+                    this.groups.splice(i, 1, g);
+                    updated = true;
                     break;
                   }
                 }
-                if(!found){
+                if(!updated)
                   this.groups.push(g);
-                }
                 
               })
             });
           });
-
+          
 
         })
       });

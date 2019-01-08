@@ -12,7 +12,7 @@
 
   
   <ion-scroll scrollX="true" style="white-space: nowrap; height: 200px;" class="card-background-page" >
-    <div class="scroll-item" *ngFor="let group of groups; let i=index">
+    <div class="scroll-item" *ngFor="let group of groups">
         <ion-card (click)="groupDetail(group)">
           <img src="{{group.img}}">
           <div class="card-title">{{group.id}}</div>
