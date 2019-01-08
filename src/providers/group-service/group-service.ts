@@ -51,9 +51,22 @@ export class GroupServiceProvider {
     await this.fireStore.firestore.collection("Groups").get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
         joinedGroups.forEach((element) => {
           if (element == doc.id) {
+
+            
+            try {
+              // async () => {
+              //   await doc.data().eventsSnapshot.forEach(element => {
+              //     element.date = element.date.toDate();
+              //     //console.log(element.date);
+              //     return element;
+              //   });
+
+            } catch (error) {
+              
+            }
             var g = {
               id: doc.id,
               img: doc.data().img,
@@ -63,12 +76,26 @@ export class GroupServiceProvider {
               isPublic: doc.data().isPublic,
               shortDescription: doc.data().shortDescription,
               organizers: doc.data().organizers,
+              eventsSnapshot: doc.data().eventsSnapshot,
             }
+            
             groupData.push(g)
           }
         })
       });
     });
+    await groupData.forEach((group)=>{
+      try {
+        group.eventsSnapshot.forEach(element => {
+          element.date_from = element.date_from.toDate();
+          
+          console.log(element.date_from);
+        });
+      } catch (error) {
+        
+      }
+      
+    })
     return groupData;
   }
 
@@ -128,6 +155,11 @@ export class GroupServiceProvider {
   removeGroup() {
 
   }
+
+  // sleep time expects milliseconds
+  sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 
 

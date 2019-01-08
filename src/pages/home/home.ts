@@ -23,21 +23,21 @@ export class HomePage {
     public groupServiceProvider: GroupServiceProvider,
     
     ) {
-      // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
-      //   console.log(this.authServiceProvider.isLoggedIn());
-      //   console.log(this.authServiceProvider.userData);
-      //   this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-      //     console.log(data);
-      //     this.groups = data;
-      //   });
-      //   console.log(this.authServiceProvider.userData);
-      //   this.authServiceProvider.currentUserInfo();
-      // });
-
-      this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-        console.log(data);
-        this.groups = data;
+      this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+        console.log(this.authServiceProvider.isLoggedIn());
+        console.log(this.authServiceProvider.userData);
+        this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+          console.log(data);
+          this.groups = data;
+        });
+        console.log(this.authServiceProvider.userData);
+        this.authServiceProvider.currentUserInfo();
       });
+
+      // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+      //   console.log(data);
+      //   this.groups = data;
+      // });
   }
 
   ionViewDidLoad() {

@@ -24,6 +24,7 @@ import { Camera } from '@ionic-native/camera';
 import { ShareServiceProvider } from '../providers/share-service/share-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
+import { EventServiceProvider } from '../providers/event-service/event-service';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -75,6 +76,7 @@ var firebaseConfig = {
     ShareServiceProvider,
     AuthServiceProvider,
     UserServiceProvider,
+    EventServiceProvider,
   ]
 })
 export class AppModule {}

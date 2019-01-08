@@ -21,50 +21,53 @@
 
 <ion-content no-padding>
   
-  
 
-  <img class="cover" src="http://coinsbird.com/wp-content/uploads/2018/09/20180912A.jpg">
+  <img class="cover" src="{{ (event | async)?.img }}">
   <div padding-horizontal>
-    <p class="greyFont">比特幣研究會</p>
-    <h2>幣少分享會</h2>
-    <ion-list>
+    <p class="greyFont">{{ (event | async)?.groupID }}</p>
+    <h2>{{id}}</h2>
+    <!-- <ion-list>
       <ion-item padding>
-        Are you going?
-        <ion-icon class="bigIcon" name="checkmark-circle-outline" color="secondary" item-end></ion-icon>
-        <ion-icon class="bigIcon" name="close-circle-outline" color="danger" item-end padding-left></ion-icon>
+         {{joinedThisEvent ? 'You are joined this event' : 'Are you going to join?'}} 
+
+       
+
+        <ion-icon *ngIf="!joinedThisEvent" class="bigIcon" name="checkmark-circle-outline" color="secondary" item-end (click)="goEvent()"></ion-icon>
+        <ion-icon *ngIf="joinedThisEvent" class="bigIcon" name="close-circle-outline" color="danger" item-end padding-left (click)="quitEvent()"></ion-icon>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
+
+    <button *ngIf="!joinedThisEvent"  ion-button block color="skyblue" outline (click)="goEvent()">Join Event</button>
+    <button *ngIf="joinedThisEvent" ion-button block color="danger" outline (click)="quitEvent()">Quit Event</button>
+
     <ion-list no-lines>
       <ion-item>
         <ion-icon name="time" item-start></ion-icon>
-        <h2>Monday, 14 January</h2>
-        <p>19:00 - 21:00</p>
+        <h2>{{ (date_from | date)}}</h2>
+        <p>{{ (date_from | date:'shortTime')}} - {{ (date_to | date:'shortTime')}}</p>
       </ion-item>
       <ion-item>
         <ion-icon name="pin" item-start></ion-icon>
-        <h2>Crescent Moon</h2>
-        <p>2-16 Hop Kwan Street, Tai Kok Tsui, HK</p>
+        <h2 text-wrap>{{ (event | async)?.location }}</h2>
+        
       </ion-item>
       <ion-item>
         <ion-icon name="person" item-start></ion-icon>
-        <h2>Organized by 幣少</h2>
+        <h2>Organized by {{organizerName}}</h2>
       </ion-item>
     </ion-list>
 
-    <h5>8 people are going</h5>
+    <h5>{{ numberOfAttendedMembers }} people are going</h5>
     <div class="avatar_holder" padding-horizontal>
 
-      <ion-avatar>
-        <img src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1">
-      </ion-avatar>
-      <ion-avatar>
-        <img src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1">
+      <ion-avatar *ngFor="let member of attendedMembers">
+        <img src="{{member.img}}">
       </ion-avatar>
     </div>
 
     <div>
       <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          {{ (event | async)?.description }}
       </p>
     </div>
 

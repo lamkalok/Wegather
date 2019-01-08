@@ -8,5 +8,6 @@ export interface Group {
     isPublic: boolean,
     shortDescription: string,
     organizers: any[],
+    eventsSnapshot: any[],
 }
 
