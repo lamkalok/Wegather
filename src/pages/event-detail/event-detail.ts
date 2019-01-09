@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -27,7 +27,8 @@ export class EventDetailPage {
   numberOfAttendedMembers: number;
   attendedMembers = [];
   organizerName: string;
-  joinedThisEvent = false;;
+  joinedThisEvent = false;
+  isOrganizer = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,6 +37,7 @@ export class EventDetailPage {
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
     public eventServiceProvider: EventServiceProvider,
+    public alertCtrl: AlertController
   ) {
     var eventSnapshot = navParams.data;
     this.id = eventSnapshot.id;
@@ -51,6 +53,10 @@ export class EventDetailPage {
             this.date_from = e.date_from.toDate();
             this.date_to = e.date_to.toDate();
             this.numberOfAttendedMembers = e.attendedMembers.length;
+
+            if(e.organizerID == this.authServiceProvider.getLoggedUID()){
+              this.isOrganizer = true;
+            }
 
             this.userServiceProvider.getUser(e.organizerID).then((organizer) => {
               this.organizerName = organizer.name;
@@ -82,23 +88,55 @@ export class EventDetailPage {
   }
 
   goEvent() {
-    if(this.shareServiceProvider.showConfirm("Join event", "Are sure to join this event?")){
-      console.log("goEvent");
-      this.eventServiceProvider.addMemeberToEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
-        this.joinedThisEvent = true;
-        this.shareServiceProvider.showToast("Join event successfully");
-      });
-    }
+    const confirm = this.alertCtrl.create({
+      title: "Join event",
+      message: "Are you sure to join this event?",
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagree clicked'); 
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            console.log('Agree clicked');
+            this.eventServiceProvider.addMemeberToEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
+              this.joinedThisEvent = true;
+              this.shareServiceProvider.showToast("Join event successfully");
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   quitEvent() {
-    if(this.shareServiceProvider.showConfirm("Quit event", "Are sure to quit this event?")){
-      console.log("quitEvent");
-      this.eventServiceProvider.removeMemberFromEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
-        this.joinedThisEvent = false;
-        this.shareServiceProvider.showToast("Quit event successfully");
-      });
-    }
+    const confirm = this.alertCtrl.create({
+      title: "Quit event",
+      message: "Are you sure to quit this event?",
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagree clicked'); 
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            console.log('Agree clicked');
+            this.eventServiceProvider.removeMemberFromEvent(this.authServiceProvider.getLoggedUID(), this.id).then(()=>{
+              this.joinedThisEvent = false;
+              this.shareServiceProvider.showToast("Quit event successfully");
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }

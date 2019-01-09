@@ -65,6 +65,7 @@ export class ShareServiceProvider {
         {
           text: 'Disagree',
           handler: () => {
+            confirm.dismiss();
             console.log('Disagree clicked');
             return false;
           }

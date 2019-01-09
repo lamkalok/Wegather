@@ -241,5 +241,23 @@ export class GroupServiceProvider {
   }
 
   
+  async removeMebmerFromGroup(uid:string, groupID: string){
+    var groupRef = this.fireStore.firestore.collection("Groups").doc(groupID);
+    await groupRef.get().then((doc)=>{
+      if (doc.exists) {
+        const data = doc.data();
+
+        var array = data.members;
+
+        var position = array.indexOf(uid);
+
+        if ( ~position ) array.splice(position, 1);
+
+        groupRef.update({
+          members: array,
+        });
+      }
+    });
+  }
 
 }

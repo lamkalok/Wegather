@@ -65,9 +65,7 @@ export class UserServiceProvider {
     return await this.fireStore.doc('Users/' + uid ).snapshotChanges()
   }
 
-  async addGroupToUser(uid: string, joinedGroups: Array<any>, auth: AuthServiceProvider) {
-    
-      
+  async addGroupToUser(uid: string, joinedGroups: Array<any>, auth: AuthServiceProvider) {  
       var userRef = this.fireStore.firestore.collection("Users").doc(uid);
       userRef.get().then((doc) => {
         const data = doc.data();
@@ -85,7 +83,24 @@ export class UserServiceProvider {
           }
         });
       })
-    
+  }
+
+  async removeGroupFromUser(uid: string, groupID, auth: AuthServiceProvider){
+    var userRef = this.fireStore.firestore.collection("Users").doc(uid);
+    userRef.get().then((doc) => {
+      const data = doc.data();
+      var array = data.joinedGroups;
+      var position = array.indexOf(groupID);
+
+      var positionInAuthUserData = auth.userData.joinedGroups.indexOf(groupID);
+      if ( ~positionInAuthUserData ) auth.userData.joinedGroups.splice(positionInAuthUserData, 1);
+
+        if ( ~position ) array.splice(position, 1);
+        userRef.update({
+          joinedGroups: array,
+        });
+      
+    })
   }
 
 }

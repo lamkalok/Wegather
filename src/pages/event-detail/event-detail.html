@@ -37,9 +37,13 @@
       </ion-item>
     </ion-list> -->
 
+    <div *ngIf="!isOrganizer">
     <button *ngIf="!joinedThisEvent"  ion-button block color="skyblue" outline (click)="goEvent()">Join Event</button>
     <button *ngIf="joinedThisEvent" ion-button block color="danger" outline (click)="quitEvent()">Quit Event</button>
-
+    </div>
+    <div *ngIf="isOrganizer">
+        <button ion-button block color="danger" outline >Cancel Event</button>
+    </div>
     <ion-list no-lines>
       <ion-item>
         <ion-icon name="time" item-start></ion-icon>
