@@ -64,7 +64,7 @@ export class AuthServiceProvider {
     try {
       if(this.firebaseAuth.auth.currentUser!=null){
         await this.userServiceProvider.getUser(this.firebaseAuth.auth.currentUser.uid).then((u) => {
-          console.log("set user data: " + u);
+          console.log(u);
           this.userData = u
         });
       }

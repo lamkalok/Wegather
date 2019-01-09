@@ -35985,6 +35985,14 @@ page-home .card-background-page .card-subtitle {
   color: #fff;
 }
 
+page-home .avatar_holder ion-avatar,
+page-home .avatar_holder ion-avatar > img {
+  display: inline;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+}
+
 page-register-select-categories .card, page-register-select-categories .card-md, page-register-select-categories .card-ios {
   webkit-box-shadow: none;
   -webkit-box-shadow: none;

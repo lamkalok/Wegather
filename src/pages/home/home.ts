@@ -16,6 +16,7 @@ import { initDomAdapter } from '@angular/platform-browser/src/browser';
 export class HomePage {
   groupsObs: Observable<any>[];
   groups = [];
+  userImg: string;
   constructor(
     public navCtrl: NavController,
     public shareServiceProvider: ShareServiceProvider,
@@ -35,6 +36,7 @@ export class HomePage {
     //   this.authServiceProvider.currentUserInfo();
     // });
 
+    this.userImg = this.authServiceProvider.userData.img;
 
     try {
 
