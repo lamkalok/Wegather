@@ -24,6 +24,41 @@ export class EventServiceProvider {
     console.log('Hello EventServiceProvider Provider');
   }
 
+  async uploadEventImage(imagesString, eventName, uid){
+    // var downloadURL = "";
+    // var imageName = Date.now() + eventName;
+    let storageRef = this.fireStorage.ref('Events/' + uid + eventName);
+    await storageRef.putString(imagesString, 'data_url');
+    const ref =  this.fireStorage.ref('Events/' + uid + eventName);
+    return ref.getDownloadURL();
+  }
+
+  async downloadingFiles(eventName, uid){
+    const ref =  this.fireStorage.ref('Events/' + uid + eventName);
+    return ref.getDownloadURL();
+  }
+
+  async createEvent(event, uid, groupID){
+    await this.fireStore.collection('Events').doc(event.name).set({
+     attendedMembers: [uid],
+     comments: [],
+     date_from: new Date(event.dateStarts),
+     date_to: new Date(event.dateEnd),
+     description: event.description,
+     groupID: groupID,
+     img: event.img,
+     location: event.location,
+     organizerID: uid,
+     photos: []
+    })
+      .then(function () {
+        console.log("User successfully Created");
+      })
+      .catch(function (error) {
+        console.error("Error create user: ", error);
+      });
+  }
+
   async getEvent(eventID){
 
     console.log(eventID);

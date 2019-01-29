@@ -1,0 +1,68 @@
+<!--
+  Generated template for the GroupAddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Organize New Event</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <h2>Organize a new event</h2>
+    <p>Find the right people to make it happen.</p>
+  </div>
+  <ion-card>
+    <img *ngIf="imgSrc" [src]="imgSrc" />
+    
+      <ion-row padding>
+
+        <ion-label stacked class="label-text">Please select a image for the event cover</ion-label>
+        <ion-item>
+          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
+        </ion-item>
+      </ion-row>
+
+   
+  </ion-card>
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked class="label-text">Event Name</ion-label>
+        <ion-input type="text" [(ngModel)]="event.name"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label stacked class="label-text">Start Time</ion-label>
+        <ion-datetime displayFormat="HH:mm MMM DD YYYY" [(ngModel)]="event.dateStarts" min="2019" max="2099-12-31"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="label-text">End Time</ion-label>
+        <ion-datetime displayFormat="HH:mm MMM DD YYYY" [(ngModel)]="event.dateEnd" min="{{event?.dateStarts ? event.dateStarts : today}}" max="2099-12-31"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="label-text">Description</ion-label>
+        <ion-textarea [(ngModel)]="event.description"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="label-text">Location</ion-label>
+        <ion-input type="text" [(ngModel)]="event.location"></ion-input>
+      </ion-item>
+      
+      <!-- <ion-item>
+        <ion-label stacked class="label-text">Start Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
+      </ion-item> -->
+
+    </ion-list>
+
+    <button ion-button block color="orange" outline (click)="createEvent()">Create Event</button>
+</ion-content>

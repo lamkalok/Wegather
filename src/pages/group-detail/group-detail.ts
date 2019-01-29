@@ -40,9 +40,7 @@ export class GroupDetailPage {
     public alertCtrl: AlertController
   ) {
     this.group = navParams.data;
-    console.log(this.group.id);
-    console.log("owner: " + this.group.owner);
-    console.log(this.group);
+    
     try {
       this.numberOfMember = this.group.members.length;
 
@@ -58,7 +56,7 @@ export class GroupDetailPage {
       this.group.members.forEach(member => {
         this.userServiceProvider.getUser(member).then((memberData) => {
           this.membersInGroup.push(memberData);
-          console.log(memberData);
+          
         })
       })
     } catch (error) {
@@ -73,7 +71,7 @@ export class GroupDetailPage {
 
   presentActionSheet() {
     var actionSheet = null;
-    // Is the group owner
+    // Not the group owner
     if(this.group.owner != this.authServiceProvider.getLoggedUID()){
       actionSheet = this.actionSheetCtrl.create({
       
@@ -118,12 +116,6 @@ export class GroupDetailPage {
             }
           },
           {
-            text: 'Archive',
-            handler: () => {
-              console.log('Archive clicked');
-            }
-          },
-          {
             text: 'Cancel',
             role: 'cancel',
             handler: () => {
@@ -132,21 +124,22 @@ export class GroupDetailPage {
           }
         ]
       });
-    }else { // not the group owner
+    }else { // is the group owner
       actionSheet = this.actionSheetCtrl.create({
       
         buttons: [
+          {
+            text: 'Organize New Event',
+            handler: () => {
+              console.log('Create Event');
+              this.navCtrl.push("CreateEventPage", this.group.id);
+            }
+          },
           {
             text: 'Delete Group',
             role: 'destructive',
             handler: () => {
               console.log('Destructive clicked');
-            }
-          },
-          {
-            text: 'Archive',
-            handler: () => {
-              console.log('Archive clicked');
             }
           },
           {

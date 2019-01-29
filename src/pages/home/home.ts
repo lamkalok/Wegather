@@ -25,26 +25,31 @@ export class HomePage {
     public groupServiceProvider: GroupServiceProvider,
 
   ) {
-    // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
-    //   console.log(this.authServiceProvider.isLoggedIn());
-    //   console.log(this.authServiceProvider.userData);
-    //   this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-    //     console.log(data);
-    //     this.groups = data;
-    //   });
-    //   console.log(this.authServiceProvider.userData);
-    //   this.authServiceProvider.currentUserInfo();
+    this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+      this.init();
+      this.userImg = this.authServiceProvider.userData.img;
+    });
+
+    
+    // this.init();
+    // this.userImg = this.authServiceProvider.userData.img;
+
+
+    /** Old method -> not real time */
+    // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
+    //   //console.log(data);
+    //   this.groups = data;
     // });
+  }
 
-    this.userImg = this.authServiceProvider.userData.img;
-
+  init(){
     try {
 
       this.userServiceProvider.getUserJoinedGroupRealTime(this.authServiceProvider.getLoggedUID()).then((ubs) => {
         ubs.subscribe(uwt => {
 
           var userData: any = uwt.payload.data();
-          console.log(userData.joinedGroups);
+          //console.log(userData.joinedGroups);
           userData.joinedGroups.forEach(groupID => {
             this.groups = [];
             console.log(groupID);
@@ -78,16 +83,12 @@ export class HomePage {
           
 
         })
+      }).then(()=>{
+        //this.groups.ev.sortBy(function(o){ return new Date( o.date ) });
       });
     } catch (error) {
 
     }
-
-    /** Old method -> not real time */
-    // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{
-    //   //console.log(data);
-    //   this.groups = data;
-    // });
   }
 
   ionViewDidLoad() {
