@@ -1,0 +1,21 @@
+page-user {
+    .avatar_holder{
+
+        margin-bottom: 4rem;
+
+        ion-avatar,
+        ion-avatar>img {
+            margin: auto;
+            display: block;
+            border-radius: 50%;
+            height: 10rem;
+            width: 10rem;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    }
+
+  
+}

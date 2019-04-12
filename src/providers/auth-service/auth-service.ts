@@ -74,6 +74,8 @@ export class AuthServiceProvider {
   }
 
   logout() {
+    this.userData = null;
+    this.userServiceProvider.user = null;
     this.firebaseAuth.auth.signOut();
   }
 

@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { MessagesPage } from '../pages/messages/messages';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
+import { UserPage } from '../pages/user/user';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -47,6 +48,7 @@ var firebaseConfig = {
     MessagesPage,
     ContactPage,
     LoginPage,
+    UserPage,
     TabsPage
   ],
   imports: [
@@ -68,6 +70,7 @@ var firebaseConfig = {
     ContactPage,
     MessagesPage,
     LoginPage,
+    UserPage,
     TabsPage
   ],
   providers: [

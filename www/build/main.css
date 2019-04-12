@@ -36043,3 +36043,20 @@ page-register-select-categories .selected {
 page-register-select-groups .joinIcon {
   font-size: 2.5rem;
 }
+
+page-user .avatar_holder {
+  margin-bottom: 4rem;
+}
+
+page-user .avatar_holder ion-avatar,
+page-user .avatar_holder ion-avatar > img {
+  margin: auto;
+  display: block;
+  border-radius: 50%;
+  height: 10rem;
+  width: 10rem;
+}
+
+page-user .avatar_holder h3 {
+  text-align: center;
+}
