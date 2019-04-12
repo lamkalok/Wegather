@@ -46,4 +46,8 @@ export class UserPage {
     // this.navCtrl.popToRoot();
   }
 
+  viewGroups(){
+    this.navCtrl.push("UserGroupsPage");
+  }
+
 }

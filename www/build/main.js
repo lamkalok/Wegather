@@ -1,15 +1,105 @@
-webpackJsonp([11],{
+webpackJsonp([12],{
 
-/***/ 167:
+/***/ 146:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tabs_tabs__ = __webpack_require__(168);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var LoginPage = /** @class */ (function () {
+    function LoginPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.shareServiceProvider = shareServiceProvider;
+        this.authServiceProvider = authServiceProvider;
+        this.userServiceProvider = userServiceProvider;
+        this.authServiceProvider.logout();
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad LoginPage');
+    };
+    LoginPage.prototype.createAccount = function () {
+        this.navCtrl.push('RegisterSelectCategoriesPage');
+    };
+    LoginPage.prototype.login = function () {
+        var _this = this;
+        if (this.email == null || this.password == null) {
+            this.shareServiceProvider.showAlert("Please enter email and password");
+        }
+        else {
+            this.authServiceProvider.login(this.email, this.password).then(function (currentUser) {
+                console.log(_this.authServiceProvider.isLoggedIn());
+                console.log(_this.authServiceProvider.userData);
+                if (_this.authServiceProvider.isLoggedIn()) {
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
+                    _this.navCtrl.popToRoot();
+                }
+            });
+        }
+    };
+    // Fast login function for debugging
+    LoginPage.prototype.initLogin = function () {
+        var _this = this;
+        this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then(function (currentUser) {
+            if (_this.authServiceProvider.isLoggedIn()) {
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
+                _this.navCtrl.popToRoot();
+            }
+        });
+    };
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Welcome to Wegather</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n  <img src="../../assets/imgs/wegather_logo.png">\n  <div>\n    <form #registerForm="ngForm">\n      <ion-row>\n        <ion-col>\n          <ion-item>\n            <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class="signup-col">\n          <button ion-button block color="skyblue" outline (click)="login()">Login</button>\n          <button ion-button block color="skyblue" outline (click)="initLogin()">Init Login</button>\n          <button ion-button block color="skyblue" outline (click)="createAccount()">Create New Account</button>\n          <button ion-button block color="orange" clear (click)="resetPassword()">Reset Password</button>\n        </ion-col>\n      </ion-row>\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 168:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__contact_contact__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__messages_messages__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_user__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__contact_contact__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__messages_messages__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_user__ = __webpack_require__(171);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43,7 +133,7 @@ var TabsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 168:
+/***/ 169:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52,7 +142,7 @@ var TabsPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__ = __webpack_require__(170);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -150,7 +240,7 @@ var MessagesPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 169:
+/***/ 170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -432,7 +522,83 @@ var ChatServiceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 208:
+/***/ 171:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(146);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+/**
+ * Generated class for the UserPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UserPage = /** @class */ (function () {
+    function UserPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.shareServiceProvider = shareServiceProvider;
+        this.authServiceProvider = authServiceProvider;
+        this.userServiceProvider = userServiceProvider;
+        this.groupServiceProvider = groupServiceProvider;
+        this.userData = authServiceProvider.userData;
+        console.log(this.userData);
+    }
+    UserPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UserPage');
+    };
+    UserPage.prototype.logOut = function () {
+        this.authServiceProvider.logout();
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */]);
+        this.navCtrl.popAll();
+        window.location.reload();
+        // this.navCtrl.popToRoot();
+    };
+    UserPage.prototype.viewGroups = function () {
+        this.navCtrl.push("UserGroupsPage");
+    };
+    UserPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-user',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user/user.html"*/'<!--\n  Generated template for the UserPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>User Information</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <div class="avatar_holder">\n      <ion-avatar>\n        <img src="{{ userData.img }}">\n        <h3>\n          {{ userData.name }}\n        </h3>\n      </ion-avatar>\n  </div>\n  <br>\n  <ion-list>\n    <button ion-item (click)="viewUserDetail()">\n      <ion-icon name="person" item-start></ion-icon>\n      My Details\n    </button>\n    <button ion-item (click)="viewGroups()">\n      <ion-icon name="contacts" item-start></ion-icon>\n      My Groups\n    </button>\n    <button ion-item>\n      <ion-icon name="calendar" item-start></ion-icon>\n      My Events\n    </button>\n    <button ion-item>\n      <ion-icon name="card" item-start></ion-icon>\n      My Wallet\n    </button>\n    <button ion-item>\n      <ion-icon name="settings" item-start></ion-icon>\n      Settings\n    </button>\n    <button ion-item>\n      <ion-icon name="bulb" item-start></ion-icon>\n      About\n    </button>\n    <button ion-item (click)="logOut()">\n      <ion-icon name="log-out" item-start></ion-icon>\n      Logout\n    </button>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user/user.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
+    ], UserPage);
+    return UserPage;
+}());
+
+//# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ 210:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -445,56 +611,60 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 208;
+webpackEmptyAsyncContext.id = 210;
 
 /***/ }),
 
-/***/ 249:
+/***/ 251:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/create-event/create-event.module": [
 		529,
-		8
+		9
 	],
 	"../pages/event-detail/event-detail.module": [
 		530,
-		7
+		8
 	],
 	"../pages/group-add/group-add.module": [
 		531,
-		6
+		7
 	],
 	"../pages/group-detail/group-detail.module": [
 		532,
-		5
+		6
 	],
 	"../pages/message-detail/message-detail.module": [
 		533,
-		4
+		5
 	],
 	"../pages/messages/messages.module": [
-		536,
-		10
+		534,
+		11
 	],
 	"../pages/register-select-categories/register-select-categories.module": [
-		534,
-		3
+		535,
+		4
 	],
 	"../pages/register-select-groups/register-select-groups.module": [
-		535,
-		2
+		536,
+		3
 	],
 	"../pages/register/register.module": [
 		537,
+		2
+	],
+	"../pages/user-groups/user-groups.module": [
+		538,
 		1
 	],
 	"../pages/user/user.module": [
-		538,
-		9
+		539,
+		10
 	],
 	"../pages/users-list/users-list.module": [
-		539,
+		540,
 		0
 	]
 };
@@ -509,12 +679,12 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 249;
+webpackAsyncContext.id = 251;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 266:
+/***/ 268:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -549,7 +719,7 @@ var ContactPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 267:
+/***/ 269:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -671,97 +841,7 @@ var HomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 309:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tabs_tabs__ = __webpack_require__(167);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var LoginPage = /** @class */ (function () {
-    function LoginPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.shareServiceProvider = shareServiceProvider;
-        this.authServiceProvider = authServiceProvider;
-        this.userServiceProvider = userServiceProvider;
-        this.authServiceProvider.logout();
-    }
-    LoginPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad LoginPage');
-    };
-    LoginPage.prototype.createAccount = function () {
-        this.navCtrl.push('RegisterSelectCategoriesPage');
-    };
-    LoginPage.prototype.login = function () {
-        var _this = this;
-        if (this.email == null || this.password == null) {
-            this.shareServiceProvider.showAlert("Please enter email and password");
-        }
-        else {
-            this.authServiceProvider.login(this.email, this.password).then(function (currentUser) {
-                console.log(_this.authServiceProvider.isLoggedIn());
-                console.log(_this.authServiceProvider.userData);
-                if (_this.authServiceProvider.isLoggedIn()) {
-                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
-                    _this.navCtrl.popToRoot();
-                }
-            });
-        }
-    };
-    // Fast login function for debugging
-    LoginPage.prototype.initLogin = function () {
-        var _this = this;
-        this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then(function (currentUser) {
-            if (_this.authServiceProvider.isLoggedIn()) {
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__tabs_tabs__["a" /* TabsPage */]);
-                _this.navCtrl.popToRoot();
-            }
-        });
-    };
-    LoginPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Welcome to Wegather</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n  <img src="../../assets/imgs/wegather_logo.png">\n  <div>\n    <form #registerForm="ngForm">\n      <ion-row>\n        <ion-col>\n          <ion-item>\n            <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class="signup-col">\n          <button ion-button block color="skyblue" outline (click)="login()">Login</button>\n          <button ion-button block color="skyblue" outline (click)="initLogin()">Init Login</button>\n          <button ion-button block color="skyblue" outline (click)="createAccount()">Create New Account</button>\n          <button ion-button block color="orange" clear (click)="resetPassword()">Reset Password</button>\n        </ion-col>\n      </ion-row>\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/login/login.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]])
-    ], LoginPage);
-    return LoginPage;
-}());
-
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ 310:
+/***/ 311:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -997,75 +1077,6 @@ var EventServiceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 312:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(309);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-/**
- * Generated class for the UserPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var UserPage = /** @class */ (function () {
-    function UserPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.shareServiceProvider = shareServiceProvider;
-        this.authServiceProvider = authServiceProvider;
-        this.userServiceProvider = userServiceProvider;
-        this.groupServiceProvider = groupServiceProvider;
-        this.userData = authServiceProvider.userData;
-        console.log(this.userData);
-    }
-    UserPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad UserPage');
-    };
-    UserPage.prototype.logOut = function () {
-        this.authServiceProvider.logout();
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */]);
-        this.navCtrl.popAll();
-        window.location.reload();
-        // this.navCtrl.popToRoot();
-    };
-    UserPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-user',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user/user.html"*/'<!--\n  Generated template for the UserPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>User Information</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <div class="avatar_holder">\n      <ion-avatar>\n        <img src="{{ userData.img }}">\n        <h3>\n          {{ userData.name }}\n        </h3>\n      </ion-avatar>\n  </div>\n  <br>\n  <ion-list>\n    <button ion-item (click)="viewUserDetail()">\n      <ion-icon name="person" item-start></ion-icon>\n      My Details\n    </button>\n    <button ion-item (click)="viewBooking()">\n      <ion-icon name="calendar" item-start></ion-icon>\n      My Groups\n    </button>\n    <button ion-item>\n      <ion-icon name="heart" item-start></ion-icon>\n      My Events\n    </button>\n    <button ion-item>\n      <ion-icon name="card" item-start></ion-icon>\n      My Wallet\n    </button>\n    <button ion-item>\n      <ion-icon name="settings" item-start></ion-icon>\n      Settings\n    </button>\n    <button ion-item>\n      <ion-icon name="bulb" item-start></ion-icon>\n      About\n    </button>\n    <button ion-item (click)="logOut()">\n      <ion-icon name="log-out" item-start></ion-icon>\n      Logout\n    </button>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user/user.html"*/,
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _f || Object])
-    ], UserPage);
-    return UserPage;
-    var _a, _b, _c, _d, _e, _f;
-}());
-
-//# sourceMappingURL=user.js.map
-
-/***/ }),
-
 /***/ 313:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1241,10 +1252,11 @@ var AuthServiceProvider = /** @class */ (function () {
     };
     AuthServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"],
+            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */]])
     ], AuthServiceProvider);
     return AuthServiceProvider;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=auth-service.js.map
@@ -1260,28 +1272,28 @@ var AuthServiceProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(526);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(269);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_about_about__ = __webpack_require__(527);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_messages_messages__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_contact_contact__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(309);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_user_user__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_tabs_tabs__ = __webpack_require__(167);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_status_bar__ = __webpack_require__(307);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_splash_screen__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_messages_messages__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_contact_contact__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_user_user__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_tabs_tabs__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_status_bar__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_splash_screen__ = __webpack_require__(310);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(528);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__angular_fire__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_fire_database__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_fire_auth__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_fire_auth__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__angular_fire_storage__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_group_service_group_service__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_fire_firestore__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_camera__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_camera__ = __webpack_require__(312);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_share_service_share_service__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_auth_service_auth_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_event_service_event_service__ = __webpack_require__(310);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_chat_service_chat_service__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_event_service_event_service__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_chat_service_chat_service__ = __webpack_require__(170);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1354,10 +1366,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/group-add/group-add.module#GroupAddPageModule', name: 'GroupAddPage', segment: 'group-add', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/group-detail/group-detail.module#GroupDetailPageModule', name: 'GroupDetailPage', segment: 'group-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/message-detail/message-detail.module#MessageDetailPageModule', name: 'MessageDetailPage', segment: 'message-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/messages/messages.module#MessagesPageModule', name: 'MessagesPage', segment: 'messages', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register-select-categories/register-select-categories.module#RegisterSelectCategoriesPageModule', name: 'RegisterSelectCategoriesPage', segment: 'register-select-categories', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register-select-groups/register-select-groups.module#RegisterSelectGroupsPageModule', name: 'RegisterSelectGroupsPage', segment: 'register-select-groups', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/messages/messages.module#MessagesPageModule', name: 'MessagesPage', segment: 'messages', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/user-groups/user-groups.module#UserGroupsPageModule', name: 'UserGroupsPage', segment: 'user-groups', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/user/user.module#UserPageModule', name: 'UserPage', segment: 'user', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/users-list/users-list.module#UsersListPageModule', name: 'UsersListPage', segment: 'users-list', priority: 'low', defaultHistory: [] }
                     ]
@@ -1604,9 +1617,9 @@ var UserServiceProvider = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(307);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(308);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(146);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

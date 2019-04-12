@@ -1,14 +1,14 @@
 webpackJsonp([8],{
 
-/***/ 529:
+/***/ 530:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateEventPageModule", function() { return CreateEventPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventDetailPageModule", function() { return EventDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__create_event__ = __webpack_require__(540);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_detail__ = __webpack_require__(542);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CreateEventPageModule = /** @class */ (function () {
-    function CreateEventPageModule() {
+var EventDetailPageModule = /** @class */ (function () {
+    function EventDetailPageModule() {
     }
-    CreateEventPageModule = __decorate([
+    EventDetailPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__create_event__["a" /* CreateEventPage */],
+                __WEBPACK_IMPORTED_MODULE_2__event_detail__["a" /* EventDetailPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__create_event__["a" /* CreateEventPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__event_detail__["a" /* EventDetailPage */]),
             ],
         })
-    ], CreateEventPageModule);
-    return CreateEventPageModule;
+    ], EventDetailPageModule);
+    return EventDetailPageModule;
 }());
 
-//# sourceMappingURL=create-event.module.js.map
+//# sourceMappingURL=event-detail.module.js.map
 
 /***/ }),
 
-/***/ 540:
+/***/ 542:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateEventPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(311);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_share_service_share_service__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_group_service_group_service__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_event_service_event_service__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_event_service_event_service__ = __webpack_require__(311);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,97 +66,132 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /**
- * Generated class for the CreateEventPage page.
+ * Generated class for the EventDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var CreateEventPage = /** @class */ (function () {
-    function CreateEventPage(navCtrl, navParams, camera, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider, eventServiceProvider) {
+var EventDetailPage = /** @class */ (function () {
+    function EventDetailPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider, eventServiceProvider, alertCtrl) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.camera = camera;
         this.shareServiceProvider = shareServiceProvider;
         this.authServiceProvider = authServiceProvider;
         this.userServiceProvider = userServiceProvider;
         this.groupServiceProvider = groupServiceProvider;
         this.eventServiceProvider = eventServiceProvider;
-        this.today = new Date(Date.now()).toISOString();
-        this.event = {
-            //dateStarts: new Date(Date.now()).toISOString(),
-            name: "",
-            location: "",
-            description: "",
-            dateStarts: undefined,
-            dateEnd: "",
-            img: ""
-        };
-        this.groupID = this.navParams.data;
-        console.log(this.groupID);
-    }
-    CreateEventPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CreateEventPage');
-    };
-    CreateEventPage.prototype.takeImage = function () {
-        var _this = this;
-        var options = {
-            quality: 65,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
-        };
-        this.camera.getPicture(options).then(function (imageData) {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-            var base64Image = 'data:image/jpeg;base64,' + imageData;
-            _this.imgSrc = base64Image;
-        }, function (err) {
-            // Handle error
-        });
-    };
-    CreateEventPage.prototype.createEvent = function () {
-        var _this = this;
-        try {
-            this.shareServiceProvider.showLoading();
-            console.log(this.event);
-            this.eventServiceProvider.uploadEventImage(this.imgSrc, this.event.name, this.authServiceProvider.getLoggedUID()).then(function (url) {
-                url.subscribe(function (u) {
-                    _this.event.img = u;
-                    _this.eventServiceProvider.createEvent(_this.event, _this.authServiceProvider.getLoggedUID(), _this.groupID).then(function () {
-                        _this.eventServiceProvider.createEventSnapShot(_this.event, _this.authServiceProvider.getLoggedUID(), _this.groupID).then(function () {
-                            _this.shareServiceProvider.hideLoading();
-                            _this.shareServiceProvider.showToast("Event create successfully");
-                            _this.navCtrl.pop();
+        this.alertCtrl = alertCtrl;
+        this.attendedMembers = [];
+        this.joinedThisEvent = false;
+        this.isOrganizer = false;
+        var eventSnapshot = navParams.data;
+        this.id = eventSnapshot.id;
+        if (this.id != null) {
+            try {
+                eventServiceProvider.getEvent(eventSnapshot.id).then(function (e) {
+                    _this.event = e;
+                    //subscribe is also real time update
+                    _this.event.subscribe(function (e) {
+                        _this.attendedMembers = [];
+                        console.log(e);
+                        _this.date_from = e.date_from.toDate();
+                        _this.date_to = e.date_to.toDate();
+                        _this.numberOfAttendedMembers = e.attendedMembers.length;
+                        if (e.organizerID == _this.authServiceProvider.getLoggedUID()) {
+                            _this.isOrganizer = true;
+                        }
+                        _this.userServiceProvider.getUser(e.organizerID).then(function (organizer) {
+                            _this.organizerName = organizer.name;
+                        });
+                        e.attendedMembers.forEach(function (attendedMemberID) {
+                            if (attendedMemberID == _this.authServiceProvider.getLoggedUID()) {
+                                _this.joinedThisEvent = true;
+                            }
+                            _this.userServiceProvider.getUser(attendedMemberID).then(function (user) {
+                                _this.attendedMembers.push(user);
+                            });
                         });
                     });
                 });
-            });
+            }
+            catch (error) {
+            }
         }
-        catch (error) {
-            this.shareServiceProvider.hideLoading();
-            this.shareServiceProvider.showToast("Event create fail: " + error);
-        }
+    }
+    EventDetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad EventDetailPage');
     };
-    CreateEventPage = __decorate([
+    EventDetailPage.prototype.goEvent = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: "Join event",
+            message: "Are you sure to join this event?",
+            buttons: [
+                {
+                    text: 'Disagree',
+                    handler: function () {
+                        console.log('Disagree clicked');
+                    }
+                },
+                {
+                    text: 'Agree',
+                    handler: function () {
+                        console.log('Agree clicked');
+                        _this.eventServiceProvider.addMemeberToEvent(_this.authServiceProvider.getLoggedUID(), _this.id).then(function () {
+                            _this.joinedThisEvent = true;
+                            _this.shareServiceProvider.showToast("Join event successfully");
+                        });
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    EventDetailPage.prototype.quitEvent = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: "Quit event",
+            message: "Are you sure to quit this event?",
+            buttons: [
+                {
+                    text: 'Disagree',
+                    handler: function () {
+                        console.log('Disagree clicked');
+                    }
+                },
+                {
+                    text: 'Agree',
+                    handler: function () {
+                        console.log('Agree clicked');
+                        _this.eventServiceProvider.removeMemberFromEvent(_this.authServiceProvider.getLoggedUID(), _this.id).then(function () {
+                            _this.joinedThisEvent = false;
+                            _this.shareServiceProvider.showToast("Quit event successfully");
+                        });
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    EventDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-event',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/create-event/create-event.html"*/'<!--\n  Generated template for the GroupAddPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Organize New Event</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div>\n    <h2>Organize a new event</h2>\n    <p>Find the right people to make it happen.</p>\n  </div>\n  <ion-card>\n    <img *ngIf="imgSrc" [src]="imgSrc" />\n    \n      <ion-row padding>\n\n        <ion-label stacked class="label-text">Please select a image for the event cover</ion-label>\n        <ion-item>\n          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>\n        </ion-item>\n      </ion-row>\n\n   \n  </ion-card>\n    <ion-list>\n\n      <ion-item>\n        <ion-label stacked class="label-text">Event Name</ion-label>\n        <ion-input type="text" [(ngModel)]="event.name"></ion-input>\n      </ion-item>\n      \n      <ion-item>\n        <ion-label stacked class="label-text">Start Time</ion-label>\n        <ion-datetime displayFormat="HH:mm MMM DD YYYY" [(ngModel)]="event.dateStarts" min="2019" max="2099-12-31"></ion-datetime>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked class="label-text">End Time</ion-label>\n        <ion-datetime displayFormat="HH:mm MMM DD YYYY" [(ngModel)]="event.dateEnd" min="{{event?.dateStarts ? event.dateStarts : today}}" max="2099-12-31"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label stacked class="label-text">Description</ion-label>\n        <ion-textarea [(ngModel)]="event.description"></ion-textarea>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked class="label-text">Location</ion-label>\n        <ion-input type="text" [(ngModel)]="event.location"></ion-input>\n      </ion-item>\n      \n      <!-- <ion-item>\n        <ion-label stacked class="label-text">Start Time</ion-label>\n        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>\n      </ion-item> -->\n\n    </ion-list>\n\n    <button ion-button block color="orange" outline (click)="createEvent()">Create Event</button>\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/create-event/create-event.html"*/,
+            selector: 'page-event-detail',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/event-detail/event-detail.html"*/'<!--\n  Generated template for the EventDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title></ion-title>\n    <ion-buttons end>\n        <button ion-button icon-start (click)="presentActionSheet()">\n            <ion-icon name=\'star-outline\' ></ion-icon>\n          \n          </button>\n        </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content no-padding>\n  \n\n  <img class="cover" src="{{ (event | async)?.img }}">\n  <div padding-horizontal>\n    <p class="greyFont">{{ (event | async)?.groupID }}</p>\n    <h2>{{id}}</h2>\n    <!-- <ion-list>\n      <ion-item padding>\n         {{joinedThisEvent ? \'You are joined this event\' : \'Are you going to join?\'}} \n\n       \n\n        <ion-icon *ngIf="!joinedThisEvent" class="bigIcon" name="checkmark-circle-outline" color="secondary" item-end (click)="goEvent()"></ion-icon>\n        <ion-icon *ngIf="joinedThisEvent" class="bigIcon" name="close-circle-outline" color="danger" item-end padding-left (click)="quitEvent()"></ion-icon>\n      </ion-item>\n    </ion-list> -->\n\n    <div *ngIf="!isOrganizer">\n    <button *ngIf="!joinedThisEvent"  ion-button block color="skyblue" outline (click)="goEvent()">Join Event</button>\n    <button *ngIf="joinedThisEvent" ion-button block color="danger" outline (click)="quitEvent()">Quit Event</button>\n    </div>\n    <div *ngIf="isOrganizer">\n        <button ion-button block color="danger" outline >Cancel Event</button>\n    </div>\n    <ion-list no-lines>\n      <ion-item>\n        <ion-icon name="time" item-start></ion-icon>\n        <h2>{{ (date_from | date)}}</h2>\n        <p>{{ (date_from | date:\'shortTime\')}} - {{ (date_to | date:\'shortTime\')}}</p>\n      </ion-item>\n      <ion-item>\n        <ion-icon name="pin" item-start></ion-icon>\n        <h2 text-wrap>{{ (event | async)?.location }}</h2>\n        \n      </ion-item>\n      <ion-item>\n        <ion-icon name="person" item-start></ion-icon>\n        <h2>Organized by {{organizerName}}</h2>\n      </ion-item>\n    </ion-list>\n\n    <h5>{{ numberOfAttendedMembers }} people are going</h5>\n    <div class="avatar_holder" padding-horizontal>\n\n      <ion-avatar *ngFor="let member of attendedMembers">\n        <img src="{{member.img}}">\n      </ion-avatar>\n    </div>\n\n    <div>\n      <p>\n          {{ (event | async)?.description }}\n      </p>\n    </div>\n\n    <h5>Photos</h5>\n    <div></div>\n    <button ion-button block color="skyblue" outline (click)="addPhoto()">Add Photo</button>\n\n    <h5>Comments</h5>\n    <div></div>\n    <button ion-button block color="skyblue" outline (click)="addComment()">Add Comment</button>\n\n\n    \n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/event-detail/event-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_share_service_share_service__["a" /* ShareServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_group_service_group_service__["a" /* GroupServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_7__providers_event_service_event_service__["a" /* EventServiceProvider */]])
-    ], CreateEventPage);
-    return CreateEventPage;
+            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_event_service_event_service__["a" /* EventServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
+    ], EventDetailPage);
+    return EventDetailPage;
 }());
 
-//# sourceMappingURL=create-event.js.map
+//# sourceMappingURL=event-detail.js.map
 
 /***/ })
 

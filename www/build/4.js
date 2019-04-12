@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 533:
+/***/ 535:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageDetailPageModule", function() { return MessageDetailPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterSelectCategoriesPageModule", function() { return RegisterSelectCategoriesPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__message_detail__ = __webpack_require__(544);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_select_categories__ = __webpack_require__(546);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MessageDetailPageModule = /** @class */ (function () {
-    function MessageDetailPageModule() {
+var RegisterSelectCategoriesPageModule = /** @class */ (function () {
+    function RegisterSelectCategoriesPageModule() {
     }
-    MessageDetailPageModule = __decorate([
+    RegisterSelectCategoriesPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__message_detail__["a" /* MessageDetailPage */],
+                __WEBPACK_IMPORTED_MODULE_2__register_select_categories__["a" /* RegisterSelectCategoriesPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__message_detail__["a" /* MessageDetailPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register_select_categories__["a" /* RegisterSelectCategoriesPage */]),
             ],
         })
-    ], MessageDetailPageModule);
-    return MessageDetailPageModule;
+    ], RegisterSelectCategoriesPageModule);
+    return RegisterSelectCategoriesPageModule;
 }());
 
-//# sourceMappingURL=message-detail.module.js.map
+//# sourceMappingURL=register-select-categories.module.js.map
 
 /***/ }),
 
-/***/ 544:
+/***/ 546:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageDetailPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterSelectCategoriesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_group_service_group_service__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,119 +58,63 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 /**
- * Generated class for the MessageDetailPage page.
+ * Generated class for the RegisterSelectCategoriesPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var MessageDetailPage = /** @class */ (function () {
-    function MessageDetailPage(navCtrl, navParams, authServiceProvider, userServiceProvider, chatServiceProvider) {
-        var _this = this;
+var RegisterSelectCategoriesPage = /** @class */ (function () {
+    function RegisterSelectCategoriesPage(navCtrl, navParams, groupServiceProvider) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.authServiceProvider = authServiceProvider;
-        this.userServiceProvider = userServiceProvider;
-        this.chatServiceProvider = chatServiceProvider;
-        this.messages = [];
-        this.target = this.navParams.data;
-        this.uid = this.authServiceProvider.getLoggedUID();
-        // console.log(this.target);
-        // console.log(this.authServiceProvider.userData);
-        try {
-            this.chatServiceProvider.checkChatBeforeRealTime(this.target.uid, this.authServiceProvider.getLoggedUID()).then(function (user_event) {
-                user_event.subscribe(function (user_data) {
-                    console.log(user_data.payload.data());
-                    var payload_data = user_data.payload.data();
-                    var chats = payload_data.chats;
-                    var result = null;
-                    chats.forEach(function (element) {
-                        console.log(element);
-                        if (element.target_id == _this.target.uid) {
-                            result = element.id;
-                        }
-                    });
-                    if (result == null) {
-                        _this.isChated = false;
-                    }
-                    else {
-                        _this.isChated = true;
-                        _this.chat_id = result;
-                        _this.chatServiceProvider.getChatMessages(_this.chat_id).then(function (cm) {
-                            // console.log(cm);
-                            _this.chat_messages = cm;
-                            _this.chat_messages.subscribe(function (data) {
-                                //this.messages = [];
-                                // console.log(data);
-                                data.messages.forEach(function (element) {
-                                    _this.chatServiceProvider.getMessages(element).then(function (m) {
-                                        // console.log(m);
-                                        m.date = m.timestamp.toDate().toDateString();
-                                        var updated = false;
-                                        for (var i = 0; i < _this.messages.length; i++) {
-                                            if (_this.messages[i].id == m.id) {
-                                                _this.messages.splice(i, 1, m);
-                                                updated = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!updated)
-                                            _this.messages.push(m);
-                                        console.log(_this.messages);
-                                    });
-                                });
-                            });
-                        });
-                    }
-                }); // end user subscribe
-            });
-            // this.chatServiceProvider.checkChatBefore(this.target.uid, this.authServiceProvider.getLoggedUID()).then(result => {
-            //   // console.log(result);
-            // });
-        }
-        catch (error) {
-        }
+        this.groupServiceProvider = groupServiceProvider;
+        this.count = 0;
+        this.isValid = false;
     }
-    MessageDetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad MessageDetailPage');
-    };
-    MessageDetailPage.prototype.sendMsg = function () {
+    RegisterSelectCategoriesPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        var user = this.authServiceProvider.userData;
-        // console.log(this.isChated);
-        if (this.isChated == false) {
-            // console.log(this.msg_content);
-            this.chatServiceProvider.createChat(this.target, user).then(function (chat_id) {
-                console.log(chat_id);
-                _this.chatServiceProvider.setUserChats(chat_id, _this.target.uid, _this.authServiceProvider.getLoggedUID()).then(function () {
-                    console.log("After setUserChats");
-                    _this.chatServiceProvider.createMessage(_this.target, user, chat_id, _this.msg_content).then(function () {
-                        _this.msg_content = "";
-                    });
-                });
-            });
+        this.categories = [];
+        this.count = 0;
+        this.isValid = false;
+        console.log('ionViewDidLoad RegisterSelectCategoriesPage');
+        this.groupServiceProvider.getCategories().then(function (list) {
+            _this.categories = list;
+        });
+    };
+    RegisterSelectCategoriesPage.prototype.ionViewWillLeave = function () {
+        console.log('ionViewWillLeave RegisterSelectCategoriesPage');
+    };
+    RegisterSelectCategoriesPage.prototype.changeClass = function (cate) {
+        if (cate.selected) {
+            this.count--;
         }
         else {
-            this.chatServiceProvider.createMessage(this.target, user, this.chat_id, this.msg_content);
+            this.count++;
         }
-        this.msg_content = "";
+        cate.selected = !cate.selected;
+        if (this.count > 0) {
+            this.isValid = true;
+        }
+        else {
+            this.isValid = false;
+        }
     };
-    MessageDetailPage = __decorate([
+    RegisterSelectCategoriesPage.prototype.nextPage = function () {
+        this.navCtrl.push('RegisterSelectGroupsPage', this.categories);
+    };
+    RegisterSelectCategoriesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-message-detail',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/message-detail/message-detail.html"*/'<!--\n  Generated template for the MessageDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>{{target.name}}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list no-lines>\n      <div *ngFor="let message of messages"> \n          <ion-item *ngIf="message.sender.uid != uid">\n              <ion-avatar item-start>\n                  <img src="{{message.sender.img}}">\n                </ion-avatar>\n                <h2>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>\n         \n        </ion-item>\n        <ion-item *ngIf="message.sender.uid == uid">\n            <h2 item-end>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>\n            <ion-avatar item-end>\n                <img src="{{message.sender.img}}">\n            </ion-avatar>\n         \n        </ion-item>\n      </div>       \n\n      </ion-list>\n</ion-content>\n\n<ion-footer>\n  <ion-item>\n    <ion-textarea placeholder="text here" [(ngModel)]="msg_content"></ion-textarea>\n    <button ion-button clear icon-only item-end (click)="sendMsg()">\n      <ion-icon name="ios-send" ios="ios-send" md="md-send" id="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-footer>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/message-detail/message-detail.html"*/,
+            selector: 'page-register-select-categories',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register-select-categories/register-select-categories.html"*/'<!--\n  Generated template for the RegisterSelectCategoriesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Categories</ion-title>\n    <ion-buttons end>\n      <button [disabled]="!isValid" ion-button icon-start (click)="nextPage()">\n        Next\n      </button>\n      </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n\n\n\n\n</ion-content>\n\n<ion-content padding>\n  <p center text-center>Select some categories to get started</p>\n  <ion-list>\n      <ion-row no-padding>\n          <ion-col col-6 *ngFor="let cate of categories ; let i=index">\n                <ion-card [ngClass]="{\'selected\' : cate.selected}" (click)="changeClass(cate)">\n                    <img src="{{cate.img}}" />\n                    <div>{{cate.name}}<i class="fas fa-check" *ngIf="cate.selected"></i></div>\n                  </ion-card>\n          </ion-col >\n\n        </ion-row>\n      </ion-list>\n\n\n\n\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register-select-categories/register-select-categories.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__["a" /* ChatServiceProvider */]])
-    ], MessageDetailPage);
-    return MessageDetailPage;
+            __WEBPACK_IMPORTED_MODULE_2__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
+    ], RegisterSelectCategoriesPage);
+    return RegisterSelectCategoriesPage;
 }());
 
-//# sourceMappingURL=message-detail.js.map
+//# sourceMappingURL=register-select-categories.js.map
 
 /***/ })
 

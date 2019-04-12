@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 537:
+/***/ 538:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserGroupsPageModule", function() { return UserGroupsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(547);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_groups__ = __webpack_require__(549);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,38 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RegisterPageModule = /** @class */ (function () {
-    function RegisterPageModule() {
+var UserGroupsPageModule = /** @class */ (function () {
+    function UserGroupsPageModule() {
     }
-    RegisterPageModule = __decorate([
+    UserGroupsPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_2__user_groups__["a" /* UserGroupsPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__user_groups__["a" /* UserGroupsPage */]),
             ],
         })
-    ], RegisterPageModule);
-    return RegisterPageModule;
+    ], UserGroupsPageModule);
+    return UserGroupsPageModule;
 }());
 
-//# sourceMappingURL=register.module.js.map
+//# sourceMappingURL=user-groups.module.js.map
 
 /***/ }),
 
-/***/ 547:
+/***/ 549:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserGroupsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tabs_tabs__ = __webpack_require__(167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,15 +64,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /**
- * Generated class for the RegisterPage page.
+ * Generated class for the UserGroupsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var RegisterPage = /** @class */ (function () {
-    function RegisterPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
+var UserGroupsPage = /** @class */ (function () {
+    function UserGroupsPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider, actionSheetCtrl, alertCtrl) {
+        // let newPromise = new Promise((resolve, reject) => {
+        //       resolve(this.authServiceProvider.userData.uid);
+        // });
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -81,86 +82,66 @@ var RegisterPage = /** @class */ (function () {
         this.authServiceProvider = authServiceProvider;
         this.userServiceProvider = userServiceProvider;
         this.groupServiceProvider = groupServiceProvider;
-        this.joinedGroups = [];
-        //console.log(navParams.data);
-        try {
-            var groups = navParams.data;
-            groups.forEach(function (element) {
-                if (element.joined) {
-                    _this.joinedGroups.push(element.id);
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.alertCtrl = alertCtrl;
+        // newPromise.then(uid=>{
+        //   this.uid = uid;
+        // })
+        this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then(function (data) {
+            console.log(data);
+            var uid = _this.authServiceProvider.userData.uid;
+            _this.ownedGroup = data.filter(function (item, index, array) {
+                if (item.owner == uid) {
+                    return item;
                 }
             });
-        }
-        catch (error) {
-            console.log(error);
-        }
+            _this.joinedGroup = data.filter(function (item, index, array) {
+                if (item.owner != uid) {
+                    return item;
+                }
+            });
+            console.log("I am owner", _this.ownedGroup);
+            console.log("Joined Group", _this.joinedGroup);
+        });
     }
-    RegisterPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RegisterPage');
+    UserGroupsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UserGroupsPage');
     };
-    RegisterPage.prototype.register = function () {
+    UserGroupsPage.prototype.presentActionSheet = function () {
         var _this = this;
-        var regex = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})");
-        if (this.password == this.password2) {
-            if (this.password.match(regex)) {
-                this.shareServiceProvider.showLoading();
-                this.authServiceProvider.signup(this.email, this.password).then(function (value) {
-                    var Uid = _this.authServiceProvider.getLoggedUID();
-                    _this.user = {
-                        uid: Uid,
-                        img: "https://firebasestorage.googleapis.com/v0/b/wegather-dcb52.appspot.com/o/Users%2Fuser.jpg?alt=media&token=c744108d-36a8-493d-ada4-de5f859118df",
-                        name: _this.name,
-                        email: _this.email,
-                        phone: _this.phone,
-                        joinedGroups: _this.joinedGroups,
-                    };
-                    console.log("UID: " + Uid);
-                    try {
-                        _this.userServiceProvider.createUser(_this.user, Uid).then(function () {
-                            _this.groupServiceProvider.addMemberToGroup(Uid, _this.joinedGroups).then(function () {
-                                _this.authServiceProvider.userData = _this.user;
-                                _this.shareServiceProvider.hideLoading();
-                                //this.navCtrl.pop();
-                                _this.shareServiceProvider.showToast("Register success");
-                                //this.navCtrl.push('RegisterSelectCategoriesPage')
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__tabs_tabs__["a" /* TabsPage */]);
-                                _this.navCtrl.popToRoot();
-                            });
-                        });
+        var actionSheet = null;
+        var page = "CreateEventPage";
+        actionSheet = this.actionSheetCtrl.create({
+            buttons: [
+                {
+                    text: 'Create New Group',
+                    handler: function () {
+                        console.log('Create Event');
+                        _this.navCtrl.push(page);
                     }
-                    catch (error) {
-                        _this.shareServiceProvider.hideLoading();
-                        _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + error);
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('Cancel clicked');
                     }
-                })
-                    .catch(function (err) {
-                    _this.shareServiceProvider.hideLoading();
-                    _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + err);
-                });
-            }
-            else {
-                this.shareServiceProvider.showAlert("Register Fail, password should longer than 8 length and contains number and letter !");
-            }
-        }
-        else {
-            this.shareServiceProvider.showAlert("Register Fail, please input the same password!");
-        }
+                }
+            ]
+        });
+        actionSheet.present();
     };
-    RegisterPage = __decorate([
+    UserGroupsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>Register</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <img src="../../assets/imgs/wegather_logo.png">\n  <div>\n    <form #registerForm="ngForm">\n      <ion-list inset>\n        <ion-item>\n          <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>\n        </ion-item>\n        <ion-item>           \n          <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>\n        </ion-item>\n        <ion-item>               \n            <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-input [(ngModel)]="password" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n        </ion-item>\n        <ion-item>               \n            <ion-input [(ngModel)]="password2" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n        </ion-item>\n      </ion-list>     \n      <br />\n      <ion-row>\n        <ion-col class="signup-col">\n          <button ion-button block color="skyblue" outline (click)="register()">Submit</button>\n        </ion-col>\n      </ion-row>\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/,
+            selector: 'page-user-groups',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user-groups/user-groups.html"*/'<!--\n  Generated template for the UserGroupsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>User Groups</ion-title>\n    <ion-buttons end>\n      <button ion-button icon-start (click)="presentActionSheet()">\n        <ion-icon name=\'more\' ></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n    <ion-item-group>\n      <ion-item-divider color="light">Owned Group</ion-item-divider>\n      <ion-item *ngFor="let og of ownedGroup">{{ og.id }}</ion-item>\n     \n    </ion-item-group>\n    <ion-item-group>\n        <ion-item-divider color="light">Joined Group</ion-item-divider>\n        <ion-item *ngFor="let jg of joinedGroup">{{ jg.id }}</ion-item>\n       \n      </ion-item-group>\n\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/user-groups/user-groups.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
-    ], RegisterPage);
-    return RegisterPage;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object])
+    ], UserGroupsPage);
+    return UserGroupsPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=user-groups.js.map
 
 /***/ })
 
