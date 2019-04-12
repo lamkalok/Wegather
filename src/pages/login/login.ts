@@ -27,7 +27,6 @@ export class LoginPage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
   ) {
-    
     this.authServiceProvider.logout();
   }
 
@@ -36,31 +35,28 @@ export class LoginPage {
   }
 
   createAccount() {
-    console.log('Register Page');
     this.navCtrl.push('RegisterSelectCategoriesPage')
   }
 
   login() {
-    if(this.email == null || this.password == null){
+    if (this.email == null || this.password == null) {
       this.shareServiceProvider.showAlert("Please enter email and password");
     } else {
-      this.authServiceProvider.login(this.email, this.password).then((currentUser)=>{
+      this.authServiceProvider.login(this.email, this.password).then((currentUser) => {
         console.log(this.authServiceProvider.isLoggedIn());
         console.log(this.authServiceProvider.userData);
         if (this.authServiceProvider.isLoggedIn()) {
           this.navCtrl.setRoot(TabsPage);
           this.navCtrl.popToRoot();
         }
-        
       });
     }
-    
+
   }
 
-  initLogin(){
-    this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
-      console.log(this.authServiceProvider.isLoggedIn());
-      console.log(this.authServiceProvider.userData);
+  // Fast login function for debugging
+  initLogin() {
+    this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser) => {
       if (this.authServiceProvider.isLoggedIn()) {
         this.navCtrl.setRoot(TabsPage);
         this.navCtrl.popToRoot();

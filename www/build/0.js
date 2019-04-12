@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 532:
+/***/ 537:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersListPageModule", function() { return UsersListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(539);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_list__ = __webpack_require__(546);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,38 +18,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RegisterPageModule = /** @class */ (function () {
-    function RegisterPageModule() {
+var UsersListPageModule = /** @class */ (function () {
+    function UsersListPageModule() {
     }
-    RegisterPageModule = __decorate([
+    UsersListPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_2__users_list__["a" /* UsersListPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__users_list__["a" /* UsersListPage */]),
             ],
         })
-    ], RegisterPageModule);
-    return RegisterPageModule;
+    ], UsersListPageModule);
+    return UsersListPageModule;
 }());
 
-//# sourceMappingURL=register.module.js.map
+//# sourceMappingURL=users-list.module.js.map
 
 /***/ }),
 
-/***/ 539:
+/***/ 546:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__ = __webpack_require__(167);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tabs_tabs__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(36);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,107 +56,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-
-
-
 /**
- * Generated class for the RegisterPage page.
+ * Generated class for the UsersListPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var RegisterPage = /** @class */ (function () {
-    function RegisterPage(navCtrl, navParams, shareServiceProvider, authServiceProvider, userServiceProvider, groupServiceProvider) {
-        var _this = this;
+var UsersListPage = /** @class */ (function () {
+    function UsersListPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.shareServiceProvider = shareServiceProvider;
-        this.authServiceProvider = authServiceProvider;
-        this.userServiceProvider = userServiceProvider;
-        this.groupServiceProvider = groupServiceProvider;
-        this.joinedGroups = [];
-        //console.log(navParams.data);
-        try {
-            var groups = navParams.data;
-            groups.forEach(function (element) {
-                if (element.joined) {
-                    console.log(element);
-                    _this.joinedGroups.push(element.id);
-                }
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
+        this.membersList = [];
+        this.membersList = this.navParams.data;
+        console.log(this.membersList);
     }
-    RegisterPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad RegisterPage');
+    UsersListPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UsersListPage');
     };
-    RegisterPage.prototype.register = function () {
-        var _this = this;
-        var regex = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})");
-        if (this.password == this.password2) {
-            if (this.password.match(regex)) {
-                this.shareServiceProvider.showLoading();
-                this.authServiceProvider.signup(this.email, this.password).then(function (value) {
-                    var Uid = _this.authServiceProvider.getLoggedUID();
-                    _this.user = {
-                        uid: Uid,
-                        img: "https://firebasestorage.googleapis.com/v0/b/wegather-dcb52.appspot.com/o/Users%2Fuser.jpg?alt=media&token=c744108d-36a8-493d-ada4-de5f859118df",
-                        name: _this.name,
-                        email: _this.email,
-                        phone: _this.phone,
-                        joinedGroups: _this.joinedGroups,
-                    };
-                    console.log("UID: " + Uid);
-                    try {
-                        _this.userServiceProvider.createUser(_this.user, Uid).then(function () {
-                            _this.groupServiceProvider.addMemberToGroup(Uid, _this.joinedGroups).then(function () {
-                                _this.authServiceProvider.userData = _this.user;
-                                _this.shareServiceProvider.hideLoading();
-                                //this.navCtrl.pop();
-                                _this.shareServiceProvider.showToast("Register success");
-                                //this.navCtrl.push('RegisterSelectCategoriesPage')
-                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__tabs_tabs__["a" /* TabsPage */]);
-                                _this.navCtrl.popToRoot();
-                            });
-                        });
-                    }
-                    catch (error) {
-                        _this.shareServiceProvider.hideLoading();
-                        _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + error);
-                    }
-                })
-                    .catch(function (err) {
-                    _this.shareServiceProvider.hideLoading();
-                    _this.shareServiceProvider.showAlert("Register Fail, Something went wrong!" + err);
-                });
-            }
-            else {
-                this.shareServiceProvider.showAlert("Register Fail, password should longer than 8 length and contains number and letter !");
-            }
-        }
-        else {
-            this.shareServiceProvider.showAlert("Register Fail, please input the same password!");
-        }
+    UsersListPage.prototype.startChat = function (member) {
+        this.navCtrl.push('MessageDetailPage', member);
     };
-    RegisterPage = __decorate([
+    UsersListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Register</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n      <img src="../../assets/imgs/wegather_logo.png">\n\n  <div>\n    <form #registerForm="ngForm">\n   \n        <ion-list inset>\n\n            <ion-item>\n             \n              <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>\n            </ion-item>\n          \n            <ion-item>\n            \n              <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n               \n                <ion-input [(ngModel)]="password" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n                \n                <ion-input [(ngModel)]="password2" type="password" placeholder="Password (8+ letters and numbers)" name="password" required></ion-input>\n            </ion-item>\n          \n          </ion-list>\n\n           \n<br />\n      <ion-row>\n        <ion-col class="signup-col">\n\n          <button ion-button block color="skyblue" outline (click)="register()">Submit</button>\n\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/register/register.html"*/,
+            selector: 'page-users-list',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/users-list/users-list.html"*/'<!--\n  Generated template for the UsersListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Members</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n    <ion-list>\n        <ion-item *ngFor="let member of membersList" >\n          <ion-avatar item-start>\n            <img src="{{member.img}}">\n          </ion-avatar>\n          <h2>{{member.name}}</h2>\n          <ion-icon name="chatbubbles" item-end (click)="startChat(member)"></ion-icon>\n        </ion-item>\n      </ion-list>\n      \n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/users-list/users-list.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_share_service_share_service__["a" /* ShareServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_user_service_user_service__["a" /* UserServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
-    ], RegisterPage);
-    return RegisterPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+    ], UsersListPage);
+    return UsersListPage;
 }());
 
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=users-list.js.map
 
 /***/ })
 

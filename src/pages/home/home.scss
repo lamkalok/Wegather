@@ -1,7 +1,14 @@
 page-home {
+
   ion-scroll[scrollX] {
     .scroll-item {
       display: inline-block;
+    }
+  }
+
+  ion-card {
+    img {
+      max-height: 200px;
     }
   }
 
@@ -18,7 +25,7 @@ page-home {
         width: auto;
         filter: brightness(80%);
       }
-
+      
     }
 
     .card-title {

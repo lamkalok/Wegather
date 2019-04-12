@@ -1,5 +1,8 @@
 page-group-detail {
 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
 
     .organizer {
         padding-top:2rem;
@@ -14,20 +17,28 @@ page-group-detail {
     }
     
     ion-scroll[scrollX] {
+
+        height: 30vh;
+        white-space: nowrap; 
+        
         .scroll-item {
             display: inline-block;
-            
+            height: 100%;
+          
+        }
+        ion-card {
+            width: 65vw;
+            height: 100%;
+            margin: 5px;
+       
         }
 
-        ion-card {
-            width: 20rem;
-            height: 17rem;
-        }
+        
     }
 
     .avatar_holder{
         ion-avatar,
-        ion-avatar>img {
+        ion-avatar > img {
             display: inline;
             border-radius: 50%;
             height: 4rem;
@@ -35,27 +46,4 @@ page-group-detail {
         }
     }
 
-
-
-
-    // .events {
-
-    //     padding-top: 3rem;
-
-
-    //     ion-card {
-    //         width: 20rem;
-    //         height: 15rem;
-    //     }
-
-    //     ion-scroll {
-
-    //         height: 280px;
-    //         width: 100%;
-    //         white-space: nowrap;
-    //         .scroll-content {
-    //             padding: 0px !important;
-    //         }
-    //     }
-    // }
 }

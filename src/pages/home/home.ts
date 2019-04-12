@@ -25,14 +25,14 @@ export class HomePage {
     public groupServiceProvider: GroupServiceProvider,
 
   ) {
-    this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
-      this.init();
-      this.userImg = this.authServiceProvider.userData.img;
-    });
+    // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
+    //   this.init();
+    //   this.userImg = this.authServiceProvider.userData.img;
+    // });
 
     
-    // this.init();
-    // this.userImg = this.authServiceProvider.userData.img;
+    this.init();
+    this.userImg = this.authServiceProvider.userData.img;
 
 
     /** Old method -> not real time */
@@ -66,6 +66,7 @@ export class HomePage {
                   }
                 }
 
+                // check new updated element add to groups
                 var updated = false;
                 for (var i = 0; i < this.groups.length; i++) {
                   if (this.groups[i].id == g.id) {

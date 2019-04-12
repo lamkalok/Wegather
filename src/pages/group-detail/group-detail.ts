@@ -161,4 +161,8 @@ export class GroupDetailPage {
     this.navCtrl.push("EventDetailPage", eventsSnapshot)
   }
 
+  goToMemberList(){
+    this.navCtrl.push('UsersListPage', this.membersInGroup)
+  }
+
 }

@@ -42,25 +42,19 @@ export class RegisterPage {
       var groups = navParams.data;
       groups.forEach(element => {
         if (element.joined) {
-          console.log(element);
           this.joinedGroups.push(element.id);
         }
       });
     } catch (error) {
       console.log(error);
     }
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
-
   }
 
   register() {
-
-
-
     var regex = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})");
 
     if (this.password == this.password2) {

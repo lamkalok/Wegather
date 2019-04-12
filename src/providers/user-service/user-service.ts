@@ -49,16 +49,26 @@ export class UserServiceProvider {
     var userRef = this.fireStore.firestore.collection("Users").doc(uid);
     await userRef.get().then((doc) => {
       const data = doc.data();
+      var chats = [];
+      if(doc.data().chats != undefined){
+        chats = doc.data().chats
+      }
       var u = {
+        uid: doc.id,
         email: doc.data().email,
         img: doc.data().img,
         joinedGroups: doc.data().joinedGroups,
         name: doc.data().name,
-        phone: doc.data().phone
+        phone: doc.data().phone,
+        chats: chats
       }
       uData = u;
     });
     return uData;
+  }
+
+  async getUserRealTime(uid){
+    return await this.fireStore.doc('Users/' + uid).snapshotChanges();
   }
 
   async getUserJoinedGroupRealTime(uid){

@@ -35921,6 +35921,11 @@ page-group-add .label-text {
   font-size: 1.0em !important;
 }
 
+page-group-detail {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 page-group-detail .organizer {
   padding-top: 2rem;
 }
@@ -35933,13 +35938,20 @@ page-group-detail .organizer ion-avatar > img {
   width: 6rem;
 }
 
+page-group-detail ion-scroll[scrollX] {
+  height: 30vh;
+  white-space: nowrap;
+}
+
 page-group-detail ion-scroll[scrollX] .scroll-item {
   display: inline-block;
+  height: 100%;
 }
 
 page-group-detail ion-scroll[scrollX] ion-card {
-  width: 20rem;
-  height: 17rem;
+  width: 65vw;
+  height: 100%;
+  margin: 5px;
 }
 
 page-group-detail .avatar_holder ion-avatar,
@@ -35952,6 +35964,10 @@ page-group-detail .avatar_holder ion-avatar > img {
 
 page-home ion-scroll[scrollX] .scroll-item {
   display: inline-block;
+}
+
+page-home ion-card img {
+  max-height: 200px;
 }
 
 page-home .card-background-page ion-card {
@@ -35991,6 +36007,18 @@ page-home .avatar_holder ion-avatar > img {
   border-radius: 50%;
   height: 3rem;
   width: 3rem;
+}
+
+page-message-detail .left {
+  float: left;
+}
+
+page-message-detail .right {
+  float: right;
+}
+
+page-message-detail #send {
+  font-size: 4rem;
 }
 
 page-register-select-categories .card, page-register-select-categories .card-md, page-register-select-categories .card-ios {

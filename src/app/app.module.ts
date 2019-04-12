@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { AboutPage } from '../pages/about/about';
+import { MessagesPage } from '../pages/messages/messages';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
 
@@ -25,6 +26,7 @@ import { ShareServiceProvider } from '../providers/share-service/share-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { EventServiceProvider } from '../providers/event-service/event-service';
+import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -42,6 +44,7 @@ var firebaseConfig = {
     MyApp,
     AboutPage,
     HomePage,
+    MessagesPage,
     ContactPage,
     LoginPage,
     TabsPage
@@ -63,6 +66,7 @@ var firebaseConfig = {
     AboutPage,
     HomePage,
     ContactPage,
+    MessagesPage,
     LoginPage,
     TabsPage
   ],
@@ -77,6 +81,7 @@ var firebaseConfig = {
     AuthServiceProvider,
     UserServiceProvider,
     EventServiceProvider,
+    ChatServiceProvider,
   ]
 })
 export class AppModule {}

@@ -5,11 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Welcome to Wegather</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -19,20 +17,14 @@
     <form #registerForm="ngForm">
       <ion-row>
         <ion-col>
-         
-
-            <ion-item>
-              <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>
-            </ion-item>
-
-
+          <ion-item>
+            <ion-input [(ngModel)]="email" type="text" placeholder="Email" name="email" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input [(ngModel)]="password" type="password" placeholder="Password" name="password" required></ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
-
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button block color="skyblue" outline (click)="login()">Login</button>
@@ -41,7 +33,6 @@
           <button ion-button block color="orange" clear (click)="resetPassword()">Reset Password</button>
         </ion-col>
       </ion-row>
-
     </form>
   </div>
 </ion-content>

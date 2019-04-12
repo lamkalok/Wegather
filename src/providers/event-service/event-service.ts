@@ -14,42 +14,42 @@ import { Observable } from 'rxjs';
 */
 @Injectable()
 export class EventServiceProvider {
-  obs:Observable<any>;
+  obs: Observable<any>;
   constructor(
     public afd: AngularFireDatabase,
     public fireStore: AngularFirestore,
     public fireStorage: AngularFireStorage,
     public authServiceProvider: AuthServiceProvider,
-    ) {
+  ) {
     console.log('Hello EventServiceProvider Provider');
   }
 
-  async uploadEventImage(imagesString, eventName, uid){
+  async uploadEventImage(imagesString, eventName, uid) {
     // var downloadURL = "";
     // var imageName = Date.now() + eventName;
     let storageRef = this.fireStorage.ref('Events/' + uid + eventName);
     await storageRef.putString(imagesString, 'data_url');
-    const ref =  this.fireStorage.ref('Events/' + uid + eventName);
+    const ref = this.fireStorage.ref('Events/' + uid + eventName);
     return ref.getDownloadURL();
   }
 
-  async downloadingFiles(eventName, uid){
-    const ref =  this.fireStorage.ref('Events/' + uid + eventName);
+  async downloadingFiles(eventName, uid) {
+    const ref = this.fireStorage.ref('Events/' + uid + eventName);
     return ref.getDownloadURL();
   }
 
-  async createEvent(event, uid, groupID){
+  async createEvent(event, uid, groupID) {
     await this.fireStore.collection('Events').doc(event.name).set({
-     attendedMembers: [uid],
-     comments: [],
-     date_from: new Date(event.dateStarts),
-     date_to: new Date(event.dateEnd),
-     description: event.description,
-     groupID: groupID,
-     img: event.img,
-     location: event.location,
-     organizerID: uid,
-     photos: []
+      attendedMembers: [uid],
+      comments: [],
+      date_from: new Date(event.dateStarts),
+      date_to: new Date(event.dateEnd),
+      description: event.description,
+      groupID: groupID,
+      img: event.img,
+      location: event.location,
+      organizerID: uid,
+      photos: []
     })
       .then(function () {
         console.log("User successfully Created");
@@ -59,11 +59,35 @@ export class EventServiceProvider {
       });
   }
 
-  async getEvent(eventID){
+  async createEventSnapShot(event, uid, groupID) {
+    var ess = {
+      date_from: new Date(event.dateStarts),
+      date_to: new Date(event.dateEnd),
+      description: event.description,
+      id: event.name,
+      img: event.img
+    }
+    var groupRef = this.fireStore.firestore.collection("Groups").doc(groupID);
+    await groupRef.get().then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        console.log(data);
+        console.log(ess);
+        var eventsSnapshot = data.eventsSnapshot;
+        eventsSnapshot.push(ess);
+        groupRef.update({
+          eventsSnapshot: eventsSnapshot
+        });
+      }
+    })
+
+  }
+
+  async getEvent(eventID) {
 
     console.log(eventID);
 
-    this.obs = this.fireStore.doc('Events/' + eventID ).valueChanges();
+    this.obs = this.fireStore.doc('Events/' + eventID).valueChanges();
     this.obs.subscribe(evt => {
       console.log(evt);
     });
@@ -75,10 +99,10 @@ export class EventServiceProvider {
     // });
   }
 
-  async addMemeberToEvent(user, joinEvent){
+  async addMemeberToEvent(user, joinEvent) {
     var eventRef = this.fireStore.firestore.collection("Events").doc(joinEvent);
 
-    await eventRef.get().then((doc)=>{
+    await eventRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
 
@@ -94,10 +118,10 @@ export class EventServiceProvider {
     });
   }
 
-  async removeMemberFromEvent(userID, joinedEvent){
+  async removeMemberFromEvent(userID, joinedEvent) {
     var eventRef = this.fireStore.firestore.collection("Events").doc(joinedEvent);
-
-    await eventRef.get().then((doc)=>{
+    
+    await eventRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
 
@@ -105,7 +129,7 @@ export class EventServiceProvider {
 
         var position = array.indexOf(userID);
 
-        if ( ~position ) array.splice(position, 1);
+        if (~position) array.splice(position, 1);
 
         eventRef.update({
           attendedMembers: array,

@@ -32,13 +32,13 @@ export class CreateEventPage {
     name: "",
     location: "",
     description: "",
-    dateStarts:undefined,
+    dateStarts: undefined,
     dateEnd: "",
     img: ""
   }
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public camera: Camera,
     public shareServiceProvider: ShareServiceProvider,
@@ -46,8 +46,8 @@ export class CreateEventPage {
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
     public eventServiceProvider: EventServiceProvider,
-    ) {
-    
+  ) {
+
     this.groupID = this.navParams.data;
     console.log(this.groupID);
   }
@@ -56,7 +56,7 @@ export class CreateEventPage {
     console.log('ionViewDidLoad CreateEventPage');
   }
 
-  takeImage(){
+  takeImage() {
     const options: CameraOptions = {
       quality: 65,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -69,32 +69,35 @@ export class CreateEventPage {
       // If it's base64:
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.imgSrc = base64Image;
-      
+
     }, (err) => {
       // Handle error
     });
   }
 
-  createEvent(){
-    
+  createEvent() {
+
     
     try {
       this.shareServiceProvider.showLoading();
       console.log(this.event);
-      this.eventServiceProvider.uploadEventImage(this.imgSrc, this.event.name, this.authServiceProvider.getLoggedUID()).then((url)=>{
-        
-        url.subscribe(u=>{
-          
+      this.eventServiceProvider.uploadEventImage(this.imgSrc, this.event.name, this.authServiceProvider.getLoggedUID()).then((url) => {
+
+        url.subscribe(u => {
+
           this.event.img = u;
-          this.eventServiceProvider.createEvent(this.event, this.authServiceProvider.getLoggedUID(), this.groupID).then(()=>{
-            this.shareServiceProvider.hideLoading();
-            this.shareServiceProvider.showToast("Event create successfully");
-            this.navCtrl.pop();
+          this.eventServiceProvider.createEvent(this.event, this.authServiceProvider.getLoggedUID(), this.groupID).then(() => {
+            this.eventServiceProvider.createEventSnapShot(this.event, this.authServiceProvider.getLoggedUID(), this.groupID).then(() => {
+              this.shareServiceProvider.hideLoading();
+              this.shareServiceProvider.showToast("Event create successfully");
+              this.navCtrl.pop();
+            })
           });
         })
       });
     } catch (error) {
-      
+      this.shareServiceProvider.hideLoading();
+      this.shareServiceProvider.showToast("Event create fail: " + error);
     }
 
   }

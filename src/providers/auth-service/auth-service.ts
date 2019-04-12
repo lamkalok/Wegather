@@ -39,7 +39,6 @@ export class AuthServiceProvider {
     });
   }
 
-
   async login(email: string, password: string) {
     await this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(value => {
       console.log('Nice, it worked!');
@@ -89,8 +88,6 @@ export class AuthServiceProvider {
   getLoggedUID(): string {
     return this.firebaseAuth.auth.currentUser.uid;
   }
-
-
 
   getVerifyState(): boolean {
     return this.firebaseAuth.auth.currentUser.emailVerified;

@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 528:
+/***/ 532:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GroupAddPageModule", function() { return GroupAddPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageDetailPageModule", function() { return MessageDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__group_add__ = __webpack_require__(535);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__message_detail__ = __webpack_require__(542);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var GroupAddPageModule = /** @class */ (function () {
-    function GroupAddPageModule() {
+var MessageDetailPageModule = /** @class */ (function () {
+    function MessageDetailPageModule() {
     }
-    GroupAddPageModule = __decorate([
+    MessageDetailPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__group_add__["a" /* GroupAddPage */],
+                __WEBPACK_IMPORTED_MODULE_2__message_detail__["a" /* MessageDetailPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__group_add__["a" /* GroupAddPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__message_detail__["a" /* MessageDetailPage */]),
             ],
         })
-    ], GroupAddPageModule);
-    return GroupAddPageModule;
+    ], MessageDetailPageModule);
+    return MessageDetailPageModule;
 }());
 
-//# sourceMappingURL=group-add.module.js.map
+//# sourceMappingURL=message-detail.module.js.map
 
 /***/ }),
 
-/***/ 535:
+/***/ 542:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GroupAddPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(309);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_group_service_group_service__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__ = __webpack_require__(169);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,60 +61,115 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
- * Generated class for the GroupAddPage page.
+ * Generated class for the MessageDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var GroupAddPage = /** @class */ (function () {
-    function GroupAddPage(navCtrl, navParams, camera, groupService) {
+var MessageDetailPage = /** @class */ (function () {
+    function MessageDetailPage(navCtrl, navParams, authServiceProvider, userServiceProvider, chatServiceProvider) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.camera = camera;
-        this.groupService = groupService;
+        this.authServiceProvider = authServiceProvider;
+        this.userServiceProvider = userServiceProvider;
+        this.chatServiceProvider = chatServiceProvider;
+        this.messages = [];
+        this.target = this.navParams.data;
+        this.uid = this.authServiceProvider.getLoggedUID();
+        // console.log(this.target);
+        // console.log(this.authServiceProvider.userData);
+        try {
+            this.chatServiceProvider.checkChatBeforeRealTime(this.target.uid, this.authServiceProvider.getLoggedUID()).then(function (user_event) {
+                user_event.subscribe(function (user_data) {
+                    console.log(user_data.payload.data());
+                    var payload_data = user_data.payload.data();
+                    var chats = payload_data.chats;
+                    var result = null;
+                    chats.forEach(function (element) {
+                        console.log(element);
+                        if (element.target_id == _this.target.uid) {
+                            result = element.id;
+                        }
+                    });
+                    if (result == null) {
+                        _this.isChated = false;
+                    }
+                    else {
+                        _this.isChated = true;
+                        _this.chat_id = result;
+                        _this.chatServiceProvider.getChatMessages(_this.chat_id).then(function (cm) {
+                            // console.log(cm);
+                            _this.chat_messages = cm;
+                            _this.chat_messages.subscribe(function (data) {
+                                //this.messages = [];
+                                // console.log(data);
+                                data.messages.forEach(function (element) {
+                                    _this.chatServiceProvider.getMessages(element).then(function (m) {
+                                        // console.log(m);
+                                        m.date = m.timestamp.toDate().toDateString();
+                                        var updated = false;
+                                        for (var i = 0; i < _this.messages.length; i++) {
+                                            if (_this.messages[i].id == m.id) {
+                                                _this.messages.splice(i, 1, m);
+                                                updated = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!updated)
+                                            _this.messages.push(m);
+                                        console.log(_this.messages);
+                                    });
+                                });
+                            });
+                        });
+                    }
+                }); // end user subscribe
+            });
+            // this.chatServiceProvider.checkChatBefore(this.target.uid, this.authServiceProvider.getLoggedUID()).then(result => {
+            //   // console.log(result);
+            // });
+        }
+        catch (error) {
+        }
     }
-    GroupAddPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad GroupAddPage');
+    MessageDetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad MessageDetailPage');
     };
-    GroupAddPage.prototype.takeImage = function () {
+    MessageDetailPage.prototype.sendMsg = function () {
         var _this = this;
-        var options = {
-            quality: 65,
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            destinationType: this.camera.DestinationType.DATA_URL,
-            encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
-        };
-        this.camera.getPicture(options).then(function (imageData) {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-            var base64Image = 'data:image/jpeg;base64,' + imageData;
-            _this.imgSrc = base64Image;
-        }, function (err) {
-            // Handle error
-        });
+        var user = this.authServiceProvider.userData;
+        // console.log(this.isChated);
+        if (this.isChated == false) {
+            // console.log(this.msg_content);
+            this.chatServiceProvider.createChat(this.target, user).then(function (chat_id) {
+                console.log(chat_id);
+                _this.chatServiceProvider.setUserChats(chat_id, _this.target.uid, _this.authServiceProvider.getLoggedUID()).then(function () {
+                    console.log("After setUserChats");
+                    _this.chatServiceProvider.createMessage(_this.target, user, chat_id, _this.msg_content).then(function () {
+                        _this.msg_content = "";
+                    });
+                });
+            });
+        }
+        else {
+            this.chatServiceProvider.createMessage(this.target, user, this.chat_id, this.msg_content);
+        }
+        this.msg_content = "";
     };
-    GroupAddPage.prototype.selectTags = function () {
-        console.log("tags");
-        this.navCtrl.pop();
-    };
-    GroupAddPage.prototype.createGroup = function () {
-        this.groupService.createGroup(this.imgSrc);
-    };
-    GroupAddPage = __decorate([
+    MessageDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-group-add',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/group-add/group-add.html"*/'<!--\n  Generated template for the GroupAddPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Add New Group</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div>\n    <h2>Start a new group</h2>\n    <p>Find new people and do your thing together</p>\n  </div>\n  <ion-card>\n    <img *ngIf="imgSrc" [src]="imgSrc" />\n    \n      <ion-row padding>\n\n        <ion-label stacked class="label-text">Please Select Group Image</ion-label>\n        <ion-item>\n          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>\n        </ion-item>\n      </ion-row>\n\n   \n  </ion-card>\n    <ion-list>\n\n      <ion-item>\n        <ion-label stacked class="label-text">Group Name</ion-label>\n        <ion-input type="text"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label stacked class="label-text">Description</ion-label>\n        <ion-textarea></ion-textarea>\n      </ion-item>\n\n    </ion-list>\n\n    <button ion-button block color="orange" outline (click)="createGroup()">Create Group</button>\n</ion-content>\n'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/group-add/group-add.html"*/,
+            selector: 'page-message-detail',template:/*ion-inline-start:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/message-detail/message-detail.html"*/'<!--\n  Generated template for the MessageDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>{{target.name}}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list no-lines>\n      <div *ngFor="let message of messages"> \n          <ion-item *ngIf="message.sender.uid != uid">\n              <ion-avatar item-start>\n                  <img src="{{message.sender.img}}">\n                </ion-avatar>\n                <h2>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>\n         \n        </ion-item>\n        <ion-item *ngIf="message.sender.uid == uid">\n            <h2 item-end>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>\n            <ion-avatar item-end>\n                <img src="{{message.sender.img}}">\n            </ion-avatar>\n         \n        </ion-item>\n      </div>       \n\n      </ion-list>\n</ion-content>\n\n<ion-footer>\n  <ion-item>\n    <ion-textarea placeholder="text here" [(ngModel)]="msg_content"></ion-textarea>\n    <button ion-button clear icon-only item-end (click)="sendMsg()">\n      <ion-icon name="ios-send" ios="ios-send" md="md-send" id="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-footer>'/*ion-inline-end:"/Users/lamkalok/Desktop/Ionic/Wegather/src/pages/message-detail/message-detail.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_group_service_group_service__["a" /* GroupServiceProvider */]])
-    ], GroupAddPage);
-    return GroupAddPage;
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__["a" /* AuthServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__["a" /* AuthServiceProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_user_service_user_service__["a" /* UserServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__["a" /* ChatServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_chat_service_chat_service__["a" /* ChatServiceProvider */]) === "function" && _e || Object])
+    ], MessageDetailPage);
+    return MessageDetailPage;
+    var _a, _b, _c, _d, _e;
 }());
 
-//# sourceMappingURL=group-add.js.map
+//# sourceMappingURL=message-detail.js.map
 
 /***/ })
 
