@@ -18,11 +18,36 @@ export class WalletServiceProvider {
 
 
   async checkLength(){
-    
     var length = await this.storage.length();
-    console.log("len", length);
     return length;
   }
   
+  async getWallet(){
+    var wallet = await this.storage.get('wallet');
+    return wallet;
+  }
+
+  async storeAccount(address, keystone){
+    await this.getWallet().then(w => {
+      if(w == null){
+        var wallet = [{
+            address: address,
+            keystone: keystone
+          }]
+        // set a key/value
+        this.storage.set('wallet', wallet);
+        
+      }else{
+        console.log("w", w);
+        w.push({
+          address: address,
+          keystone: keystone
+        });
+        // set a key/value
+        this.storage.set('wallet', w);
+      }
+    })
+    return "success";
+  }
 
 }

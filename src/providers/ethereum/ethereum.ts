@@ -12,6 +12,10 @@ import { AppConfig } from './env.template';
 import WeCoinContract from "./contracts/WeCoin.json";
 import { convertUrlToDehydratedSegments } from 'ionic-angular/umd/navigation/url-serializer';
 
+import { Platform } from 'ionic-angular';
+import { HTTP } from '@ionic-native/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
+
 var Tx = require('ethereumjs-tx');
 
 @Injectable()
@@ -30,6 +34,8 @@ export class EthereumProvider {
   tokenContract: any;
 
   constructor(
+    public plt: Platform,
+    private http_ionic_native: HTTP
   ) {
     this.web3js = new Web3(new Web3.providers.HttpProvider(AppConfig.ethereum.provider));
 
@@ -61,9 +67,35 @@ export class EthereumProvider {
 
   public async checkBalance(account) {
     var bal = "";
-    await this.tokenContract.methods.balanceOf(account).call().then(b => {
-      bal = b;
-    });
+    if (this.plt.is('ios')) {
+      console.log("IOS check balance");
+      let headers = new Headers(
+        {
+          'Content-Type': 'application/json'
+        });
+
+      let options = new RequestOptions({ headers: headers });
+      var data = {
+        'address': account
+      }
+      await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/checkBalance', data, { Authorization: 'OAuth2: token' })
+        .then(res => {
+          var json_data = JSON.parse(res.data);
+          console.log(json_data.balance);
+          bal = json_data.balance;
+          console.log(res.status);
+          console.log(res.data); // data received by server
+          console.log(res.headers);
+        }).catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log("Non IOS check balance");
+      await this.tokenContract.methods.balanceOf(account).call().then(b => {
+        bal = b;
+      });
+    }
+    console.log("bal",bal); // data received by server
     return bal;
   }
 
@@ -110,16 +142,18 @@ export class EthereumProvider {
   }
 
   public generateMnemonic() {
-    this.mnemonic = Bip39.generateMnemonic();
+    var mnemonic = Bip39.generateMnemonic();
+    return mnemonic;
   }
 
   public generateAccountFromMnemonic(mnemonic: string) {
     if (!mnemonic) mnemonic = this.mnemonic;
     const seed = Bip39.mnemonicToSeed(mnemonic); //creates seed buffer
-    this.root = HDKey.fromMasterSeed(seed);
-    this.privateKey = this.root.privateKey.toString('hex');
-    const account = this.web3js.eth.accounts.privateKeyToAccount('0x' + this.privateKey);
-    this.accountAddress = account.address;
+    var root = HDKey.fromMasterSeed(seed);
+    var privateKey = root.privateKey.toString('hex');
+    var account = this.web3js.eth.accounts.privateKeyToAccount('0x' + privateKey);
+    account.privateKey = account.privateKey.substr(2);
+    return account;
   }
 
   public generateAccount() {
@@ -166,6 +200,17 @@ export class EthereumProvider {
     };
     const transaction = await this.web3js.eth.accounts.signTransaction(params, '0x' + this.privateKey);
     return transaction;
+  }
+
+  public async encrypt(privateKey, password) {
+    var keystone = await this.web3js.eth.accounts.encrypt("0x" + privateKey, password);
+    return keystone;
+  }
+
+  public async decrypt(keystone, password) {
+    var account = await this.web3js.eth.accounts.decrypt(keystone, password);
+    account.privateKey = account.privateKey.substr(2);
+    return account;
   }
 
   public getPrivateKey() {

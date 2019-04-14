@@ -15,15 +15,38 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 })
 export class WalletPage {
 
+  isNewWallet = true;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public walletServiceProvider: WalletServiceProvider) {
-      this.walletServiceProvider.checkLength()
+      this.walletServiceProvider.checkLength().then(length=>{
+        console.log("length", length);
+        if(length > 0) {
+          this.isNewWallet = false;
+        }
+        
+      })
+
+      this.walletServiceProvider.getWallet().then(w=>{
+        console.log("wallet", w);
+        if(w != null ){
+          this.isNewWallet = false;
+        }
+      })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletPage');
+  }
+
+  createAccount(){
+    this.navCtrl.push("WalletCreatePage", this);
+  }
+
+  viewAccounts(){
+    this.navCtrl.push("WalletListPage");
   }
 
 }

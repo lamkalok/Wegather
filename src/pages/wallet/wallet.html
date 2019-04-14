@@ -19,6 +19,10 @@
     <img class="wecoinLogo" src="https://firebasestorage.googleapis.com/v0/b/wegather-dcb52.appspot.com/o/WeCoin.png?alt=media&token=ac5db70c-30ae-4a8b-a317-1d29bca8d34c">
   </div>
   <div class="desc">
-    <p>New generation social network cryptocurrencies</p>
+    <h5>New generation social network cryptocurrencies</h5>
+    <p>WeCoin is an Ethereum-based token to enchance the user experiences on the Wegather platform, a pure cryptocurrency exchange that plans to create a decentralized exchange for blockchain assets. WEC also gives users access to special features and will be used to power the upcoming decentralized exchange.</p>
+    <h5 id="join">Join Us, enjoy the digital asset from <span>Wegather</span></h5>
+    <button *ngIf="!isNewWallet" ion-button block color="skyblue" outline (click)="viewAccounts()">View Accounts</button>
+    <button ion-button block color="orange" outline (click)="createAccount()">Create New Account</button>
   </div>
 </ion-content>

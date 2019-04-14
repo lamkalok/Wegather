@@ -57,6 +57,15 @@ export class ShareServiceProvider {
     alert.present();
   }
 
+  showAlertWithTitle(msg: string, title: string) : void {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: msg,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   showConfirm(msg: string, title: string) : boolean {
     const confirm = this.alertCtrl.create({
       title: title,

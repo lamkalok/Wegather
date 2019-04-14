@@ -1,0 +1,31 @@
+<!--
+  Generated template for the WalletListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Wallet</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <h1>WeCoin</h1>
+    <div class="logoHolder">
+      <img class="wecoinLogo" src="https://firebasestorage.googleapis.com/v0/b/wegather-dcb52.appspot.com/o/WeCoin.png?alt=media&token=ac5db70c-30ae-4a8b-a317-1d29bca8d34c">
+    </div>
+    <div class="desc">
+      <h5>New generation social network cryptocurrencies</h5>
+    </div>
+    <ion-list>
+      <ion-item *ngFor="let account of wallet">
+        <h4 text-wrap>{{account.address}}</h4>
+        <p>{{account.balance}} WeCoin Tokens</p>
+        <button ion-button clear item-end>View</button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
