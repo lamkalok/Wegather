@@ -1,0 +1,27 @@
+page-wallet {
+
+    @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+    
+
+    h1 {
+        text-align: center;
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .desc p {
+        text-align: center;
+        padding: 5px;
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .logoHolder {
+       
+    }
+
+    .wecoinLogo {
+        width: 150px;
+        margin: auto;
+        display: block;
+    }
+}
