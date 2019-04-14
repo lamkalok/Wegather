@@ -7,11 +7,15 @@ import { GroupServiceProvider } from '../../providers/group-service/group-servic
 import { User } from "../../data/user.interface";
 import { Observable } from 'rxjs';
 import { initDomAdapter } from '@angular/platform-browser/src/browser';
+import { EthereumProvider } from '../../providers/ethereum/ethereum';
+
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+
 })
 export class HomePage {
   groupsObs: Observable<any>[];
@@ -23,14 +27,15 @@ export class HomePage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
-
+    public ethereumProvider: EthereumProvider,
+    public http: Http
   ) {
     // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
     //   this.init();
     //   this.userImg = this.authServiceProvider.userData.img;
     // });
 
-    
+
     this.init();
     this.userImg = this.authServiceProvider.userData.img;
 
@@ -40,9 +45,25 @@ export class HomePage {
     //   //console.log(data);
     //   this.groups = data;
     // });
+
+    // this.ethereumProvider.checkBalance().then(b=>{
+    //   this.shareServiceProvider.showConfirm("balance is " + b, "Your token balance!");
+    // })
+
   }
 
-  init(){
+  testTransfer() {
+    // this.ethereumProvider.transferToken().then(receipt => {
+    //   this.shareServiceProvider.showConfirm("Transfer success", receipt);
+    // });
+    //     this.ethereumProvider.checkBalance("0xc12A83339750bE19CA5158Ab03E827b43c9847af").then(b=>{
+    //   this.shareServiceProvider.showConfirm("balance is " + b, "Your token balance!");
+    // })
+
+
+  }
+
+  init() {
     try {
 
       this.userServiceProvider.getUserJoinedGroupRealTime(this.authServiceProvider.getLoggedUID()).then((ubs) => {
@@ -75,16 +96,16 @@ export class HomePage {
                     break;
                   }
                 }
-                if(!updated)
+                if (!updated)
                   this.groups.push(g);
-                
+
               })
             });
           });
-          
+
 
         })
-      }).then(()=>{
+      }).then(() => {
         //this.groups.ev.sortBy(function(o){ return new Date( o.date ) });
       });
     } catch (error) {

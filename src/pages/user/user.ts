@@ -50,4 +50,8 @@ export class UserPage {
     this.navCtrl.push("UserGroupsPage");
   }
 
+  viewWallet(){
+    this.navCtrl.push("WalletPage")
+  }
+
 }

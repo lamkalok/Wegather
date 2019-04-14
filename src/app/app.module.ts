@@ -9,7 +9,6 @@ import { MessagesPage } from '../pages/messages/messages';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
 import { UserPage } from '../pages/user/user';
-
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -28,6 +27,11 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { EventServiceProvider } from '../providers/event-service/event-service';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { EthereumProvider } from '../providers/ethereum/ethereum';
+import { HTTP } from '@ionic-native/http';
+
+
+import { WalletPage } from '../pages/wallet/wallet';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -49,7 +53,8 @@ var firebaseConfig = {
     ContactPage,
     LoginPage,
     UserPage,
-    TabsPage
+    TabsPage,
+    WalletPage
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,8 @@ var firebaseConfig = {
     MessagesPage,
     LoginPage,
     UserPage,
-    TabsPage
+    TabsPage,
+    WalletPage
   ],
   providers: [
     StatusBar,
@@ -85,6 +91,8 @@ var firebaseConfig = {
     UserServiceProvider,
     EventServiceProvider,
     ChatServiceProvider,
+    EthereumProvider,
+    HTTP
   ]
 })
 export class AppModule {}

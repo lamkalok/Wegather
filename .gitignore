@@ -1,3 +1,4 @@
-/node_modules/*
-/.sourcemaps/
-/www/
+node_modules/*
+www/build/*
+.sourcemaps
+platform
