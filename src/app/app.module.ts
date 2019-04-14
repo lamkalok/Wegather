@@ -30,8 +30,9 @@ import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 import { EthereumProvider } from '../providers/ethereum/ethereum';
 import { HTTP } from '@ionic-native/http';
 
-
+import { IonicStorageModule } from '@ionic/storage';
 import { WalletPage } from '../pages/wallet/wallet';
+import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -66,6 +67,7 @@ var firebaseConfig = {
     AngularFirestoreModule,
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -92,7 +94,9 @@ var firebaseConfig = {
     EventServiceProvider,
     ChatServiceProvider,
     EthereumProvider,
-    HTTP
+    IonicStorageModule,
+    HTTP,
+    WalletServiceProvider
   ]
 })
 export class AppModule {}
