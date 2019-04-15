@@ -33,7 +33,7 @@
     "angularfire2": "5.0.2",
     "angularx-qrcode": "1.5.3",
     "bip39": "2.5.0",
-    "cordova-android": "6.3.0",
+    "cordova-android": "^7.0.0",
     "cordova-clipboard": "^1.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-add-swift-support": "^2.0.2",
