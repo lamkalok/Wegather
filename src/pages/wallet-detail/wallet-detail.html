@@ -23,7 +23,7 @@
         <qrcode [qrdata]="myAngularxQrCode" [size]="128" [level]="'M'"></qrcode>
     </div>
     <br><br>
-    <button ion-button block color="orange" outline (click)="copyAddress()" id="address">{{ address }}</button>
+    <button ion-button block color="orange" outline (click)="copyAddress()" id="address" >{{ address }}</button>
     <div class="balance">
       <p>You have {{ weCoinBalance }} WeCoins</p>
       <p>You have {{ ethBalance }} Ethers</p>

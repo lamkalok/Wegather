@@ -11,7 +11,7 @@ import { WalletPage } from '../pages/wallet/wallet';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = WalletPage;
+  rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
