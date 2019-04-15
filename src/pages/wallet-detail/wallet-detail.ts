@@ -63,6 +63,10 @@ export class WalletDetailPage {
     this.shareServiceProvider.showToast("Address copied");
   }
 
+  transfer(){
+    this.navCtrl.push("WalletTransferPage");
+  }
+
   presentActionSheet() {
     var actionSheet = null;
 
@@ -121,5 +125,7 @@ export class WalletDetailPage {
    
     actionSheet.present();
   }
+
+
 
 }

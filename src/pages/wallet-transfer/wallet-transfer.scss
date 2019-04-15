@@ -1,0 +1,46 @@
+page-wallet-transfer {
+
+    @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+    @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+    
+
+    h1 {
+        text-align: center;
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .desc h5 {
+        text-align: center;
+        padding-top: 10px;
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .desc p {
+        line-height: 2;
+        font-size: 1.5rem;
+        text-align: justify;
+    }
+
+    .icon-holder {
+        
+        font-size: 3rem;
+        
+    
+    }
+
+    #join {
+        font-family: 'Permanent Marker', cursive;
+        text-align: center;
+    }
+
+    #join span {
+        color: #5ae0ed;
+        font-size: 2.5rem;
+    }
+
+    .wecoinLogo {
+        width: 150px;
+        margin: auto;
+        display: block;
+    }
+}
