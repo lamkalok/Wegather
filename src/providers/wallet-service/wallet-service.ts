@@ -27,6 +27,16 @@ export class WalletServiceProvider {
     return wallet;
   }
 
+  async deleteAccount(account) {
+    var wallet;
+    await this.getWallet().then(function(w){
+      wallet = w.filter(function(item, index, array){
+        return item.address != account;       
+      }); 
+      console.log("filtered wallet", wallet);   
+    })
+    this.storage.set('wallet', wallet);  
+  }
   async storeAccount(address, keystone){
     await this.getWallet().then(w => {
       if(w == null){
@@ -34,7 +44,6 @@ export class WalletServiceProvider {
             address: address,
             keystone: keystone
           }]
-        // set a key/value
         this.storage.set('wallet', wallet);
         
       }else{
@@ -43,7 +52,6 @@ export class WalletServiceProvider {
           address: address,
           keystone: keystone
         });
-        // set a key/value
         this.storage.set('wallet', w);
       }
     })

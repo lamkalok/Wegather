@@ -33,9 +33,9 @@ export class WalletListPage {
       this.walletServiceProvider.getWallet().then(w=>{
         this.wallet = w;
         this.wallet.forEach(acc => {
-          this.ethereumProvider.checkBalance(acc.address).then(bal=>{
-            acc.balance = bal;
-          })
+          // this.ethereumProvider.checkBalance(acc.address).then(bal=>{
+          //   acc.balance = bal;
+          // })
         });
       })
 
@@ -48,4 +48,7 @@ export class WalletListPage {
     console.log('ionViewDidLoad WalletListPage');
   }
 
+  viewWalletDetail(account){
+    this.navCtrl.push("WalletDetailPage", account);
+  }
 }

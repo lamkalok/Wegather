@@ -8,6 +8,11 @@
 
   <ion-navbar>
     <ion-title>My Wallet</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-start (click)="presentActionSheet()">
+        <ion-icon name='more' ></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -25,7 +30,7 @@
       <ion-item *ngFor="let account of wallet">
         <h4 text-wrap>{{account.address}}</h4>
         <p>{{account.balance}} WeCoin Tokens</p>
-        <button ion-button clear item-end>View</button>
+        <button ion-button clear item-end (click)="viewWalletDetail(account)">View</button>
       </ion-item>
     </ion-list>
   </ion-content>

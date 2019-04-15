@@ -33,6 +33,7 @@ import { HTTP } from '@ionic-native/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { WalletPage } from '../pages/wallet/wallet';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
+import { QRCodeModule } from 'angularx-qrcode';
 
 // Initialize Firebase
 var firebaseConfig = {
@@ -67,7 +68,8 @@ var firebaseConfig = {
     AngularFirestoreModule,
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    QRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -96,7 +98,8 @@ var firebaseConfig = {
     EthereumProvider,
     IonicStorageModule,
     HTTP,
-    WalletServiceProvider
+    WalletServiceProvider,
+    QRCodeModule
   ]
 })
 export class AppModule {}

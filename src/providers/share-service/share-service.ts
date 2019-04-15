@@ -66,7 +66,7 @@ export class ShareServiceProvider {
     alert.present();
   }
 
-  showConfirm(msg: string, title: string) : boolean {
+  showConfirm(msg: string, title: string, callback){
     const confirm = this.alertCtrl.create({
       title: title,
       message: msg,
@@ -83,13 +83,13 @@ export class ShareServiceProvider {
           text: 'Agree',
           handler: () => {
             console.log('Agree clicked');
+            callback();
             return true;
           }
         }
       ]
     });
     confirm.present();
-    return false;
   }
   
 }

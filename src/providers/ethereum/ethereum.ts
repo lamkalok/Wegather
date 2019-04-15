@@ -64,6 +64,42 @@ export class EthereumProvider {
     return net;
   }
 
+  public async checkEthBalance(account) {
+    var bal = "";
+    if (this.plt.is('ios')) {
+      console.log("IOS check eth balance");
+      let headers = new Headers(
+        {
+          'Content-Type': 'application/json'
+        });
+
+      let options = new RequestOptions({ headers: headers });
+      var data = {
+        'address': account
+      }
+      await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/checkEthBalance', data, { Authorization: 'OAuth2: token' })
+        .then(res => {
+          var json_data = JSON.parse(res.data);
+          console.log(json_data.balance);
+          bal = json_data.balance;
+          console.log(res.status);
+          console.log(res.data); // data received by server
+          console.log(res.headers);
+        }).catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log("Non IOS check Eth balance");
+      await this.web3js.eth.getBalance(account).then(b => {
+        var realb = (b / Math.pow(10, 18));
+        bal = realb + "";
+      });
+    }
+    console.log("bal",bal); // data received by server
+    return bal;
+
+  }
+
 
   public async checkBalance(account) {
     var bal = "";
