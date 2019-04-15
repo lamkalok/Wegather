@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { EthereumProvider } from '../../providers/ethereum/ethereum';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 // import { QRScanner, QRScannerStatus } from 'cordova-plugin-qrscanner';
 
@@ -25,7 +26,7 @@ export class WalletTransferPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    
+    private barcodeScanner: BarcodeScanner,
     public ethereumProvider: EthereumProvider,
     public shareServiceProvider: ShareServiceProvider,
   ) {
@@ -37,21 +38,12 @@ export class WalletTransferPage {
   }
 
   scan() {
-
-    // QRScanner.scan(displayContents);
- 
-    // function displayContents(err, text){
-    //   if(err){
-    //     // an error occurred, or the scan was canceled (error code `6`)
-    //   } else {
-    //     // The scan completed, display the contents of the QR code:
-    //     alert(text);
-    //   }
-    // }
-     
-    // // Make the webview transparent so the video preview is visible behind it.
-    // QRScanner.show();
-
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData.text);
+      this.shareServiceProvider.showToast(barcodeData.text);
+     }).catch(err => {
+         console.log('Error', err);
+     });
   }
 
 }

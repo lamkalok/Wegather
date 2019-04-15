@@ -36,7 +36,6 @@ import { WalletServiceProvider } from '../providers/wallet-service/wallet-servic
 import { QRCodeModule } from 'angularx-qrcode';
 
 
-
 // Initialize Firebase
 var firebaseConfig = {
   apiKey: "AIzaSyAECqVG3OgN2RkGG2xgYt8grTgj5kQ4VSs",

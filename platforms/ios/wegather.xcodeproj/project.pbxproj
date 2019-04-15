@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		05479506805D4EAAA0BBD632 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DFEFFF96741DD811DA531 /* AFURLSessionManager.m */; };
@@ -64,6 +63,10 @@
 		E38BA57973C44365BD957022 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 6181F54F9E334D138744A176 /* CDVCamera.m */; };
 		F97D19BE20E64E70BB5B1078 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 989694B4FFA24190A4CDA4BD /* GCDWebServerResponse.m */; };
 		FB1026BA5B294294AC8F1C84 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F260B2101E844BF5BC62F82E /* AFHTTPSessionManager.m */; };
+		0323CE24A7AF4CD1BA8FE5B1 /* CDVBarcodeScanner.mm in Resources */ = {isa = PBXBuildFile; fileRef = A5217AF341324E9C8C326C84 /* CDVBarcodeScanner.mm */; };
+		73C821D398AB41D09F316ED1 /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 055EE57E85E94B51A99AFF31 /* scannerOverlay.xib */; };
+		9FE061409E514239B62E3581 /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42D9C6A63F124AEC8629D33E /* CDVBarcodeScanner.bundle */; };
+		D6424E95205F426BBF703D14 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52C21160F0694E449C57345F /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +211,10 @@
 		F2F255C8BAE24A88903F2D90 /* GCDWebServerPrivate.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = GCDWebServerPrivate.h; path = "cordova-plugin-ionic-webview/GCDWebServerPrivate.h"; sourceTree = "<group>"; };
 		F500A29273DB46A18CCE9584 /* NativeStorage.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = NativeStorage.h; path = "cordova-plugin-nativestorage/NativeStorage.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = wegather/config.xml; sourceTree = "<group>"; };
+		A5217AF341324E9C8C326C84 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; name = "CDVBarcodeScanner.mm"; path = "phonegap-plugin-barcodescanner/CDVBarcodeScanner.mm"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		055EE57E85E94B51A99AFF31 /* scannerOverlay.xib */ = {isa = PBXFileReference; name = "scannerOverlay.xib"; path = "scannerOverlay.xib"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = file.xib; explicitFileType = undefined; includeInIndex = 0; };
+		42D9C6A63F124AEC8629D33E /* CDVBarcodeScanner.bundle */ = {isa = PBXFileReference; name = "CDVBarcodeScanner.bundle"; path = "CDVBarcodeScanner.bundle"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.plug-in; explicitFileType = undefined; includeInIndex = 0; };
+		52C21160F0694E449C57345F /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +230,7 @@
 				57AB362235C24C5BBCFE3BB3 /* AVFoundation.framework in Frameworks */,
 				E24578E126AB4A03ADECE0DC /* Security.framework in Frameworks */,
 				4D4AC26389E64E908582EAA6 /* SystemConfiguration.framework in Frameworks */,
+				D6424E95205F426BBF703D14 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +293,8 @@
 				3047A50E1AB8057F00498E2A /* config */,
 				8D1107310486CEB800E47090 /* wegather-Info.plist */,
 				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
+				055EE57E85E94B51A99AFF31 /* scannerOverlay.xib */,
+				42D9C6A63F124AEC8629D33E /* CDVBarcodeScanner.bundle */,
 			);
 			name = Resources;
 			path = wegather/Resources;
@@ -300,6 +310,7 @@
 				9D1A0567F2524BFCB63607B6 /* AVFoundation.framework */,
 				E2462D3039CD42A8A25550FB /* Security.framework */,
 				0ACD44CE832749DA97F93728 /* SystemConfiguration.framework */,
+				52C21160F0694E449C57345F /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -416,6 +427,7 @@
 				9946C705165B43CA966581F2 /* sqlite3.h */,
 				AE97B584629441A3BD504182 /* CDVClipboard.m */,
 				C5082C2B18834167894DF781 /* CDVClipboard.h */,
+				A5217AF341324E9C8C326C84 /* CDVBarcodeScanner.mm */,
 			);
 			name = Plugins;
 			path = wegather/Plugins;
@@ -512,6 +524,8 @@
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
+				73C821D398AB41D09F316ED1 /* scannerOverlay.xib in Resources */,
+				9FE061409E514239B62E3581 /* CDVBarcodeScanner.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +600,7 @@
 				0B7D5FB3A11045BF87F5949A /* PSPDFThreadSafeMutableDictionary.m in Sources */,
 				B2EBEAB3FF4E467F93822244 /* sqlite3.c in Sources */,
 				6DF71EDBEF6B438999CE10A5 /* CDVClipboard.m in Sources */,
+				0323CE24A7AF4CD1BA8FE5B1 /* CDVBarcodeScanner.mm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

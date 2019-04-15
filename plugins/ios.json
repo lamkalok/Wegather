@@ -39,6 +39,9 @@
     },
     "cordova-clipboard": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {
