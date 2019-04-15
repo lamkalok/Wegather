@@ -320,6 +320,14 @@ module.exports = [
     "clobbers": [
       "SQLitePlugin"
     ]
+  },
+  {
+    "id": "cordova-clipboard.Clipboard",
+    "file": "plugins/cordova-clipboard/www/clipboard.js",
+    "pluginId": "cordova-clipboard",
+    "clobbers": [
+      "cordova.plugins.clipboard"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -334,7 +342,8 @@ module.exports.metadata =
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.8",
   "cordova-plugin-nativestorage": "2.3.2",
-  "cordova-sqlite-storage": "3.2.0"
+  "cordova-sqlite-storage": "3.2.0",
+  "cordova-clipboard": "1.2.1"
 };
 // BOTTOM OF METADATA
 });

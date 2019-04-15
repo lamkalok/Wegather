@@ -34,6 +34,7 @@
     "angularx-qrcode": "^1.5.3",
     "bip39": "2.5.0",
     "cordova-android": "6.3.0",
+    "cordova-clipboard": "^1.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-advanced-http": "^2.0.8",
     "cordova-plugin-camera": "4.0.3",
@@ -54,6 +55,7 @@
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "lodash": "4.17.11",
+    "ngx-clipboard": "^10.0.0",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",
     "sw-toolbox": "3.6.0",
@@ -78,7 +80,8 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-nativestorage": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-clipboard": {}
     },
     "platforms": [
       "ios",

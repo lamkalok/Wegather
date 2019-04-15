@@ -69,7 +69,7 @@ var firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    QRCodeModule
+    QRCodeModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

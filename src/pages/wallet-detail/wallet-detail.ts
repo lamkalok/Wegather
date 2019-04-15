@@ -5,6 +5,8 @@ import { ShareServiceProvider } from '../../providers/share-service/share-servic
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { ClipboardService } from 'ngx-clipboard'
+
 /**
  * Generated class for the WalletDetailPage page.
  *
@@ -34,7 +36,8 @@ export class WalletDetailPage {
     public userServiceProvider: UserServiceProvider,
     public walletServiceProvider: WalletServiceProvider,
     public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private _clipboardService: ClipboardService
     ) {
       console.log(this.navParams.data);
       this.account = this.navParams.data
@@ -55,6 +58,10 @@ export class WalletDetailPage {
     console.log('ionViewDidLoad WalletDetailPage');
   }
 
+  copyAddress(){
+    this._clipboardService.copyFromContent(this.account.address);
+    this.shareServiceProvider.showToast("Address copied");
+  }
 
   presentActionSheet() {
     var actionSheet = null;
