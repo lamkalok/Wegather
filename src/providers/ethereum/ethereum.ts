@@ -17,6 +17,7 @@ import { HTTP } from '@ionic-native/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 var Tx = require('ethereumjs-tx');
+var aesjs = require('aes-js');
 
 @Injectable()
 export class EthereumProvider {
@@ -95,7 +96,7 @@ export class EthereumProvider {
         bal = realb + "";
       });
     }
-    console.log("bal",bal); // data received by server
+    console.log("bal", bal); // data received by server
     return bal;
 
   }
@@ -131,7 +132,7 @@ export class EthereumProvider {
         bal = b;
       });
     }
-    console.log("bal",bal); // data received by server
+    console.log("bal", bal); // data received by server
     return bal;
   }
 
@@ -142,6 +143,21 @@ export class EthereumProvider {
 
     if (this.plt.is('ios')) {
 
+      // An example 128-bit key
+      var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+      // The initialization vector (must be 16 bytes)
+      var iv = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+
+      var privateKeyBytes = aesjs.utils.utf8.toBytes(myPrivateKey);
+
+      var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
+      var encryptedBytes = aesCbc.encrypt(privateKeyBytes);
+      // To print or store the binary data, you may convert it to hex
+      var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+      console.log("encryptedHex", encryptedHex);
+
+
       console.log("IOS transfer WeCoin");
       let headers = new Headers(
         {
@@ -150,14 +166,22 @@ export class EthereumProvider {
 
       let options = new RequestOptions({ headers: headers });
       var data = {
-        'address': account
+        'address': myAddress,
+        'privateKey': encryptedHex,
+        'toAddress': toAddress,
+        'amount': amount
+
       }
-      await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/checkBalance', data, { Authorization: 'OAuth2: token' })
+
+      console.log("data", data);
+
+      await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/transferWeCoin', data, { Authorization: 'OAuth2: token' })
         .then(res => {
           var json_data = JSON.parse(res.data);
           console.log(res.status);
-          console.log(res.data); // data received by server
+          console.log("Json data", json_data); // data received by server
           console.log(res.headers);
+          receipt = json_data;
         }).catch(error => {
           console.log(error);
         });
@@ -166,12 +190,12 @@ export class EthereumProvider {
 
       var count = await this.web3js.eth.getTransactionCount(myAddress);
       console.log(`num transactions so far: ${count}`);
-  
+
       var contractAddress = WeCoinContract.address;
-  
+
       // Gas Fee = Gas Limit x Gas Price
       // Gas Fee = 49674 * 1 / 10 ^ 9 =  0.000049674 ETH
-  
+
       var rawTransaction = {
         "from": myAddress,
         "nonce": "0x" + count.toString(16),
@@ -189,11 +213,11 @@ export class EthereumProvider {
       console.log(`Attempting to send signed tx:  ${serializedTx.toString('hex')}`);
       receipt = await this.web3js.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
       console.log(`Receipt info:  ${JSON.stringify(receipt, null, '\t')}`);
-  
+
       // // The balance may not be updated yet, but let's check
       // var balance = await this.tokenContract.methods.balanceOf(myAddress).call();
       // console.log(`Balance after send: ${balance}`);
-  
+
       // var balance2 = await this.tokenContract.methods.balanceOf(toAddress).call();
       // console.log(`Balance after send: ${balance2}`);
 
@@ -349,24 +373,24 @@ export class EthereumProvider {
   }
 
 
-    // var http = new XMLHttpRequest();
-    // var url = 'https://wegathertoken.herokuapp.com/testing';
-    // // var url = 'http://192.168.0.104:5000/checkBalance';
-    // var data = {
-    //   'address': "0xc12A83339750bE19CA5158Ab03E827b43c9847af"
-    // }
-    // http.open('POST', url, true);
+  // var http = new XMLHttpRequest();
+  // var url = 'https://wegathertoken.herokuapp.com/testing';
+  // // var url = 'http://192.168.0.104:5000/checkBalance';
+  // var data = {
+  //   'address': "0xc12A83339750bE19CA5158Ab03E827b43c9847af"
+  // }
+  // http.open('POST', url, true);
 
-    // //Send the proper header information along with the request
-    // http.setRequestHeader('Content-type', 'application/json');
-    // var share = this.shareServiceProvider;
-    // http.onreadystatechange = function () {//Call a function when the state changes.
-    //   if (http.readyState == 4 && http.status == 200) {
-    //     //alert(http.responseText);
-    //     share.showConfirm(http.responseText, "OKOK");
-    //   }
-    // }
-    // http.send(JSON.stringify(data));
+  // //Send the proper header information along with the request
+  // http.setRequestHeader('Content-type', 'application/json');
+  // var share = this.shareServiceProvider;
+  // http.onreadystatechange = function () {//Call a function when the state changes.
+  //   if (http.readyState == 4 && http.status == 200) {
+  //     //alert(http.responseText);
+  //     share.showConfirm(http.responseText, "OKOK");
+  //   }
+  // }
+  // http.send(JSON.stringify(data));
 
 
 }

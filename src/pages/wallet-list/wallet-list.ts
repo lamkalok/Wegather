@@ -31,15 +31,11 @@ export class WalletListPage {
       this.walletServiceProvider.getWallet().then(w=>{
         this.wallet = w;
         this.wallet.forEach(acc => {
-          // this.ethereumProvider.checkBalance(acc.address).then(bal=>{
-          //   acc.balance = bal;
-          // })
+          this.ethereumProvider.checkBalance(acc.address).then(bal=>{
+            acc.balance = bal;
+          })
         });
       })
-
-      // this.ethereumProvider.checkBalance("0xd68D71c39B8548E04cD92931142c1B1Dadb33D77").then(b=>{
-      //   console.log(b);
-      // });
   }
 
   ionViewDidLoad() {

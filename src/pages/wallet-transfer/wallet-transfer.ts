@@ -77,9 +77,10 @@ export class WalletTransferPage {
         if (parseFloat(weBal) >= this.amount) {
           this.ethereumProvider.checkEthBalance(this.fromAddress).then(ethBal => {
             if (parseFloat(ethBal) >= 0.00005) {
-              this.shareServiceProvider.showLoadingWithCustomContent("Please wait, it may take a long time...");
+              
               this.ethereumProvider.decrypt(this.account.keystone, this.password).then(acc => {
                 console.log("decrypt acc", acc);
+                this.shareServiceProvider.showLoadingWithCustomContent("Please wait, it may take a long time...");
                 if (this.fromAddress == acc.address) {
                   this.ethereumProvider.transferWeCoin(acc, this.toAddress, this.amount).then(receipt => {
                     console.log(receipt);
