@@ -24,17 +24,15 @@ export class WalletPage {
       this.walletServiceProvider.checkLength().then(length=>{
         console.log("length", length);
         if(length > 0) {
-          this.isNewWallet = false;
+          this.walletServiceProvider.getWallet().then(w=>{
+            console.log("wallet", w);
+            console.log("wallet len", w.length);
+            if(w != null && w.length > 0){
+              this.isNewWallet = false;
+            }
+          })
         }
-        
-      })
-
-      this.walletServiceProvider.getWallet().then(w=>{
-        console.log("wallet", w);
-        if(w != null ){
-          this.isNewWallet = false;
-        }
-      })
+      })     
   }
 
   ionViewDidLoad() {

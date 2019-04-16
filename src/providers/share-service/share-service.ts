@@ -33,6 +33,14 @@ export class ShareServiceProvider {
   
   }
 
+  showLoadingWithCustomContent(msg) : void {
+    this.loader = this.loadingCtrl.create({
+        content: msg
+    });
+    this.loader.present();
+
+}
+
   hideLoading() : void {
     if(this.loader){
       this.loader.dismiss();

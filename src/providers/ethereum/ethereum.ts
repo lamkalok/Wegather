@@ -135,6 +135,74 @@ export class EthereumProvider {
     return bal;
   }
 
+  public async transferWeCoin(account, toAddress, amount) {
+    var myAddress = account.address;
+    var myPrivateKey = account.privateKey;
+    var receipt;
+
+    if (this.plt.is('ios')) {
+
+      console.log("IOS transfer WeCoin");
+      let headers = new Headers(
+        {
+          'Content-Type': 'application/json'
+        });
+
+      let options = new RequestOptions({ headers: headers });
+      var data = {
+        'address': account
+      }
+      await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/checkBalance', data, { Authorization: 'OAuth2: token' })
+        .then(res => {
+          var json_data = JSON.parse(res.data);
+          console.log(res.status);
+          console.log(res.data); // data received by server
+          console.log(res.headers);
+        }).catch(error => {
+          console.log(error);
+        });
+
+    } else {
+
+      var count = await this.web3js.eth.getTransactionCount(myAddress);
+      console.log(`num transactions so far: ${count}`);
+  
+      var contractAddress = WeCoinContract.address;
+  
+      // Gas Fee = Gas Limit x Gas Price
+      // Gas Fee = 49674 * 1 / 10 ^ 9 =  0.000049674 ETH
+  
+      var rawTransaction = {
+        "from": myAddress,
+        "nonce": "0x" + count.toString(16),
+        "gasPrice": "0x3B9ACA00", //1000000000wei = 1Gwei
+        "gasLimit": "0xC20A", //49674 unit
+        "to": contractAddress,
+        "value": "0x0",
+        "data": this.tokenContract.methods.transfer(toAddress, amount).encodeABI(),
+      };
+      var privKey = new Buffer(myPrivateKey, 'hex');
+      var tx = new Tx(rawTransaction);
+      tx.sign(privKey);
+      var serializedTx = tx.serialize();
+      // Comment out these three lines if you don't really want to send the TX right now
+      console.log(`Attempting to send signed tx:  ${serializedTx.toString('hex')}`);
+      receipt = await this.web3js.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
+      console.log(`Receipt info:  ${JSON.stringify(receipt, null, '\t')}`);
+  
+      // // The balance may not be updated yet, but let's check
+      // var balance = await this.tokenContract.methods.balanceOf(myAddress).call();
+      // console.log(`Balance after send: ${balance}`);
+  
+      // var balance2 = await this.tokenContract.methods.balanceOf(toAddress).call();
+      // console.log(`Balance after send: ${balance2}`);
+
+    }
+
+    return receipt;
+
+  }
+
   public async transferToken() {
     var gasPrice = Web3.utils.toHex(100000000000000);
     var myAddress = "0xc12A83339750bE19CA5158Ab03E827b43c9847af";
@@ -145,11 +213,15 @@ export class EthereumProvider {
     console.log(`num transactions so far: ${count}`);
 
     var contractAddress = WeCoinContract.address;
+
+    // Gas Fee = Gas Limit x Gas Price
+    // Gas Fee = 49674 * 1 / 10 ^ 9 =  0.000049674 ETH
+
     var rawTransaction = {
       "from": myAddress,
       "nonce": "0x" + count.toString(16),
-      "gasPrice": "0x3B9ACA00",
-      "gasLimit": "0xC20A",
+      "gasPrice": "0x3B9ACA00", //1000000000wei = 1Gwei
+      "gasLimit": "0xC20A", //49674 unit
       "to": contractAddress,
       "value": "0x0",
       "data": this.tokenContract.methods.transfer(toAddress, 10).encodeABI(),
@@ -191,6 +263,14 @@ export class EthereumProvider {
     account.privateKey = account.privateKey.substr(2);
     return account;
   }
+
+  public async importAccountFromPrivateKey(privateKey: string) {
+    var account = await this.web3js.eth.accounts.privateKeyToAccount("0x" + privateKey);
+    return account;
+  }
+
+
+
 
   public generateAccount() {
     const account = this.web3js.eth.accounts.create();
@@ -267,4 +347,26 @@ export class EthereumProvider {
   public async getChainId() {
     return await this.web3js.eth.net.getId()
   }
+
+
+    // var http = new XMLHttpRequest();
+    // var url = 'https://wegathertoken.herokuapp.com/testing';
+    // // var url = 'http://192.168.0.104:5000/checkBalance';
+    // var data = {
+    //   'address': "0xc12A83339750bE19CA5158Ab03E827b43c9847af"
+    // }
+    // http.open('POST', url, true);
+
+    // //Send the proper header information along with the request
+    // http.setRequestHeader('Content-type', 'application/json');
+    // var share = this.shareServiceProvider;
+    // http.onreadystatechange = function () {//Call a function when the state changes.
+    //   if (http.readyState == 4 && http.status == 200) {
+    //     //alert(http.responseText);
+    //     share.showConfirm(http.responseText, "OKOK");
+    //   }
+    // }
+    // http.send(JSON.stringify(data));
+
+
 }

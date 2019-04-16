@@ -31,7 +31,7 @@ import { EthereumProvider } from '../providers/ethereum/ethereum';
 import { HTTP } from '@ionic-native/http';
 
 import { IonicStorageModule } from '@ionic/storage';
-// import { WalletPage } from '../pages/wallet/wallet';
+import { WalletPage } from '../pages/wallet/wallet';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { QRCodeModule } from 'angularx-qrcode';
 
@@ -57,7 +57,7 @@ var firebaseConfig = {
     LoginPage,
     UserPage,
     TabsPage,
-    // WalletPage
+    WalletPage
   ],
   imports: [
     BrowserModule,
@@ -82,7 +82,7 @@ var firebaseConfig = {
     LoginPage,
     UserPage,
     TabsPage,
-    // WalletPage
+    WalletPage
   ],
   providers: [
     StatusBar,

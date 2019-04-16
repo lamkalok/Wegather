@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { EthereumProvider } from '../../providers/ethereum/ethereum';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 /**
@@ -24,11 +22,11 @@ export class WalletListPage {
 
   constructor(
     public navCtrl: NavController, 
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController,
     public navParams: NavParams,
     public ethereumProvider: EthereumProvider,
     public shareServiceProvider: ShareServiceProvider,
-    public authServiceProvider: AuthServiceProvider,
-    public userServiceProvider: UserServiceProvider,
     public walletServiceProvider: WalletServiceProvider) {
       this.walletServiceProvider.getWallet().then(w=>{
         this.wallet = w;
@@ -51,4 +49,38 @@ export class WalletListPage {
   viewWalletDetail(account){
     this.navCtrl.push("WalletDetailPage", account);
   }
+
+  presentActionSheet() {
+    var actionSheet = null;
+
+      actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            text: 'Create Account',
+            handler: () => {
+              console.log('Create Account');
+              this.navCtrl.push("WalletCreatePage");
+            }
+          },
+          {
+            text: 'Import Account',
+            handler: () => {
+              console.log('Import Account');
+              this.navCtrl.push("WalletImportPage");
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+   
+    actionSheet.present();
+  }
+
+
 }

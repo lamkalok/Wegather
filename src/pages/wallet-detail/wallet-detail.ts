@@ -64,7 +64,7 @@ export class WalletDetailPage {
   }
 
   transfer(){
-    this.navCtrl.push("WalletTransferPage");
+    this.navCtrl.push("WalletTransferPage", this.account);
   }
 
   presentActionSheet() {

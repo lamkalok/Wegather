@@ -1,0 +1,40 @@
+<!--
+  Generated template for the WalletImportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Import Account</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div class="warn">
+      <h1>Warning!!!</h1>
+      <ion-icon name="warning"></ion-icon>
+      <p>1. The password is using to encrypt and decrypt your account private key for the trasaction and receive WeCoin. Please note that your password cannot be changed once it is set </p>
+      <p>2. It’s recommended that you properly store your mnemonic along with your password and the account address somewhere safe offline</p>
+    </div>
+  
+    <div class="accountInfo">
+      <h1>Import Account</h1>
+      <label stacked class="label-text">Please enter the account privateKey: </label>
+      <ion-textarea [(ngModel)]="privateKey"></ion-textarea>
+      <br>
+      <label stacked class="label-text">Password: </label>
+      <ion-item>
+          <ion-input [(ngModel)]="password" type="password" placeholder="Please input a password" name="password" required></ion-input>
+      </ion-item>
+  
+      <label stacked class="label-text">Confirm Password: </label>
+      <ion-item>
+          <ion-input [(ngModel)]="password2" type="password" placeholder="Please input a password" name="password2" required></ion-input>
+      </ion-item>
+      <br>
+      <button ion-button block color="orange" outline (click)="importAccount()">Submit</button>
+    </div>
+  </ion-content>
