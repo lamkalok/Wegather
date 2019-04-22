@@ -20,7 +20,7 @@ import { EventServiceProvider } from '../../providers/event-service/event-servic
 })
 export class EventClaimWecoinPage {
   eventID: string;
-  attendedRecord: any[];
+  attendedRecord = [];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -30,8 +30,10 @@ export class EventClaimWecoinPage {
     public groupServiceProvider: GroupServiceProvider,
     public eventServiceProvider: EventServiceProvider,) {
       this.eventID = this.navParams.data;
+      console.log(this.eventID);
       this.eventServiceProvider.getAttendanceRecord(this.eventID).then(rec => {
         rec.forEach(element => {
+          console.log("attend record", element);
           this.userServiceProvider.getUser(element).then(user => {
             this.attendedRecord.push(user);
           })

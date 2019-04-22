@@ -76,7 +76,7 @@ export class HomePage {
             console.log(groupID);
             this.groupServiceProvider.getUserJoinedGroupsRealTime(groupID).then((gbs) => {
               gbs.subscribe(gwt => {
-                console.log(gwt.payload.data());
+                console.log("gwt payload:", gwt.payload.data());
                 var g: any = gwt.payload.data();
                 g.id = gwt.payload.id;
                 if (g.eventsSnapshot != undefined) {

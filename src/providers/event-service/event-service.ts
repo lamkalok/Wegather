@@ -142,26 +142,47 @@ export class EventServiceProvider {
   async takeAttendance(userID, joinedEvent) {
     var eventRef = this.fireStore.firestore.collection("Events").doc(joinedEvent);
     var message = await eventRef.get().then((doc) => {
-
-      if (doc.data().attendedRecord == undefined) {
+      var attendedMembers = doc.data().attendedMembers;
+      var attendedRecord = doc.data().attendedRecord;
+      var msg;
+      if (!doc.data().attendedRecord) {
         console.log("attendedRecord isUndef");
         eventRef.set(
           { attendedRecord: [userID] },
           { merge: true }
         )
-      } else {
-        var attendedRecord = doc.data().attendedRecord;
-        var attendedMembers = doc.data().attendedMembers;
-        if(!attendedRecord.includes(userID)) {
-          attendedRecord.push(userID);
+        if (!attendedMembers.includes(userID)) {
           attendedMembers.push(userID);
+          eventRef.update({
+            attendedMembers: attendedMembers
+          })
+        }
+        msg = {
+          message: "Adding Attendance record successfully",
+          title: "Great"
+        }
+        return msg;
+      } else {
+        if (!attendedRecord.includes(userID)) {
+          attendedRecord.push(userID);
+          if (!attendedMembers.includes(userID)) {
+            attendedMembers.push(userID);
+          }
           eventRef.update({
             attendedRecord: attendedRecord,
             attendedMembers: attendedMembers
           })
-          return "Adding Attendance record successfully";
+          msg = {
+            message: "Adding Attendance record successfully",
+            title: "Great"
+          }
+          return msg;
         } else {
-          return "The record have been added";
+          msg = {
+            message: "The record have been added",
+            title: "Error"
+          }
+          return msg;
         }
       }
     })
