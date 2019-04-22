@@ -1,0 +1,36 @@
+page-wallet-privatekey {
+    .warn {
+        text-align: center;
+
+        ion-icon {
+            font-size: 5rem;
+            color: red;
+        }
+
+        p {
+            line-height: 1.5;
+            text-align: justify;
+        }
+    }
+
+    .accountInfo {
+        line-height: 1.5;
+        text-align: justify;
+
+        ion-item {
+            padding: 10px;
+        }
+    }
+
+    .icon-holder {
+        font-size: 3rem;
+    }
+
+    #prikey {
+        text-align: center;
+    }
+
+    #privateKey {
+        font-size: 1.5rem;
+    }
+}

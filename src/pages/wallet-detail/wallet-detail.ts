@@ -70,15 +70,14 @@ export class WalletDetailPage {
   presentActionSheet() {
     var actionSheet = null;
 
-    var page = "CreateEventPage";
+    
 
       actionSheet = this.actionSheetCtrl.create({
         buttons: [
           {
             text: 'Export Private Key',
             handler: () => {
-              console.log('Create Event');
-              this.navCtrl.push(page);
+              this.navCtrl.push("WalletPrivatekeyPage", this.account);
             }
           },
           {
