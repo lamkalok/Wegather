@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 import * as fs from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 /*
   Generated class for the EventServiceProvider provider.
 
@@ -120,7 +121,7 @@ export class EventServiceProvider {
 
   async removeMemberFromEvent(userID, joinedEvent) {
     var eventRef = this.fireStore.firestore.collection("Events").doc(joinedEvent);
-    
+
     await eventRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
@@ -136,6 +137,35 @@ export class EventServiceProvider {
         });
       }
     });
+  }
+
+  async takeAttendance(userID, joinedEvent) {
+    var eventRef = this.fireStore.firestore.collection("Events").doc(joinedEvent);
+    var message = await eventRef.get().then((doc) => {
+
+      if (doc.data().attendedRecord == undefined) {
+        console.log("attendedRecord isUndef");
+        eventRef.set(
+          { attendedRecord: [userID] },
+          { merge: true }
+        )
+      } else {
+        var attendedRecord = doc.data().attendedRecord;
+        var attendedMembers = doc.data().attendedMembers;
+        if(!attendedRecord.includes(userID)) {
+          attendedRecord.push(userID);
+          attendedMembers.push(userID);
+          eventRef.update({
+            attendedRecord: attendedRecord,
+            attendedMembers: attendedMembers
+          })
+          return "Adding Attendance record successfully";
+        } else {
+          return "The record have been added";
+        }
+      }
+    })
+    return message;
   }
 
 }

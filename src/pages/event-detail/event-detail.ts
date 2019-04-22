@@ -6,7 +6,7 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { GroupServiceProvider } from '../../providers/group-service/group-service';
 import { EventServiceProvider } from '../../providers/event-service/event-service';
 import { Observable } from 'rxjs';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the EventDetailPage page.
  *
@@ -29,6 +29,10 @@ export class EventDetailPage {
   organizerName: string;
   joinedThisEvent = false;
   isOrganizer = false;
+  now = Date.now();
+  isOver = false;
+  eventOnGoing = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,11 +41,12 @@ export class EventDetailPage {
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
     public eventServiceProvider: EventServiceProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private barcodeScanner: BarcodeScanner,
   ) {
     var eventSnapshot = navParams.data;
     this.id = eventSnapshot.id;
-
+    console.log("now" , this.now);
     if (this.id != null) {
       try {
         eventServiceProvider.getEvent(eventSnapshot.id).then((e) => {
@@ -53,6 +58,17 @@ export class EventDetailPage {
             this.date_from = e.date_from.toDate();
             this.date_to = e.date_to.toDate();
             this.numberOfAttendedMembers = e.attendedMembers.length;
+
+            console.log("OnGoing?", this.now - this.date_from.getTime());
+            console.log("Over? " , this.now - this.date_to.getTime());
+
+            if(this.now - this.date_from.getTime() > 0 && this.now - this.date_to.getTime() < 0) {
+              this.eventOnGoing = true;
+            }
+
+            if(this.now - this.date_to.getTime() > 0) {
+              this.isOver = true;
+            }
 
             if(e.organizerID == this.authServiceProvider.getLoggedUID()){
               this.isOrganizer = true;
@@ -78,9 +94,22 @@ export class EventDetailPage {
 
       }
     }
+  }
 
-
-
+  scan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData.text);
+      var uid = barcodeData.text;
+      if(uid == this.authServiceProvider.getLoggedUID()) {
+        this.shareServiceProvider.showAlert("You can not take attendance record of yourself")
+      } else {
+        this.eventServiceProvider.takeAttendance(uid, this.id).then((msg)=> {
+          this.shareServiceProvider.showAlertWithTitle(msg, "Great");
+        });
+      }
+    }).catch(err => {
+      console.log('Error', err);
+    });
   }
 
   ionViewDidLoad() {

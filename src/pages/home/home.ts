@@ -84,6 +84,10 @@ export class HomePage {
                     g.eventsSnapshot.forEach(eventsSp => {
                       eventsSp.date_from = eventsSp.date_from.toDate();
                     });
+                    // ordered the event by date
+                    g.eventsSnapshot.sort(function(a,b){
+                      return b.date_from.getTime() - a.date_from.getTime();
+                    });
                   }
                 }
 

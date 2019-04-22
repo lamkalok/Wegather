@@ -10,9 +10,8 @@
     <ion-title></ion-title>
     <ion-buttons end>
         <button ion-button icon-start (click)="presentActionSheet()">
-            <ion-icon name='star-outline' ></ion-icon>
-          
-          </button>
+          <ion-icon name='more' ></ion-icon>
+        </button>
         </ion-buttons>
   </ion-navbar>
 
@@ -38,11 +37,19 @@
     </ion-list> -->
 
     <div *ngIf="!isOrganizer">
-    <button *ngIf="!joinedThisEvent"  ion-button block color="skyblue" outline (click)="goEvent()">Join Event</button>
-    <button *ngIf="joinedThisEvent" ion-button block color="danger" outline (click)="quitEvent()">Quit Event</button>
+    <button *ngIf="!joinedThisEvent && !isOver"  ion-button block color="skyblue" outline (click)="goEvent()">Join Event</button>
+    <button *ngIf="joinedThisEvent && !isOver" ion-button block color="danger" outline (click)="quitEvent()">Quit Event</button>
     </div>
     <div *ngIf="isOrganizer">
+      <div *ngIf="eventOnGoing">
+          <button ion-button block outline (click)="scan()">Take Attendance</button>
+      </div>
+      <div *ngIf="!isOver && !eventOnGoing">
         <button ion-button block color="danger" outline >Cancel Event</button>
+      </div>
+      <div *ngIf="isOver">
+        <button ion-button block color="orange" outline >Get WeCoin</button>
+      </div>
     </div>
     <ion-list no-lines>
       <ion-item>
