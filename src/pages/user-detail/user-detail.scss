@@ -1,0 +1,26 @@
+page-user-detail {
+
+    .avatar_holder{
+
+        margin-bottom: 1rem;
+
+        
+        ion-avatar > img {
+            margin: auto;
+            display: block;
+            border-radius: 50%;
+            height: 5rem;
+            width: 5rem;
+        }
+
+        h4 {
+            text-align: center;
+        }
+    }
+
+    .qrcode img {
+        display: block;
+        margin: auto;
+    }
+
+}

@@ -4,10 +4,10 @@ import { ShareServiceProvider } from '../../providers/share-service/share-servic
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { GroupServiceProvider } from '../../providers/group-service/group-service';
-import { LoginPage } from '../login/login';
+import { EventServiceProvider } from '../../providers/event-service/event-service';
 
 /**
- * Generated class for the UserPage page.
+ * Generated class for the UserDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,48 +15,28 @@ import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
-  selector: 'page-user',
-  templateUrl: 'user.html',
+  selector: 'page-user-detail',
+  templateUrl: 'user-detail.html',
 })
-export class UserPage {
+export class UserDetailPage {
 
   userData: any;
+  myAngularxQrCode: string = null;
 
   constructor(
-    public navCtrl: NavController,
+    public navCtrl: NavController, 
     public navParams: NavParams,
+    public groupService: GroupServiceProvider,
     public shareServiceProvider: ShareServiceProvider,
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
-    public groupServiceProvider: GroupServiceProvider,
-  ) {
-    this.userData = authServiceProvider.userData;
-    console.log(this.userData);
+    public eventServiceProvider: EventServiceProvider,) {
+      this.userData = authServiceProvider.userData;
+      this.myAngularxQrCode = this.userData.uid;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
-  }
-
-  logOut() {
-    // this.navCtrl.popAll();
-    this.navCtrl.setRoot(LoginPage);
-    this.navCtrl.popToRoot();
-    // window.location.reload();
-    // this.navCtrl.popToRoot();
-    this.authServiceProvider.logout();
-  }
-
-  viewUserDetail() {
-    this.navCtrl.push("UserDetailPage");
-  }
-
-  viewGroups() {
-    this.navCtrl.push("UserGroupsPage");
-  }
-
-  viewWallet() {
-    this.navCtrl.push("WalletPage")
+    console.log('ionViewDidLoad UserDetailPage');
   }
 
 }
