@@ -27,4 +27,19 @@
       <button ion-button clear item-end (click)="viewWalletDetail(account)">View</button> -->
     </ion-item>
   </ion-list>
+
+  <p>Total Attanded Members: {{ attendedCount }}</p>
+  <p>You can get {{ numberOfWeCoinClaim }} WeCoin</p>
+  <br>
+  <ion-list>
+    <ion-item>
+      <ion-label>Account</ion-label>
+      <ion-select [(ngModel)]="selectedAccount">
+        <ion-option *ngFor="let account of wallet" [value]="account">{{account.address}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+  </ion-list>
+  <br>
+  <button ion-button block color="skyblue" outline (click)="claimWeCoin()">Claim WeCoin</button>
 </ion-content>

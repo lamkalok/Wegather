@@ -20,6 +20,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   templateUrl: 'event-detail.html',
 })
 export class EventDetailPage {
+
   event: Observable<any>;
   id: string;
   date_from: Date;
@@ -32,6 +33,7 @@ export class EventDetailPage {
   now = Date.now();
   isOver = false;
   eventOnGoing = false;
+  isClaim = false;
 
   constructor(
     public navCtrl: NavController,
@@ -55,6 +57,10 @@ export class EventDetailPage {
           this.event.subscribe(e => {
             
             console.log("event: ", e);
+
+            if(e.isClaim) {
+              this.isClaim = true;
+            }
             this.date_from = e.date_from.toDate();
             this.date_to = e.date_to.toDate();
             this.numberOfAttendedMembers = e.attendedMembers.length;
@@ -190,7 +196,11 @@ export class EventDetailPage {
   }
 
   claimWecoin() {
-    this.navCtrl.push("EventClaimWecoinPage", this.id);
+    var data = {
+      eventId: this.id,
+      // eventDetailPage: this
+    }
+    this.navCtrl.push("EventClaimWecoinPage", data);
   }
 
 }

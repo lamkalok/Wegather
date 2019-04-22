@@ -294,7 +294,30 @@ export class EthereumProvider {
   }
 
 
-
+  public async claimWeCoin(address, amount) {
+    var receipt;
+    let headers = new Headers(
+      {
+        'Content-Type': 'application/json'
+      });
+    let options = new RequestOptions({ headers: headers });
+    var data = {
+      'address': address,
+      'amount': amount
+    }
+    console.log("data", data);
+    await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/getCoin', data, { Authorization: 'OAuth2: token' })
+      .then(res => {
+        var json_data = JSON.parse(res.data);
+        console.log(res.status);
+        console.log("Json data", json_data); // data received by server
+        console.log(res.headers);
+        receipt = json_data;
+      }).catch(error => {
+        console.log(error);
+      });
+      return receipt;
+  }
 
   public generateAccount() {
     const account = this.web3js.eth.accounts.create();

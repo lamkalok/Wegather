@@ -47,7 +47,7 @@
       <div *ngIf="!isOver && !eventOnGoing">
         <button ion-button block color="danger" outline >Cancel Event</button>
       </div>
-      <div *ngIf="isOver">
+      <div *ngIf="isOver && !isClaim">
         <button ion-button block color="orange" outline (click)="claimWecoin()">Get WeCoin</button>
       </div>
     </div>

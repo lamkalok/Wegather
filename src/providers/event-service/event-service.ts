@@ -100,6 +100,20 @@ export class EventServiceProvider {
     // });
   }
 
+  async addClaimedToEvent(eventID) {
+    await this.fireStore.firestore.collection("Events").doc(eventID).set(
+      {
+        isClaim: true,
+      }, 
+      { merge: true })
+      .then(function () {
+        console.log("Event successfully Created");
+      })
+      .catch(function (error) {
+        console.error("Error create event: ", error);
+      });
+  }
+
   async addMemeberToEvent(user, joinEvent) {
     var eventRef = this.fireStore.firestore.collection("Events").doc(joinEvent);
 
