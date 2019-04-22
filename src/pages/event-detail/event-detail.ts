@@ -168,4 +168,8 @@ export class EventDetailPage {
     confirm.present();
   }
 
+  claimWecoin() {
+    this.navCtrl.push("EventClaimWecoinPage", this.id);
+  }
+
 }

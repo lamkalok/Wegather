@@ -33,6 +33,8 @@ export class RegisterSelectGroupsPage {
     public userServiceProvider: UserServiceProvider,
     ) {
     console.log(this.navParams);
+    this.authServiceProvider.currentUserInfo();
+    console.log("Logined", this.authServiceProvider.isLoggedIn())
     var data = this.navParams.data;
     if(data != null && !this.authServiceProvider.isLoggedIn()){
       try {

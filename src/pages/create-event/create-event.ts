@@ -90,7 +90,7 @@ export class CreateEventPage {
             this.eventServiceProvider.createEventSnapShot(this.event, this.authServiceProvider.getLoggedUID(), this.groupID).then(() => {
               this.shareServiceProvider.hideLoading();
               this.shareServiceProvider.showToast("Event create successfully");
-              this.navCtrl.pop();
+              this.navCtrl.popTo(this.navCtrl.first());
             })
           });
         })

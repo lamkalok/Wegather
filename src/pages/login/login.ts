@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -8,7 +8,7 @@ import { TabsPage } from '../tabs/tabs';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { HTTP } from '@ionic-native/http';
-
+import { Events } from 'ionic-angular';
 /**
  * Generated class for the LoginPage page.
  *
@@ -32,12 +32,30 @@ export class LoginPage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
     public http: Http,
-    private http_ionic_native: HTTP
+    private http_ionic_native: HTTP,
+    public events: Events,
+    public app: App
   ) {
-    this.authServiceProvider.logout();
+    
+    var nav = this.navCtrl;
+    var app = this.app;
+    events.subscribe('logout', async function(bool){
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      console.log("Logout");
+      
+      
+      await app.getRootNav().setRoot(LoginPage);
+      // // await nav.popToRoot();
+      // this.authServiceProvider.logout().then(async function(){
+      
+        
+      // });
+
+    });
   }
 
   ionViewDidLoad() {
+    this.authServiceProvider.logout();
     console.log('ionViewDidLoad LoginPage');
   }
 
@@ -46,9 +64,15 @@ export class LoginPage {
   }
 
   login() {
+    
     if (this.email == null || this.password == null) {
       this.shareServiceProvider.showAlert("Please enter email and password");
     } else {
+
+      this.userServiceProvider.user = null;
+      this.userServiceProvider.usersCollection = null;
+      this.authServiceProvider.userData = null;
+
       this.authServiceProvider.login(this.email, this.password).then((currentUser) => {
         console.log(this.authServiceProvider.isLoggedIn());
         console.log(this.authServiceProvider.userData);

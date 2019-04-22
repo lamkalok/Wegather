@@ -168,4 +168,12 @@ export class EventServiceProvider {
     return message;
   }
 
+  async getAttendanceRecord(eventID) {
+    var eventRef = this.fireStore.firestore.collection("Events").doc(eventID);
+    var attendedRecord = await eventRef.get().then(doc => {
+      return doc.data().attendedRecord;
+    })
+    return attendedRecord;
+  }
+
 }

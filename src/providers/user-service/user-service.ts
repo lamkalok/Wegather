@@ -50,7 +50,7 @@ export class UserServiceProvider {
     await userRef.get().then((doc) => {
       const data = doc.data();
       var chats = [];
-      if(doc.data().chats != undefined){
+      if(doc.data().chats){
         chats = doc.data().chats
       }
       var u = {

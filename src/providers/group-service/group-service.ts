@@ -33,21 +33,25 @@ export class GroupServiceProvider {
     this.categories = [];
     let cateDoc = this.fireStore.firestore.collection(`Categories`);
 
-    await cateDoc.get().then((querySnapshot) => {
+    var cateArray = await cateDoc.get().then((querySnapshot) => {
+
+      var categories = [];
+
       querySnapshot.forEach((doc) => {
 
         const data = doc.data();
-
+        
         var cate = {
           name: doc.id,
           img: data.img,
           selected: false,
           groups: data.groups,
         }
-        this.categories.push(cate);
+        categories.push(cate);
       })
+      return categories;
     })
-    return this.categories;
+    return cateArray;
   }
 
   async getUserJoinedGroupsRealTime(groupID) {

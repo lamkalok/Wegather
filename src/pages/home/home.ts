@@ -34,7 +34,7 @@ export class HomePage {
     //   this.init();
     //   this.userImg = this.authServiceProvider.userData.img;
     // });
-
+    this.authServiceProvider.currentUserInfo();
 
     this.init();
     this.userImg = this.authServiceProvider.userData.img;

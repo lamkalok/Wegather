@@ -5,6 +5,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { GroupServiceProvider } from '../../providers/group-service/group-service';
 import { LoginPage } from '../login/login';
+import { HomePage } from '../home/home';
+import { Events } from 'ionic-angular';
+
 
 /**
  * Generated class for the UserPage page.
@@ -29,6 +32,7 @@ export class UserPage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
+    public events: Events
   ) {
     this.userData = authServiceProvider.userData;
     console.log(this.userData);
@@ -38,13 +42,32 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
   }
 
-  logOut() {
+  async logOut() {
+
+
+    // await this.navCtrl.parent.parent.setRoot(LoginPage);
+    var events = this.events;
+    this.authServiceProvider.logout().then(async function(){
+      events.publish('logout', true);
+    });
+
+    // this.events.publish('logout', true);
+
     // this.navCtrl.popAll();
-    this.navCtrl.setRoot(LoginPage);
-    this.navCtrl.popToRoot();
-    // window.location.reload();
+
     // this.navCtrl.popToRoot();
-    this.authServiceProvider.logout();
+
+    
+    
+    // this.authServiceProvider.logout();
+
+    
+    // // window.location.reload();
+
+    
+    // this.navCtrl.setRoot(LoginPage);
+
+    // this.navCtrl.popToRoot();
   }
 
   viewUserDetail() {

@@ -9,7 +9,7 @@ import { MessagesPage } from '../pages/messages/messages';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
 import { UserPage } from '../pages/user/user';
-// import { UserPageModule } from '../pages/user/user.module';
+import { UserPageModule } from '../pages/user/user.module';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -58,7 +58,7 @@ var firebaseConfig = {
     ContactPage,
     LoginPage,
     TabsPage,
-    UserPage
+    // UserPage
     // WalletPage
   ],
   imports: [
@@ -73,7 +73,7 @@ var firebaseConfig = {
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     QRCodeModule,
-    // UserPageModule
+    UserPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

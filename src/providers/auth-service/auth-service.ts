@@ -73,17 +73,18 @@ export class AuthServiceProvider {
     return this.firebaseAuth.auth.currentUser;
   }
 
-  logout() {
+  async logout() {
     this.userData = null;
     this.userServiceProvider.user = null;
+    // this.firebaseAuth.auth.currentUser = null;
     this.firebaseAuth.auth.signOut();
   }
 
   isLoggedIn() {
-    if (this.firebaseAuth.auth.currentUser != null) {
-      return true;
+    if (this.firebaseAuth.auth.currentUser == null) {
+      return false;
     } else {
-      return false;;
+      return true;
     }
   }
 
