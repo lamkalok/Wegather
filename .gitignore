@@ -1,5 +1,12 @@
-node_modules/*
+# Webstorm/Vscode/Sublime
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+
+# Dependencies
+node_modules/
+platforms/
+plugins/
 www/build/*
 .sourcemaps
-platforms
-plugins
