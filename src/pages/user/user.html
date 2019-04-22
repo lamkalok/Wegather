@@ -16,12 +16,14 @@
 <ion-content padding>
 
   <div class="avatar_holder">
+    <div *ngIf="userData">
       <ion-avatar>
         <img src="{{ userData.img }}">
-        <h3>
+        <h4>
           {{ userData.name }}
-        </h3>
+        </h4>
       </ion-avatar>
+    </div>
   </div>
   <br>
   <ion-list>

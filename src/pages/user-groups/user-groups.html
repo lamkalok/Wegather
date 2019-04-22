@@ -22,12 +22,12 @@
 
     <ion-item-group>
       <ion-item-divider color="light">Owned Group</ion-item-divider>
-      <ion-item *ngFor="let og of ownedGroup">{{ og.id }}</ion-item>
+      <ion-item *ngFor="let og of ownedGroup" (click)="viewGroup(og)">{{ og.id }}</ion-item>
      
     </ion-item-group>
     <ion-item-group>
         <ion-item-divider color="light">Joined Group</ion-item-divider>
-        <ion-item *ngFor="let jg of joinedGroup">{{ jg.id }}</ion-item>
+        <ion-item *ngFor="let jg of joinedGroup" (click)="viewGroup(jg)">{{ jg.id }}</ion-item>
        
       </ion-item-group>
 

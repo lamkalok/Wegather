@@ -52,10 +52,10 @@ export class EventServiceProvider {
       photos: []
     })
       .then(function () {
-        console.log("User successfully Created");
+        console.log("Event successfully Created");
       })
       .catch(function (error) {
-        console.error("Error create user: ", error);
+        console.error("Error create event: ", error);
       });
   }
 

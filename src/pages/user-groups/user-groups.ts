@@ -70,10 +70,14 @@ export class UserGroupsPage {
     console.log('ionViewDidLoad UserGroupsPage');
   }
 
+  viewGroup(groupData){
+    this.navCtrl.push("GroupDetailPage", groupData)
+  }
+
   presentActionSheet() {
     var actionSheet = null;
 
-    var page = "CreateEventPage";
+    var page = "GroupAddPage";
 
       actionSheet = this.actionSheetCtrl.create({
         buttons: [

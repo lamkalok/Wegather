@@ -39,11 +39,12 @@ export class UserPage {
   }
 
   logOut(){
-    this.authServiceProvider.logout();
+    // this.navCtrl.popAll();
     this.navCtrl.setRoot(LoginPage);
-    this.navCtrl.popAll();
-    window.location.reload();
+    this.navCtrl.popToRoot();
+    // window.location.reload();
     // this.navCtrl.popToRoot();
+    this.authServiceProvider.logout();
   }
 
   viewGroups(){

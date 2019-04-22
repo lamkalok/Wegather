@@ -14,8 +14,8 @@ import * as fs from 'firebase/firestore';
 */
 @Injectable()
 export class GroupServiceProvider {
-  userJoinedGroup:Observable<any>;
-  groupObserver:Observable<any>;
+  userJoinedGroup: Observable<any>;
+  groupObserver: Observable<any>;
   categories = [];
 
   constructor(
@@ -50,8 +50,8 @@ export class GroupServiceProvider {
     return this.categories;
   }
 
-  async getUserJoinedGroupsRealTime(groupID){
-    
+  async getUserJoinedGroupsRealTime(groupID) {
+
     // var uid = this.authServiceProvider.getLoggedUID();
     // this.userJoinedGroup = this.fireStore.doc('Users/' + uid ).valueChanges();
     // await this.userJoinedGroup.subscribe(evt => {
@@ -61,16 +61,16 @@ export class GroupServiceProvider {
     //     this.groupObserver.subscribe(groupEvt=>{
     //       console.log(groupEvt.payload.data());
     //       console.log(groupEvt.payload.id);
-          
+
     //     })
     //   });
     // });
 
     // this.groupObserver = this.fireStore.doc('Groups/' + "新手媽媽谷" ).snapshotChanges();
-    
+
     // return this.groupObserver;
 
-    return await this.fireStore.doc('Groups/' + groupID ).snapshotChanges();
+    return await this.fireStore.doc('Groups/' + groupID).snapshotChanges();
 
   }
 
@@ -84,7 +84,7 @@ export class GroupServiceProvider {
         joinedGroups.forEach((element) => {
           if (element == doc.id) {
 
-            
+
             try {
               // async () => {
               //   await doc.data().eventsSnapshot.forEach(element => {
@@ -94,7 +94,7 @@ export class GroupServiceProvider {
               //   });
 
             } catch (error) {
-              
+
             }
             var g = {
               id: doc.id,
@@ -107,23 +107,23 @@ export class GroupServiceProvider {
               organizers: doc.data().organizers,
               eventsSnapshot: doc.data().eventsSnapshot,
             }
-            
+
             groupData.push(g)
           }
         })
       });
     });
-    await groupData.forEach((group)=>{
+    await groupData.forEach((group) => {
       try {
         group.eventsSnapshot.forEach(element => {
           element.date_from = element.date_from.toDate();
-          
+
           //console.log(element.date_from);
         });
       } catch (error) {
-        
+
       }
-      
+
     })
     return groupData;
   }
@@ -168,11 +168,11 @@ export class GroupServiceProvider {
           numberOfMembers: data.members.length,
           shortDescription: data.shortDescription,
           joined: false
-        }    
+        }
 
         // logined user get new group 
-        if(auth.isLoggedIn()){
-          if(!data.members.includes(auth.getLoggedUID())){
+        if (auth.isLoggedIn()) {
+          if (!data.members.includes(auth.getLoggedUID())) {
             retrunGroup = group;
           } else {
             retrunGroup = null;
@@ -196,19 +196,67 @@ export class GroupServiceProvider {
   }
 
   // sleep time expects milliseconds
-  sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-
-
-  createGroup(image: string) {
-    const picture = this.fireStorage.ref('Groups/myphoto.jpg');
-    picture.putString(image, 'data_url').then(function (snapshot) {
-    });;
+  sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 
-  async addMemberToGroup(uid, joinedGroups:Array<any>) {
+  async uploadGroupImage(imagesString, GroupName, uid) {
+    // var downloadURL = "";
+    // var imageName = Date.now() + eventName;
+    let storageRef = this.fireStorage.ref('Groups/' + GroupName + uid);
+    await storageRef.putString(imagesString, 'data_url');
+    const ref = this.fireStorage.ref('Groups/' + GroupName + uid);
+    return ref.getDownloadURL();
+  }
+
+
+  async createGroup(imageUrl: string, groupName: string, groupDesc: string, uid: string) {
+    await this.fireStore.collection('Groups').doc(groupName).set({
+      eventsSnapshot: [],
+      img: imageUrl,
+      isPublic: true,
+      members: [uid],
+      organizers: [uid],
+      owner: uid,
+      shortDescription: groupDesc
+    })
+      .then(function () {
+        console.log("Group successfully Created");
+      })
+      .catch(function (error) {
+        console.error("Error create group: ", error);
+      });
+  }
+
+  async addGroupToCategories(cateName: string, groupName: string) {
+    var cateRef = this.fireStore.firestore.collection("Categories").doc(cateName);
+    await cateRef.get().then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        var groups = data.groups;
+        groups.push(groupName);
+        cateRef.update({
+          groups: groups
+        });
+      }
+    })
+  }
+
+  async addGroupToUser(groupName: string, uid: string) {
+    var userRef = this.fireStore.firestore.collection("Users").doc(uid);
+    await userRef.get().then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        var joinedGroups = data.joinedGroups;
+        joinedGroups.push(groupName);
+        userRef.update({
+          joinedGroups: joinedGroups
+        });
+      }
+    })
+  }
+
+  async addMemberToGroup(uid, joinedGroups: Array<any>) {
     await joinedGroups.forEach(id => {
       var userRef = this.fireStore.firestore.collection("Users").doc(uid);
       var groupRef = this.fireStore.firestore.collection("Groups").doc(id);
@@ -219,7 +267,7 @@ export class GroupServiceProvider {
 
           const data = doc.data();
 
-          
+
           //console.log("group: " + group);
 
           var array = data.members;
@@ -240,10 +288,10 @@ export class GroupServiceProvider {
     });
   }
 
-  
-  async removeMebmerFromGroup(uid:string, groupID: string){
+
+  async removeMebmerFromGroup(uid: string, groupID: string) {
     var groupRef = this.fireStore.firestore.collection("Groups").doc(groupID);
-    await groupRef.get().then((doc)=>{
+    await groupRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
 
@@ -251,7 +299,7 @@ export class GroupServiceProvider {
 
         var position = array.indexOf(uid);
 
-        if ( ~position ) array.splice(position, 1);
+        if (~position) array.splice(position, 1);
 
         groupRef.update({
           members: array,

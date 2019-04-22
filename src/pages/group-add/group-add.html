@@ -22,7 +22,6 @@
     <img *ngIf="imgSrc" [src]="imgSrc" />
     
       <ion-row padding>
-
         <ion-label stacked class="label-text">Please Select Group Image</ion-label>
         <ion-item>
           <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
@@ -31,18 +30,24 @@
 
    
   </ion-card>
-    <ion-list>
 
-      <ion-item>
-        <ion-label stacked class="label-text">Group Name</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label stacked class="label-text">Description</ion-label>
-        <ion-textarea></ion-textarea>
-      </ion-item>
+  <ion-list>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="selectedCate">
+        <ion-option *ngFor="let cate of categories" [value]="cate">{{cate.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label stacked class="label-text">Group Name</ion-label>
+      <ion-input type="text" [(ngModel)]="groupName"></ion-input>
+    </ion-item>
 
-    </ion-list>
-
-    <button ion-button block color="orange" outline (click)="createGroup()">Create Group</button>
+    <ion-item>
+      <ion-label stacked class="label-text">Description</ion-label>
+      <ion-textarea [(ngModel)]="groupDesc"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <button ion-button block color="orange" outline (click)="createGroup()">Create Group</button>
 </ion-content>
