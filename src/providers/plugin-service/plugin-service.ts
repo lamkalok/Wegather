@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import * as fs from 'firebase/firestore';
+import { containerStart } from '@angular/core/src/render3/instructions';
 
 /*
   Generated class for the PluginServiceProvider provider.
@@ -32,13 +33,16 @@ export class PluginServiceProvider {
       querySnapshot.forEach((doc) => {
 
         const data = doc.data();
+
+        console.log("plugin data", doc.data());
         
         var plug = {
           name: doc.id,
           img: data.img,
           desc: data.desc,
           pageUrl: data.pageUrl,
-          purchasedMembers: data.purchasedMembers,
+          purchasedGroups: data.purchasedGroups,
+          cost: data.cost
         }
         plugIns.push(plug);
       })
@@ -47,19 +51,19 @@ export class PluginServiceProvider {
     return plugInArray;
   }
 
-  async buyPlugin(uid: string, pluginID: string) {
+  async buyPlugin(groupID: string, pluginID: string) {
     var plugInRef = this.fireStore.firestore.collection("Plugins").doc(pluginID);
 
     await plugInRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
 
-        var array = data.purchasedMembers;
+        var array = data.purchasedGroups;
 
-        array.push(uid);
+        array.push(groupID);
 
         plugInRef.update({
-          purchasedMembers: array,
+          purchasedGroups: array,
         });
 
       }

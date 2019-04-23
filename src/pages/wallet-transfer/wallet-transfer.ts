@@ -73,6 +73,7 @@ export class WalletTransferPage {
     }
 
     try {
+      this.shareServiceProvider.showLoadingWithCustomContent("Please wait, it may take a long time...");
       this.ethereumProvider.checkBalance(this.fromAddress).then(weBal => {
         if (parseFloat(weBal) >= this.amount) {
           this.ethereumProvider.checkEthBalance(this.fromAddress).then(ethBal => {
@@ -80,7 +81,7 @@ export class WalletTransferPage {
               
               this.ethereumProvider.decrypt(this.account.keystone, this.password).then(acc => {
                 console.log("decrypt acc", acc);
-                this.shareServiceProvider.showLoadingWithCustomContent("Please wait, it may take a long time...");
+                
                 if (this.fromAddress == acc.address) {
                   this.ethereumProvider.transferWeCoin(acc, this.toAddress, this.amount).then(receipt => {
                     console.log(receipt);
@@ -88,16 +89,18 @@ export class WalletTransferPage {
                     this.confirmTransferSuccess("The block hash: " + receipt.blockHash);
                   })
                 } else {
-                  this.shareServiceProvider.showAlert("Wrong password, transfer failed");
                   this.shareServiceProvider.hideLoading();
+                  this.shareServiceProvider.showAlert("Wrong password, transfer failed");
                 }
               })
             } else {
+              this.shareServiceProvider.hideLoading();
               this.shareServiceProvider.showAlert("You don't have enough Ether to pay the gas fee");
               return;
             }
           })
         } else {
+          this.shareServiceProvider.hideLoading();
           this.shareServiceProvider.showAlert("You don't have enough WeCoin");
           return;
         }

@@ -23,6 +23,7 @@ export class PluginListPage {
 
   ownedPlugins = [];
   avaliablePlugins = [];
+  groupID: string;
 
   constructor(
     public navCtrl: NavController, 
@@ -34,11 +35,12 @@ export class PluginListPage {
     public eventServiceProvider: EventServiceProvider,
     public pluginServiceProvider: PluginServiceProvider
     ) {
-      var uid = this.authServiceProvider.getLoggedUID();
+      this.groupID = this.navParams.data;
+      console.log(this.groupID);
       this.pluginServiceProvider.getPlugins().then(pluginArray => {
         pluginArray.forEach(plugin => {
           console.log("plugin", plugin);
-          if(plugin.purchasedMembers.includes(uid)) {
+          if(plugin.purchasedGroups.includes(this.groupID)) {
             this.ownedPlugins.push(plugin);
           } else {
             this.avaliablePlugins.push(plugin);
@@ -50,6 +52,14 @@ export class PluginListPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PluginListPage');
+  }
+
+  viewPluginDetail(plugin) {
+    var data = {
+      plugin: plugin,
+      groupID: this.groupID
+    }
+    this.navCtrl.push("PluginDetailPage", data);
   }
 
 }

@@ -1,0 +1,24 @@
+page-plugin-detail {
+
+    #pluginImg {
+        display: block;
+        margin: auto;
+        width: 200px;
+    }
+
+    .pluginDesc {
+        margin-top: 20px;
+        text-align: center;
+
+        p {
+            line-height: 2;
+            font-size: 1.8rem;
+        }
+
+    }
+
+    #icon {
+        font-size: 2rem;
+        color: 	#DC143C
+    }
+}

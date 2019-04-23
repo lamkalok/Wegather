@@ -16,10 +16,10 @@
 <ion-content>
   <ion-item-group>
     <ion-item-divider color="light">Owned Plugin</ion-item-divider>
-    <ion-item *ngFor="let op of ownedPlugins">{{ op.name }}</ion-item>
+    <ion-item *ngFor="let op of ownedPlugins" (click)="viewPluginDetail(op)">{{ op.name }}</ion-item>
   </ion-item-group>
   <ion-item-group>
     <ion-item-divider color="light">Avaliable Plugin</ion-item-divider>
-    <ion-item *ngFor="let ap of avaliablePlugins">{{ ap.name }}</ion-item>
+    <ion-item *ngFor="let ap of avaliablePlugins" (click)="viewPluginDetail(ap)">{{ ap.name }}</ion-item>
   </ion-item-group>
 </ion-content>
