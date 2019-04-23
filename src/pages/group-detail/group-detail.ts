@@ -136,6 +136,13 @@ export class GroupDetailPage {
             }
           },
           {
+            text: 'Purchase Plugin',
+            handler: () => {
+              console.log('Purchase Plugin');
+              this.navCtrl.push("PluginListPage");
+            }
+          },
+          {
             text: 'Delete Group',
             role: 'destructive',
             handler: () => {

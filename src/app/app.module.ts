@@ -29,13 +29,17 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { EventServiceProvider } from '../providers/event-service/event-service';
 import { ChatServiceProvider } from '../providers/chat-service/chat-service';
+import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
+import { PluginServiceProvider } from '../providers/plugin-service/plugin-service';
 import { EthereumProvider } from '../providers/ethereum/ethereum';
 import { HTTP } from '@ionic-native/http';
 
+import { QRCodeModule } from 'angularx-qrcode';
 import { IonicStorageModule } from '@ionic/storage';
 // import { WalletPage } from '../pages/wallet/wallet';
-import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
-import { QRCodeModule } from 'angularx-qrcode';
+
+
+
 
 
 // Initialize Firebase
@@ -104,6 +108,7 @@ var firebaseConfig = {
     HTTP,
     WalletServiceProvider,
     QRCodeModule,
+    PluginServiceProvider,
   ]
 })
 export class AppModule {}

@@ -136,6 +136,48 @@ export class EthereumProvider {
     return bal;
   }
 
+  public async buyPluginByWeCoin(account, amount) {
+    var myAddress = account.address;
+    var myPrivateKey = account.privateKey;
+    var receipt;
+    // An example 128-bit key
+    var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+    // The initialization vector (must be 16 bytes)
+    var iv = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+
+    var privateKeyBytes = aesjs.utils.utf8.toBytes(myPrivateKey);
+
+    var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
+    var encryptedBytes = aesCbc.encrypt(privateKeyBytes);
+    // To print or store the binary data, you may convert it to hex
+    var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+    console.log("encryptedHex", encryptedHex);
+    let headers = new Headers(
+      {
+        'Content-Type': 'application/json'
+      });
+
+    let options = new RequestOptions({ headers: headers });
+    var data = {
+      'toAddress': myAddress,
+      'privateKey': encryptedHex,
+      'amount': amount
+    }
+    console.log("data", data);
+    await this.http_ionic_native.post('https://wegathertoken.herokuapp.com/buyPlugin', data, { Authorization: 'OAuth2: token' })
+      .then(res => {
+        var json_data = JSON.parse(res.data);
+        console.log(res.status);
+        console.log("Json data", json_data); // data received by server
+        console.log(res.headers);
+        receipt = json_data;
+      }).catch(error => {
+        console.log(error);
+      });
+      return receipt;
+  }
+
   public async transferWeCoin(account, toAddress, amount) {
     var myAddress = account.address;
     var myPrivateKey = account.privateKey;
@@ -316,7 +358,7 @@ export class EthereumProvider {
       }).catch(error => {
         console.log(error);
       });
-      return receipt;
+    return receipt;
   }
 
   public generateAccount() {
