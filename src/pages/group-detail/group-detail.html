@@ -40,37 +40,47 @@
     <ion-list>
         <ion-item *ngFor="let organizer of organizers">
           <ion-avatar item-start>
-              <img src="{{organizer.img}}">
+            <img src="{{organizer.img}}">
           </ion-avatar>
           <h2>{{organizer.name}}</h2>
-          
         </ion-item>
-       
       </ion-list>
   </div>
 
   <div class="events" >
-      <h3 padding-horizontal>Events<span float-right style="color:red ; font-size:14px; ">See all</span></h3>
-      <div class="holder" no-padding *ngIf="group.eventsSnapshot?.length > 0">
-          <ion-scroll scrollX="true" >
-              <div class="scroll-item" *ngFor="let event of group.eventsSnapshot">
-                  <ion-card (click)="eventDetail(event)">
-                      <ion-card-header text-wrap>
-                        {{event.id}}
-                      </ion-card-header>
-                      <ion-card-content text-wrap>
-                        {{event.description | slice:0 : 40}}...
-                      </ion-card-content>
-                      <ion-note float-right padding >{{event.date_from | date }}</ion-note>
-                    </ion-card>
-              </div>
-          </ion-scroll>
-      
+    <h3 padding-horizontal>Events<span float-right style="color:red ; font-size:14px; ">See all</span></h3>
+    <div class="holder" no-padding *ngIf="group.eventsSnapshot?.length > 0">
+      <ion-scroll scrollX="true" >
+          <div class="scroll-item" *ngFor="let event of group.eventsSnapshot">
+            <ion-card (click)="eventDetail(event)">
+              <ion-card-header text-wrap>
+                {{event.id}}
+              </ion-card-header>
+              <ion-card-content text-wrap>
+                {{event.description | slice:0 : 40}}...
+              </ion-card-content>
+              <ion-note float-right padding >{{event.date_from | date }}</ion-note>
+            </ion-card>
+          </div>
+      </ion-scroll>
     </div>
-
   </div>
 
-  <div class="highlights" padding-horizontal>
+  <div class="plugin">
+      <h3 padding-horizontal>Group Plugins</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let plugin of groupPlugin" size="4">
+          <div class="col-container">
+            <img src="{{ plugin.img }}" (click)="usePlugin(plugin)">
+            <p class="pluginName">{{ plugin.name }}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- <div class="highlights" padding-horizontal>
       <h3>Highlights</h3>
       <ion-list>
           <ion-card>
@@ -87,7 +97,7 @@
               <ion-note float-right padding>11h ago</ion-note>
             </ion-card>
       </ion-list>
-  </div>
+  </div> -->
 
   <!-- <div padding-horizontal class="events">
     

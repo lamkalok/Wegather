@@ -7,6 +7,7 @@ import { GroupServiceProvider } from '../../providers/group-service/group-servic
 import { EventServiceProvider } from '../../providers/event-service/event-service';
 import { Group } from '../../data/group.interface';
 import { TabsPage } from '../tabs/tabs';
+import { PluginServiceProvider } from '../../providers/plugin-service/plugin-service';
 
 /**
  * Generated class for the GroupDetailPage page.
@@ -27,6 +28,8 @@ export class GroupDetailPage {
 
   membersInGroup = [];
   organizers = [];
+
+  groupPlugin = [];
   
   constructor(
     public navCtrl: NavController,
@@ -37,22 +40,18 @@ export class GroupDetailPage {
     public groupServiceProvider: GroupServiceProvider,
     public eventServiceProvider: EventServiceProvider,
     public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public pluginServiceProvider: PluginServiceProvider,
   ) {
     this.group = navParams.data;
     
     try {
       this.numberOfMember = this.group.members.length;
-
       this.group.organizers.forEach(element => {
         this.userServiceProvider.getUser(element).then((memberData) => {
           this.organizers.push(memberData);
-
         })
       });
-
-
-
       this.group.members.forEach(member => {
         this.userServiceProvider.getUser(member).then((memberData) => {
           this.membersInGroup.push(memberData);
@@ -62,6 +61,15 @@ export class GroupDetailPage {
     } catch (error) {
       console.log(error);
     }
+
+    this.pluginServiceProvider.getPlugins().then(pluginArray => {
+      pluginArray.forEach(plugin => {
+        console.log("plugin", plugin);
+        if(plugin.purchasedGroups.includes(this.group.id)) {
+          this.groupPlugin.push(plugin);
+        }
+      })
+    })
 
   }
 
@@ -170,6 +178,10 @@ export class GroupDetailPage {
 
   goToMemberList(){
     this.navCtrl.push('UsersListPage', this.membersInGroup)
+  }
+
+  usePlugin(plugin) {
+    console.log(plugin);
   }
 
 }

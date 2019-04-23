@@ -41,8 +41,10 @@ export class PluginListPage {
         pluginArray.forEach(plugin => {
           console.log("plugin", plugin);
           if(plugin.purchasedGroups.includes(this.groupID)) {
+            plugin.isOwned = true;
             this.ownedPlugins.push(plugin);
           } else {
+            plugin.isOwned = false;
             this.avaliablePlugins.push(plugin);
           }
         })
