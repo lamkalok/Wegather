@@ -22,6 +22,9 @@
   
     <div class="accountInfo">
       <h1>Import Account</h1>
+      <label stacked class="label-text">Mnemonic: </label>
+      <ion-textarea [(ngModel)]="mnemonic"></ion-textarea>
+      <br>
       <label stacked class="label-text">Please enter the account privateKey: </label>
       <ion-textarea [(ngModel)]="privateKey"></ion-textarea>
       <br>
@@ -35,6 +38,8 @@
           <ion-input [(ngModel)]="password2" type="password" placeholder="Please input a password" name="password2" required></ion-input>
       </ion-item>
       <br>
-      <button ion-button block color="orange" outline (click)="importAccount()">Submit</button>
+      <button ion-button block color="orange" outline (click)="importAccountbyPrivate()">Import by private</button>
+      <br>
+      <button ion-button block color="orange" outline (click)="importAccountbyMnemonic()">Import by Mnemonic</button>
     </div>
   </ion-content>

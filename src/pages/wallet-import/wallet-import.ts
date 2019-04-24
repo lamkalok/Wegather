@@ -21,7 +21,7 @@ export class WalletImportPage {
   privateKey: string;
   password: string;
   password2: string;
-
+  mnemonic: string; 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -34,15 +34,13 @@ export class WalletImportPage {
     console.log('ionViewDidLoad WalletImportPage');
   }
 
-  importAccount() {
+  importAccountbyPrivate() {
     this.shareServiceProvider.showLoading();
     if(this.password == this.password2) {
       this.ethereumProvider.importAccountFromPrivateKey(this.privateKey).then(account=>{
-        console.log("get account", account);
         var address = account.address;
         this.ethereumProvider.encrypt(this.privateKey, this.password).then(keystone=>{
           this.walletServiceProvider.storeAccount(address, keystone).then((msg)=>{
-            console.log(msg);
             if(msg=="success"){
               this.shareServiceProvider.hideLoading();
               this.shareServiceProvider.showAlertWithTitle("Account import successfully", "Success");
@@ -54,6 +52,28 @@ export class WalletImportPage {
     } else {
       this.shareServiceProvider.showAlert("The password must be the same as confirm password");
     }
+  }
+
+  async importAccountbyMnemonic() {
+    try {
+      if(this.password == this.password2) {
+        var account = await this.ethereumProvider.generateAccountFromMnemonic(this.mnemonic);
+        var address = account.address;
+  
+        this.ethereumProvider.encrypt(account.privateKey, this.password).then(keystone=>{
+          this.walletServiceProvider.storeAccount(address, keystone).then((msg)=>{
+            if(msg=="success"){
+              this.shareServiceProvider.hideLoading();
+              this.shareServiceProvider.showAlertWithTitle("Account import successfully", "Success");
+              this.navCtrl.popTo(this.navCtrl.first());
+            }
+          })
+        })
+      }
+    } catch(err) {
+      this.shareServiceProvider.showAlert("Error:" + err);
+    }
+
   }
 
 }
