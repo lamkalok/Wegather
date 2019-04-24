@@ -291,7 +291,7 @@ export class EventDetailPage {
           var image = {
             img: u,
             sender: uid,
-            date: Date.now()
+            date: new Date(Date.now())
           }
           this.eventServiceProvider.createEventPhoto(image, this.id)
         })
