@@ -17,7 +17,7 @@
     <ion-list>
         <ion-item *ngFor="let chat_data of chats_messages_data" >
           <ion-avatar item-start>
-            <img src="{{chat_data.target_info.img}}">
+            <img src="{{chat_data.target_info.img}}" (click)="viewUserDetail(chat_data.target_info.uid)">
           </ion-avatar>
           <h2>{{chat_data.target_info.name}}</h2>
           <p>{{chat_data.last_message.content}}</p>

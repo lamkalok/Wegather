@@ -22,6 +22,7 @@ export class UserDetailPage {
 
   userData: any;
   myAngularxQrCode: string = null;
+  isMe = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -32,6 +33,9 @@ export class UserDetailPage {
     public userServiceProvider: UserServiceProvider,
     public eventServiceProvider: EventServiceProvider,) {
       var uid = this.navParams.data;
+      if(uid == this.authServiceProvider.getLoggedUID()) {
+        this.isMe = true;
+      }
       this.userServiceProvider.getUser(uid).then(user => {
         this.userData = user;
         this.myAngularxQrCode = this.userData.uid;

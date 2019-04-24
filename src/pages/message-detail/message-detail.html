@@ -18,7 +18,7 @@
       <div *ngFor="let message of messages"> 
           <ion-item *ngIf="message.sender.uid != uid">
               <ion-avatar item-start>
-                <img src="{{message.sender.img}}">
+                <img src="{{message.sender.img}}" (click)="viewUserDetail(message.sender.uid)">
               </ion-avatar>
                 <h2>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>
           </ion-item>

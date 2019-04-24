@@ -89,7 +89,7 @@
     <div *ngIf="haveComment">
       <ion-item *ngFor="let comment of comments">
           <ion-avatar item-start>
-            <img src="{{ comment.sender.img }}">
+            <img src="{{ comment.sender.img }}" (click)="viewUserDetail(comment.sender.uid)">
           </ion-avatar>
             <h2>{{ comment.content }}<span class="greyFont small" padding-left>{{ comment.date  | date: 'fullDate' }}</span></h2>
       </ion-item>

@@ -15,10 +15,12 @@
 
 <ion-content padding *ngIf="userData">
   
-  <div class="qrcode" >
+  <div class="qrcode" *ngIf="isMe">
     <qrcode [qrdata]="myAngularxQrCode" [size]="128" [level]="'M'"></qrcode>
   </div>
-    
+  <div *ngIf="!isMe">
+    <br><br>
+  </div>
   <br>
   <ion-card-header>
     User Detail

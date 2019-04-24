@@ -141,6 +141,9 @@ export class EventDetailPage {
     this.navCtrl.push('UsersListPage', this.attendedMembers)
   }
 
+  viewUserDetail(uid) {
+    this.navCtrl.push("UserDetailPage", uid);
+  }
 
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {

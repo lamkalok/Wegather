@@ -132,4 +132,8 @@ export class MessageDetailPage {
 
   }
 
+  viewUserDetail(uid) {
+    this.navCtrl.push("UserDetailPage", uid);
+  }
+
 }
