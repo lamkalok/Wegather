@@ -70,4 +70,8 @@ export class UserPage {
     this.navCtrl.push("WalletPage")
   }
 
+  viewEvent() {
+    this.navCtrl.push("EventListPage");
+  }
+
 }

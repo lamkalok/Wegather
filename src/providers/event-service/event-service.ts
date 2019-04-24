@@ -92,6 +92,25 @@ export class EventServiceProvider {
     });
   }
 
+  async getAllEvents() {
+    //This code can getting all doc data inside a collection
+    let eventDoc = this.fireStore.firestore.collection(`Events`);
+
+    var eventArray = await eventDoc.get().then((querySnapshot) => {
+
+      var events = [];
+
+      querySnapshot.forEach((doc) => {
+
+        const data = doc.data();
+        data.name = doc.id;
+        events.push(data);
+      })
+      return events;
+    })
+    return eventArray;
+  }
+
   async createEvent(event, uid, groupID) {
     await this.fireStore.collection('Events').doc(event.name).set({
       attendedMembers: [uid],
@@ -132,7 +151,6 @@ export class EventServiceProvider {
         });
       }
     })
-
   }
 
   async getEvent(eventID) {
@@ -171,15 +189,11 @@ export class EventServiceProvider {
     await eventRef.get().then((doc) => {
       if (doc.exists) {
         const data = doc.data();
-
         var array = data.attendedMembers;
-
         array.push(user);
-
         eventRef.update({
           attendedMembers: array,
         });
-
       }
     });
   }
