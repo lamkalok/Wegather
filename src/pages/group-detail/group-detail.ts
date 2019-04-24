@@ -30,7 +30,9 @@ export class GroupDetailPage {
   organizers = [];
 
   groupPlugin = [];
-  
+
+  eventsSnapshots = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,7 +46,7 @@ export class GroupDetailPage {
     public pluginServiceProvider: PluginServiceProvider,
   ) {
     this.group = navParams.data;
-    
+    console.log("GroupDetail", this.group)
     try {
       this.numberOfMember = this.group.members.length;
       this.group.organizers.forEach(element => {
@@ -55,16 +57,54 @@ export class GroupDetailPage {
       this.group.members.forEach(member => {
         this.userServiceProvider.getUser(member).then((memberData) => {
           this.membersInGroup.push(memberData);
-          
+
         })
       })
+
+      this.groupServiceProvider.getUserJoinedGroupsRealTime(this.group.id).then((gbs) => {
+        gbs.subscribe(gwt => {
+          console.log("gwt payload:", gwt.payload.data());
+          var g: any = gwt.payload.data();
+
+          g.id = gwt.payload.id;
+          if (g.eventsSnapshot != undefined) {
+            if (g.eventsSnapshot.length > 0) {
+
+              g.eventsSnapshot.forEach(eventsSp => {
+                eventsSp.date_from = eventsSp.date_from.toDate();
+              });
+              // ordered the event by date
+              g.eventsSnapshot.sort(function (a, b) {
+                return b.date_from.getTime() - a.date_from.getTime();
+              });
+            }
+          }
+
+          this.eventsSnapshots = g.eventsSnapshot;
+
+          // // check new updated element add to groups
+          // var updated = false;
+          // for (var i = 0; i < g.eventsSnapshot.length; i++) {
+          //   if (this.groups[i].id == g.id) {
+          //     this.groups.splice(i, 1, g);
+          //     updated = true;
+          //     break;
+          //   }
+          // }
+          // if (!updated)
+          //   this.groups.push(g.eventsSnapshot);
+
+        // console.log("this groups", this.groups);
+        })
+      });
+
     } catch (error) {
       console.log(error);
     }
 
     this.pluginServiceProvider.getPlugins().then(pluginArray => {
       pluginArray.forEach(plugin => {
-        if(plugin.purchasedGroups.includes(this.group.id)) {
+        if (plugin.purchasedGroups.includes(this.group.id)) {
           this.groupPlugin.push(plugin);
         }
       })
@@ -79,9 +119,9 @@ export class GroupDetailPage {
   presentActionSheet() {
     var actionSheet = null;
     // Not the group owner
-    if(this.group.owner != this.authServiceProvider.getLoggedUID()){
+    if (this.group.owner != this.authServiceProvider.getLoggedUID()) {
       actionSheet = this.actionSheetCtrl.create({
-      
+
         buttons: [
           {
             text: 'Quit Group',
@@ -94,7 +134,7 @@ export class GroupDetailPage {
                   {
                     text: 'No',
                     handler: () => {
-                      console.log('No clicked'); 
+                      console.log('No clicked');
                     }
                   },
                   {
@@ -102,19 +142,19 @@ export class GroupDetailPage {
                     handler: () => {
                       var uid = this.authServiceProvider.getLoggedUID();
                       console.log('Yes clicked');
-                      if(this.group.eventsSnapshot!=undefined){
-                        this.group.eventsSnapshot.forEach(element=>{
+                      if (this.group.eventsSnapshot != undefined) {
+                        this.group.eventsSnapshot.forEach(element => {
                           this.eventServiceProvider.removeMemberFromEvent(uid, element.id);
                         });
                       }
-                      this.userServiceProvider.removeGroupFromUser(uid, this.group.id, this.authServiceProvider).then(()=>{
-                        this.groupServiceProvider.removeMebmerFromGroup(uid, this.group.id).then(()=>{
+                      this.userServiceProvider.removeGroupFromUser(uid, this.group.id, this.authServiceProvider).then(() => {
+                        this.groupServiceProvider.removeMebmerFromGroup(uid, this.group.id).then(() => {
                           this.shareServiceProvider.showToast("Quit group successfully");
                           this.navCtrl.setRoot(TabsPage);
                           this.navCtrl.popToRoot();
                         });
                       });
-                      
+
                     }
                   }
                 ]
@@ -131,9 +171,9 @@ export class GroupDetailPage {
           }
         ]
       });
-    }else { // is the group owner
+    } else { // is the group owner
       actionSheet = this.actionSheetCtrl.create({
-      
+
         buttons: [
           {
             text: 'Organize New Event',
@@ -166,23 +206,26 @@ export class GroupDetailPage {
         ]
       });
     }
-    
+
 
     actionSheet.present();
   }
 
-  eventDetail(eventsSnapshot){
+  eventDetail(eventsSnapshot) {
     this.navCtrl.push("EventDetailPage", eventsSnapshot)
   }
 
-  goToMemberList(){
+  goToMemberList() {
     this.navCtrl.push('UsersListPage', this.membersInGroup)
   }
 
   usePlugin(plugin) {
-    var page:string = plugin.pageUrl;
+    var page: string = plugin.pageUrl;
     var data = plugin
     this.navCtrl.push(page, data);
   }
 
+  viewUserDetail(uid) {
+    this.navCtrl.push("UserDetailPage", uid);
+  }
 }

@@ -40,7 +40,7 @@
     <ion-list>
         <ion-item *ngFor="let organizer of organizers">
           <ion-avatar item-start>
-            <img src="{{organizer.img}}">
+            <img src="{{organizer.img}}" (click)="viewUserDetail(organizer.uid)">
           </ion-avatar>
           <h2>{{organizer.name}}</h2>
         </ion-item>
@@ -49,9 +49,9 @@
 
   <div class="events" >
     <h3 padding-horizontal>Events<span float-right style="color:red ; font-size:14px; ">See all</span></h3>
-    <div class="holder" no-padding *ngIf="group.eventsSnapshot?.length > 0">
+    <div class="holder" no-padding *ngIf="eventsSnapshots?.length > 0">
       <ion-scroll scrollX="true" >
-          <div class="scroll-item" *ngFor="let event of group.eventsSnapshot">
+          <div class="scroll-item" *ngFor="let event of eventsSnapshots">
             <ion-card (click)="eventDetail(event)">
               <ion-card-header text-wrap>
                 {{event.id}}

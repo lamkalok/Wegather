@@ -110,7 +110,6 @@ export class MessagesPage {
   }
 
   viewUserDetail(uid) {
-    console.log(uid);
     this.navCtrl.push("UserDetailPage", uid);
   }
 

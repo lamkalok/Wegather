@@ -22,6 +22,7 @@ export class HomePage {
   groups = [];
   userImg: string;
   now = Date.now();
+
   constructor(
     public navCtrl: NavController,
     public shareServiceProvider: ShareServiceProvider,
@@ -52,7 +53,7 @@ export class HomePage {
     //   this.groups = data;
     // });
 
-    
+
 
   }
 
@@ -71,24 +72,25 @@ export class HomePage {
               gbs.subscribe(gwt => {
                 // console.log("gwt payload:", gwt.payload.data());
                 var g: any = gwt.payload.data();
+
                 g.id = gwt.payload.id;
                 if (g.eventsSnapshot != undefined) {
                   if (g.eventsSnapshot.length > 0) {
+
                     g.eventsSnapshot.forEach(eventsSp => {
                       eventsSp.date_from = eventsSp.date_from.toDate();
                     });
                     // ordered the event by date
-                    g.eventsSnapshot.sort(function(a,b){
+                    g.eventsSnapshot.sort(function (a, b) {
                       return b.date_from.getTime() - a.date_from.getTime();
                     });
                   }
-                 
+
                   g.eventsSnapshot.forEach((eventsSp, index, array) => {
-                    if(eventsSp.date_from.getTime() < this.now) {
+                    if (eventsSp.date_from.getTime() < this.now) {
                       array.splice(index, 1);
                     }
                   });
-     
                 }
 
                 // check new updated element add to groups
