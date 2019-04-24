@@ -22,7 +22,28 @@ export class UserServiceProvider {
     public fireStorage: AngularFireStorage,
   ) {
     console.log('Hello UserServiceProvider Provider');
+  }
 
+  async uploadUserImage(imagesString, photoName, uid) {
+    let storageRef = this.fireStorage.ref('Users/' + uid + photoName);
+    await storageRef.putString(imagesString, 'data_url');
+    const ref = this.fireStorage.ref('Users/' + uid + photoName);
+    return ref.getDownloadURL();
+  }
+
+  async updateUser(img, name, email, phone, uid) {
+    var userRef = this.fireStore.firestore.collection("Users").doc(uid);
+    await userRef.get().then((doc) => {
+      if (doc.exists) {
+
+        userRef.update({
+          img: img,
+          name: name,
+          email: email,
+          phone: phone
+        });
+      }
+    });
   }
 
   async createUser(user: User, uid: string) {

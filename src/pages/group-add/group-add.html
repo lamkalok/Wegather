@@ -20,15 +20,12 @@
   </div>
   <ion-card>
     <img *ngIf="imgSrc" [src]="imgSrc" />
-    
-      <ion-row padding>
-        <ion-label stacked class="label-text">Please Select Group Image</ion-label>
-        <ion-item>
-          <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
-        </ion-item>
-      </ion-row>
-
-   
+    <ion-row padding>
+      <ion-label stacked class="label-text">Please Select Group Image</ion-label>
+      <ion-item>
+        <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
+      </ion-item>
+    </ion-row>   
   </ion-card>
 
   <ion-list>

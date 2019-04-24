@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -29,6 +29,7 @@ export class HomePage {
     public userServiceProvider: UserServiceProvider,
     public groupServiceProvider: GroupServiceProvider,
     public ethereumProvider: EthereumProvider,
+    public events: Events,
     public http: Http
   ) {
     // this.authServiceProvider.login("17200083@life.hkbu.edu.hk", "aaaa1111").then((currentUser)=>{
@@ -40,6 +41,10 @@ export class HomePage {
     this.init();
     this.userImg = this.authServiceProvider.userData.img;
 
+
+    events.subscribe('user:updated', (user) => {
+      this.userImg = user.img;
+    });
 
     /** Old method -> not real time */
     // this.groupServiceProvider.getUserJoindedGroups(this.authServiceProvider.userData.joinedGroups).then((data)=>{

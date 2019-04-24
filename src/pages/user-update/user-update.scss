@@ -1,9 +1,7 @@
-page-user-detail {
-
+page-user-update {
     .avatar_holder{
 
         margin-bottom: 1rem;
-
         
         ion-avatar > img {
             margin: auto;
@@ -12,19 +10,5 @@ page-user-detail {
             height: 12rem;
             width: 12rem;
         }
-
-        h4 {
-            text-align: center;
-        }
     }
-
-    .qrcode {
-        margin-top: 30px;
-    }
-
-    .qrcode img {
-        display: block;
-        margin: auto;
-    }
-
 }

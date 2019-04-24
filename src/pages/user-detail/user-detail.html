@@ -37,4 +37,10 @@
     <p>User Email: {{userData.email}}</p>
     <p>User Phone: {{userData.phone}}</p>
   </ion-card-content>
+
+  <br>
+  <div *ngIf="isMe" >
+    <button ion-button block color="orange" outline (click)="updateUser()">Update</button>
+  </div>
+  
 </ion-content>

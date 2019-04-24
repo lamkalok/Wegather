@@ -1,0 +1,52 @@
+<!--
+  Generated template for the UserUpdatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Update Information</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="avatar_holder">
+    <div *ngIf="userData">
+      <ion-avatar>
+        <img *ngIf="imgSrc" [src]="imgSrc" />
+      </ion-avatar>
+    </div>
+  </div>
+
+  <ion-row padding>
+    <ion-label stacked class="label-text">Please upload your proflie picture</ion-label>
+    <ion-item>
+      <button ion-button round outline color="dark" (click)="takeImage()"><ion-icon name="image" style="font-size:30px;"></ion-icon></button>
+    </ion-item>
+  </ion-row>   
+
+  <form #registerForm="ngForm">
+    <ion-list inset>
+      <ion-item>
+        <ion-input [(ngModel)]="name" type="text" placeholder="User Name" name="name" required></ion-input>
+      </ion-item>
+      <ion-item>           
+        <ion-input [(ngModel)]="phone" type="text" placeholder="Your Phone Number" name="phone" required></ion-input>
+      </ion-item>
+      <ion-item>               
+          <ion-input [(ngModel)]="email" type="text" placeholder="Email Address" name="email" required></ion-input>
+      </ion-item>
+    </ion-list>     
+    <br />
+    <ion-row>
+      <ion-col class="signup-col">
+        <button ion-button block color="skyblue" outline (click)="update()">Submit</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

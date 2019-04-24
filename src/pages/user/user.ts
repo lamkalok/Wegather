@@ -36,6 +36,13 @@ export class UserPage {
   ) {
     this.userData = authServiceProvider.userData;
     console.log(this.userData);
+
+    events.subscribe('user:updated', (user) => {
+      this.userData.name = user.name;
+      this.userData.img = user.img;
+      this.userData.phone = user.phone;
+      this.userData.email = user.email;
+    });
   }
 
   ionViewDidLoad() {
@@ -43,31 +50,12 @@ export class UserPage {
   }
 
   async logOut() {
-
-
     // await this.navCtrl.parent.parent.setRoot(LoginPage);
     var events = this.events;
     this.authServiceProvider.logout().then(async function(){
       events.publish('logout', true);
     });
 
-    // this.events.publish('logout', true);
-
-    // this.navCtrl.popAll();
-
-    // this.navCtrl.popToRoot();
-
-    
-    
-    // this.authServiceProvider.logout();
-
-    
-    // // window.location.reload();
-
-    
-    // this.navCtrl.setRoot(LoginPage);
-
-    // this.navCtrl.popToRoot();
   }
 
   viewUserDetail() {

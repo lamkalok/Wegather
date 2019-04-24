@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { ShareServiceProvider } from '../../providers/share-service/share-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -31,7 +31,8 @@ export class UserDetailPage {
     public shareServiceProvider: ShareServiceProvider,
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
-    public eventServiceProvider: EventServiceProvider,) {
+    public eventServiceProvider: EventServiceProvider,
+    public events: Events) {
       var uid = this.navParams.data;
       if(uid == this.authServiceProvider.getLoggedUID()) {
         this.isMe = true;
@@ -42,10 +43,21 @@ export class UserDetailPage {
         console.log(this.userData);
       })
 
+      events.subscribe('user:updated', (user) => {
+        this.userData.name = user.name;
+        this.userData.img = user.img;
+        this.userData.phone = user.phone;
+        this.userData.email = user.email;
+      });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserDetailPage');
+  }
+
+  updateUser() {
+    this.navCtrl.push("UserUpdatePage", this.userData);
   }
 
 }
