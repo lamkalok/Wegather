@@ -4,7 +4,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestoreModule, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import * as fs from 'firebase/firestore';
-import { containerStart } from '@angular/core/src/render3/instructions';
 
 /*
   Generated class for the PluginServiceProvider provider.

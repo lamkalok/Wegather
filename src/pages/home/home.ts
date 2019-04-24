@@ -46,20 +46,7 @@ export class HomePage {
     //   this.groups = data;
     // });
 
-    // this.ethereumProvider.checkBalance().then(b=>{
-    //   this.shareServiceProvider.showConfirm("balance is " + b, "Your token balance!");
-    // })
-
-  }
-
-  testTransfer() {
-    // this.ethereumProvider.transferToken().then(receipt => {
-    //   this.shareServiceProvider.showConfirm("Transfer success", receipt);
-    // });
-    //     this.ethereumProvider.checkBalance("0xc12A83339750bE19CA5158Ab03E827b43c9847af").then(b=>{
-    //   this.shareServiceProvider.showConfirm("balance is " + b, "Your token balance!");
-    // })
-
+    
 
   }
 

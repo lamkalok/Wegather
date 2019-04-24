@@ -199,6 +199,25 @@ export class GroupServiceProvider {
 
   }
 
+  async isGroupOwner(uid: string) {
+    let groupDoc = this.fireStore.firestore.collection(`Groups`);
+
+
+    var isOwner = await groupDoc.get().then((querySnapshot) => {
+
+      var haveGroup = false;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if(data.owner == uid) {
+          haveGroup = true;
+        }
+      })
+      return haveGroup;
+    })
+    return isOwner;
+  }
+
   // sleep time expects milliseconds
   sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));

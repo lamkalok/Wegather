@@ -4,12 +4,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
-import { AboutPage } from '../pages/about/about';
 import { MessagesPage } from '../pages/messages/messages';
-import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
 import { UserPage } from '../pages/user/user';
 import { UserPageModule } from '../pages/user/user.module';
+import { SponserPage } from '../pages/sponser/sponser';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -36,6 +35,7 @@ import { HTTP } from '@ionic-native/http';
 
 import { QRCodeModule } from 'angularx-qrcode';
 import { IonicStorageModule } from '@ionic/storage';
+import { SponserServiceProvider } from '../providers/sponser-service/sponser-service';
 // import { WalletPage } from '../pages/wallet/wallet';
 
 
@@ -56,10 +56,9 @@ var firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     HomePage,
     MessagesPage,
-    ContactPage,
+    SponserPage,
     LoginPage,
     TabsPage,
     // UserPage
@@ -82,9 +81,8 @@ var firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     HomePage,
-    ContactPage,
+    SponserPage,
     MessagesPage,
     LoginPage,
     UserPage,
@@ -109,6 +107,7 @@ var firebaseConfig = {
     WalletServiceProvider,
     QRCodeModule,
     PluginServiceProvider,
+    SponserServiceProvider,
   ]
 })
 export class AppModule {}
