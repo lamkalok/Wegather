@@ -21,6 +21,7 @@ export class HomePage {
   groupsObs: Observable<any>[];
   groups = [];
   userImg: string;
+  now = Date.now();
   constructor(
     public navCtrl: NavController,
     public shareServiceProvider: ShareServiceProvider,
@@ -60,10 +61,10 @@ export class HomePage {
           //console.log(userData.joinedGroups);
           userData.joinedGroups.forEach(groupID => {
             this.groups = [];
-            console.log(groupID);
+            // console.log(groupID);
             this.groupServiceProvider.getUserJoinedGroupsRealTime(groupID).then((gbs) => {
               gbs.subscribe(gwt => {
-                console.log("gwt payload:", gwt.payload.data());
+                // console.log("gwt payload:", gwt.payload.data());
                 var g: any = gwt.payload.data();
                 g.id = gwt.payload.id;
                 if (g.eventsSnapshot != undefined) {
@@ -76,6 +77,13 @@ export class HomePage {
                       return b.date_from.getTime() - a.date_from.getTime();
                     });
                   }
+                 
+                  g.eventsSnapshot.forEach((eventsSp, index, array) => {
+                    if(eventsSp.date_from.getTime() < this.now) {
+                      array.splice(index, 1);
+                    }
+                  });
+     
                 }
 
                 // check new updated element add to groups

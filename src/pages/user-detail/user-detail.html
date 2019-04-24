@@ -7,15 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ userData.name }}</ion-title>
+    <ion-title *ngIf="userData">{{ userData.name }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="userData">
   
-  <div class="qrcode">
+  <div class="qrcode" >
     <qrcode [qrdata]="myAngularxQrCode" [size]="128" [level]="'M'"></qrcode>
   </div>
     

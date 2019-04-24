@@ -31,8 +31,13 @@ export class UserDetailPage {
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
     public eventServiceProvider: EventServiceProvider,) {
-      this.userData = authServiceProvider.userData;
-      this.myAngularxQrCode = this.userData.uid;
+      var uid = this.navParams.data;
+      this.userServiceProvider.getUser(uid).then(user => {
+        this.userData = user;
+        this.myAngularxQrCode = this.userData.uid;
+        console.log(this.userData);
+      })
+
   }
 
   ionViewDidLoad() {

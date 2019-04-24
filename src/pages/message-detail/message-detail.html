@@ -18,18 +18,16 @@
       <div *ngFor="let message of messages"> 
           <ion-item *ngIf="message.sender.uid != uid">
               <ion-avatar item-start>
-                  <img src="{{message.sender.img}}">
-                </ion-avatar>
+                <img src="{{message.sender.img}}">
+              </ion-avatar>
                 <h2>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>
-         
-        </ion-item>
-        <ion-item *ngIf="message.sender.uid == uid">
+          </ion-item>
+          <ion-item *ngIf="message.sender.uid == uid">
             <h2 item-end>{{message.content}}<span class="greyFont small" padding-left>{{message.date}}</span></h2>
             <ion-avatar item-end>
-                <img src="{{message.sender.img}}">
+              <img src="{{message.sender.img}}">
             </ion-avatar>
-         
-        </ion-item>
+          </ion-item>
       </div>       
 
       </ion-list>

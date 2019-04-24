@@ -86,10 +86,15 @@
     <button ion-button block color="skyblue" outline (click)="addPhoto()">Add Photo</button>
 
     <h5>Comments</h5>
-    <div></div>
+    <div *ngIf="haveComment">
+      <ion-item *ngFor="let comment of comments">
+          <ion-avatar item-start>
+            <img src="{{ comment.sender.img }}">
+          </ion-avatar>
+            <h2>{{ comment.content }}<span class="greyFont small" padding-left>{{ comment.date  | date: 'fullDate' }}</span></h2>
+      </ion-item>
+    </div>
     <button ion-button block color="skyblue" outline (click)="addComment()">Add Comment</button>
-
-
-    
   </div>
+  <br>
 </ion-content>

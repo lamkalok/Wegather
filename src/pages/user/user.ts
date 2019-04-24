@@ -71,7 +71,7 @@ export class UserPage {
   }
 
   viewUserDetail() {
-    this.navCtrl.push("UserDetailPage");
+    this.navCtrl.push("UserDetailPage", this.authServiceProvider.getLoggedUID());
   }
 
   viewGroups() {

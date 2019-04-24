@@ -35,6 +35,9 @@ export class EventDetailPage {
   eventOnGoing = false;
   isClaim = false;
 
+  comments = [];
+  haveComment = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -64,6 +67,17 @@ export class EventDetailPage {
             this.date_from = e.date_from.toDate();
             this.date_to = e.date_to.toDate();
             this.numberOfAttendedMembers = e.attendedMembers.length;
+
+            if(e.comments.length > 0){
+              this.comments = e.comments;
+              this.haveComment = true;
+
+              this.comments.forEach(c => {
+                c.date = c.date.toDate();
+              })
+            }
+
+            
 
             console.log("OnGoing?", this.now - this.date_from.getTime());
             console.log("Over? ", this.now - this.date_to.getTime());
@@ -207,5 +221,42 @@ export class EventDetailPage {
     }
     this.navCtrl.push("EventClaimWecoinPage", data);
   }
+
+  addComment() {
+    const prompt = this.alertCtrl.create({
+      title: 'Comment',
+      message: "Please enter the comment",
+      inputs: [
+        {
+          name: 'Comment',
+          placeholder: 'comment...'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked', data);
+            console.log("userdata", this.authServiceProvider.userData);
+            var u = this.authServiceProvider.userData;
+            var user = {
+              uid: u.uid,
+              img: u.img,
+              name: u.name,
+            }
+            this.eventServiceProvider.createComment(this.id, user, data.Comment);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+  
 
 }

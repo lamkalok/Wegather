@@ -39,6 +39,36 @@ export class EventServiceProvider {
     return ref.getDownloadURL();
   }
 
+  async createComment(eventID, user, content) {
+    var eventRef = this.fireStore.firestore.collection("Events").doc(eventID);
+    await eventRef.get().then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+
+        var array = data.comments;
+
+        console.log("before", array);
+
+        var comment = {
+          sender: user,
+          content: content,
+          date: new Date(Date.now())
+        }
+
+        array.push(comment);
+
+
+        console.log(comment);
+        console.log(array);
+
+        eventRef.update({
+          comments: array,
+        });
+
+      }
+    });
+  }
+
   async createEvent(event, uid, groupID) {
     await this.fireStore.collection('Events').doc(event.name).set({
       attendedMembers: [uid],
