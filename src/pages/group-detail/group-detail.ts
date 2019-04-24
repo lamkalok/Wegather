@@ -64,7 +64,6 @@ export class GroupDetailPage {
 
     this.pluginServiceProvider.getPlugins().then(pluginArray => {
       pluginArray.forEach(plugin => {
-        console.log("plugin", plugin);
         if(plugin.purchasedGroups.includes(this.group.id)) {
           this.groupPlugin.push(plugin);
         }
@@ -181,7 +180,9 @@ export class GroupDetailPage {
   }
 
   usePlugin(plugin) {
-    console.log(plugin);
+    var page:string = plugin.pageUrl;
+    var data = plugin
+    this.navCtrl.push(page, data);
   }
 
 }

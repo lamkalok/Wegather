@@ -1,0 +1,60 @@
+<!--
+  Generated template for the FoodCalorieCalculatorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ plugin.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <img id="pluginImg" src="{{ plugin.img }}">
+    <br>
+    <br>
+    <div class="result" *ngIf="result">
+      <ion-card text-center>
+        <ion-card-content>
+          For {{ food }} in {{ size }} {{ unit }}, the calories is {{ result }}.
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <br>
+    <label stacked class="label-text">Food: </label>
+    <ion-item>
+        <ion-input [(ngModel)]="food" type="text" placeholder="Please input the food" name="food" required></ion-input>
+    </ion-item>
+    <br>
+    <ion-grid>
+      <ion-row>
+        <ion-col >
+          <label stacked class="label-text">Serving Size: </label>
+          <ion-item>
+            <ion-input [(ngModel)]="size" type="text" placeholder="eg: 10" name="size" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col align-self-end>
+          <label stacked class="label-text">Unit: </label>
+          <ion-select [(ngModel)]="unit">
+            <ion-option value="g" selected>
+              g
+            </ion-option>
+            <ion-option value="ml">
+              ml
+            </ion-option>
+            <ion-option value="oz">
+              oz
+            </ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <br>
+    <button ion-button block color="orange" outline (click)="getResult()">Submit</button>
+</ion-content>
