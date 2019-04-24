@@ -123,6 +123,11 @@ export class EventDetailPage {
     }
   }
 
+  goToMemberList(){
+    this.navCtrl.push('UsersListPage', this.attendedMembers)
+  }
+
+
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData.text);

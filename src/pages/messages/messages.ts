@@ -32,40 +32,64 @@ export class MessagesPage {
     this.userServiceProvider.getUserRealTime(this.authServiceProvider.getLoggedUID()).then((user_snapshot)=>{
       user_snapshot.subscribe((user_event_data)=>{
         this.chats_messages_data = [];
+
         console.log(user_event_data.payload.data());
-        var user_data:any = user_event_data.payload.data();
+
+        // getting user data
+        var user_data:any = user_event_data.payload.data(); 
+
+        // get user chat array contain chatID & chat target id
         var chats = user_data.chats;
-        if (chats != undefined) {
+
+        // if have any chat before
+        if (chats) {
           chats.forEach(chat_element => {
-            console.log(chat_element);
+
+            console.log("chat element", chat_element);
+
+
             this.chatServiceProvider.getChats(chat_element.id).then((chat_snapshot) => {
+
+
               chat_snapshot.subscribe((chat_event_data) => {
-                
+          
                 var char_data: any = chat_event_data.payload.data();
-                console.log(char_data);
+                console.log("chat data ",char_data);
+
+                // chatUserInfo container who are in the chat, only 2 people
                 char_data.chatUserInfo.forEach(cui => {
+                  
+                  // For show the last message
                   if (cui.uid != this.authServiceProvider.getLoggedUID()) {
+                    
                     var messages = char_data.messages;
                     console.log(messages.length);
-                    console.log(messages[messages.length-1]);
-                    this.chatServiceProvider.getMessages(messages[messages.length-1]).then(message_data=>{
-                      var chats_list_data = {
-                        chat_id: chat_element.id,
-                        target_info: cui,
-                        last_message: message_data
-                      }
-                      var updated = false;
-                      for (var i = 0; i < this.chats_messages_data.length; i++) {
-                        if (this.chats_messages_data[i].chat_id == chat_element.id) {
-                          this.chats_messages_data.splice(i, 1, chats_list_data);
-                          updated = true;
-                          break;
+                    console.log("last message", messages[messages.length-1]);
+
+                    if(messages[messages.length-1]) {
+                      this.chatServiceProvider.getMessages(messages[messages.length-1]).then(message_data=>{
+                        // this list data for show the list view
+                        var chats_list_data = {
+                          chat_id: chat_element.id, //chat id
+                          target_info: cui,
+                          last_message: message_data
                         }
-                      }
-                      if(!updated)
-                        this.chats_messages_data.push(chats_list_data);         
-                      console.log(this.chats_messages_data);
-                    });
+                        
+                        // clear out snapshot change duplicate item
+                        var updated = false;
+                        for (var i = 0; i < this.chats_messages_data.length; i++) {
+                          if (this.chats_messages_data[i].chat_id == chat_element.id) {
+                            this.chats_messages_data.splice(i, 1, chats_list_data);
+                            updated = true;
+                            break;
+                          }
+                        }
+                        if(!updated)
+                          this.chats_messages_data.push(chats_list_data);  
+                          
+                        console.log(this.chats_messages_data);
+                      });
+                    }
                   }
                 });
               })

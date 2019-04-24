@@ -58,17 +58,16 @@ export class ChatServiceProvider {
 
 
   async createChat(target, user) {
-    var doc_id;
     console.log(target);
     console.log(user);
 
-    await this.fireStore.firestore.collection("Chats").add({
+    var doc_id = await this.fireStore.firestore.collection("Chats").add({
       chatUserInfo: [target, user],
       messages: []
     })
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
-        doc_id = docRef.id;
+        return docRef.id;
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);
