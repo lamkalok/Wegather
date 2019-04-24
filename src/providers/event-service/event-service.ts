@@ -34,6 +34,30 @@ export class EventServiceProvider {
     return ref.getDownloadURL();
   }
 
+  async createEventPhoto(img, eventID) {
+    var eventRef = this.fireStore.firestore.collection("Events").doc(eventID);
+    await eventRef.get().then((doc) => {
+      if (doc.exists) {
+        if(doc.data().photos) {
+          const data = doc.data();
+
+          var array = data.photos;
+  
+          array.push(img);
+  
+          eventRef.update({
+            photos: array,
+          });
+        } else {
+          eventRef.set(
+            { photos: [img] },
+            { merge: true }
+          )
+        }
+      }
+    });
+  }
+
   async downloadingFiles(eventName, uid) {
     const ref = this.fireStorage.ref('Events/' + uid + eventName);
     return ref.getDownloadURL();
@@ -43,11 +67,6 @@ export class EventServiceProvider {
     var eventRef = this.fireStore.firestore.collection("Events").doc(eventID);
     await eventRef.get().then((doc) => {
       if (doc.exists) {
-        const data = doc.data();
-
-        var array = data.comments;
-
-        console.log("before", array);
 
         var comment = {
           sender: user,
@@ -55,16 +74,20 @@ export class EventServiceProvider {
           date: new Date(Date.now())
         }
 
-        array.push(comment);
+        if(doc.data().comments) {
+          const data = doc.data();
+          var array = data.comments;
 
-
-        console.log(comment);
-        console.log(array);
-
-        eventRef.update({
-          comments: array,
-        });
-
+          array.push(comment);
+          eventRef.update({
+            comments: array,
+          });
+        } else {
+          eventRef.set(
+            { comments: [comment] },
+            { merge: true }
+          )
+        }
       }
     });
   }
@@ -72,7 +95,6 @@ export class EventServiceProvider {
   async createEvent(event, uid, groupID) {
     await this.fireStore.collection('Events').doc(event.name).set({
       attendedMembers: [uid],
-      comments: [],
       date_from: new Date(event.dateStarts),
       date_to: new Date(event.dateEnd),
       description: event.description,
@@ -80,7 +102,6 @@ export class EventServiceProvider {
       img: event.img,
       location: event.location,
       organizerID: uid,
-      photos: []
     })
       .then(function () {
         console.log("Event successfully Created");

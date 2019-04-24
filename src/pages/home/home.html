@@ -32,11 +32,11 @@
     <ion-card class="adv-map" *ngFor="let event of group.eventsSnapshot">
         <div style="position: relative" (click)="eventDetail(event)">
           <img src="{{event.img}}">
-          <ion-fab right top>
+          <!-- <ion-fab right top>
             <button ion-fab class="fab-map">
               <ion-icon name='pin'></ion-icon>
             </button>
-          </ion-fab>
+          </ion-fab> -->
         </div>
         <ion-item>
           <h2 padding-top>{{event.id}}</h2>

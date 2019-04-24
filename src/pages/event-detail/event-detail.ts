@@ -7,6 +7,9 @@ import { GroupServiceProvider } from '../../providers/group-service/group-servic
 import { EventServiceProvider } from '../../providers/event-service/event-service';
 import { Observable } from 'rxjs';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 /**
  * Generated class for the EventDetailPage page.
  *
@@ -37,10 +40,14 @@ export class EventDetailPage {
 
   comments = [];
   haveComment = false;
+  havePhoto = false;
+
+  photos = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public camera: Camera,
     public shareServiceProvider: ShareServiceProvider,
     public authServiceProvider: AuthServiceProvider,
     public userServiceProvider: UserServiceProvider,
@@ -68,7 +75,7 @@ export class EventDetailPage {
             this.date_to = e.date_to.toDate();
             this.numberOfAttendedMembers = e.attendedMembers.length;
 
-            if(e.comments.length > 0){
+            if(e.comments){
               this.comments = e.comments;
               this.haveComment = true;
 
@@ -77,7 +84,10 @@ export class EventDetailPage {
               })
             }
 
-            
+            if(e.photos){
+              this.photos = e.photos;
+              this.havePhoto = true;
+            }
 
             console.log("OnGoing?", this.now - this.date_from.getTime());
             console.log("Over? ", this.now - this.date_to.getTime());
@@ -259,6 +269,37 @@ export class EventDetailPage {
       ]
     });
     prompt.present();
+  }
+
+  addPhoto() {
+    const options: CameraOptions = {
+      quality: 65,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      var timeStamp = Date.now();
+      var uid = this.authServiceProvider.getLoggedUID();
+      this.eventServiceProvider.uploadEventImage(base64Image, timeStamp, uid).then(url => {
+        
+        url.subscribe(u => {
+          var image = {
+            img: u,
+            sender: uid,
+            date: Date.now()
+          }
+          this.eventServiceProvider.createEventPhoto(image, this.id)
+        })
+      })
+
+    }, (err) => {
+      // Handle error
+    });
   }
   
 

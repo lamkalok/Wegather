@@ -55,6 +55,8 @@ export class WalletTransferPage {
   }
 
   transfer() {
+    this.shareServiceProvider.showToast("Transfer, please wait");
+
     if (this.amount == null) {
       this.shareServiceProvider.showAlert("Please enter the amount");
       return;

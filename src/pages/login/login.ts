@@ -64,7 +64,7 @@ export class LoginPage {
   }
 
   login() {
-    
+    this.shareServiceProvider.showToast("Login, please wait");
     if (this.email == null || this.password == null) {
       this.shareServiceProvider.showAlert("Please enter email and password");
     } else {

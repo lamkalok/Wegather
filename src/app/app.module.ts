@@ -36,6 +36,7 @@ import { HTTP } from '@ionic-native/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { IonicStorageModule } from '@ionic/storage';
 import { SponserServiceProvider } from '../providers/sponser-service/sponser-service';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 // import { WalletPage } from '../pages/wallet/wallet';
 
 
@@ -76,7 +77,8 @@ var firebaseConfig = {
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     QRCodeModule,
-    UserPageModule
+    UserPageModule,
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

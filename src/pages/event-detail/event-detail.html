@@ -82,7 +82,41 @@
     </div>
 
     <h5>Photos</h5>
-    <div></div>
+    <div *ngIf="havePhoto">
+      <ion-grid>
+            <ion-row>
+              <ion-col *ngFor="let p of photos ; let i = index" col-3>
+                <img src="{{p.img}}" imageViewer>
+              </ion-col>
+            </ion-row>
+
+          <!-- <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col>
+          <ion-col>
+            <img src="https://www.tokyohive.com/upload/2018/07/af_org/nogizaka46_1530579024_af_org.jpg">
+          </ion-col> -->
+
+
+      </ion-grid>
+    </div>
     <button ion-button block color="skyblue" outline (click)="addPhoto()">Add Photo</button>
 
     <h5>Comments</h5>
